@@ -1,0 +1,44 @@
+@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:root{
+  // Color
+  --background: #F2F2F2;
+  --background-header: #E44D3A;
+  --background-component: #FFFFFF;
+  --background-login: #E75348;
+  --text-color-1: #9E9E9E;
+  --text-color-2: #686868;
+  --text-color-3: #000000;
+  --text-color-4: #FFFFFF;
+  --star: #B7CE1F;
+  --button-color-1: #53D690;
+  --button-color-2: #51A5FB;
+
+  // Font size
+  --content: 13px 'Roboto',courier,arial,helvetica;
+  --title: 18px 'Roboto',courier,arial,helvetica;
+  --sub-title: 16px 'Roboto',courier,arial,helvetica;
+  --name: 26px 'Roboto',courier,arial,helvetica;
+}
+[data-theme="dark"]{
+  
+
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font: var(--content);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
