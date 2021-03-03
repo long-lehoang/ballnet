@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "./login.module.scss";
+import styles from "./styles.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +8,7 @@ export default function LayoutLogin({children}){
         <div className={styles.container}>
             <Head>
                 <title>BallNet</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/logo.png" />
             </Head>
 
             <main className={styles.main}>

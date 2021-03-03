@@ -1,0 +1,41 @@
+.container {
+  width: 100%;
+  background-image: linear-gradient(
+    var(--background-header) 100px,
+    var(--background-component) 100px
+  );
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: block;
+  padding-top: 50px;
+  .row {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 1px solid var(--text-color-1);
+    }
+    .name {
+      font: var(--name);
+      color: var(--text-color-3);
+    }
+    .star {
+      width: 15px;
+      height: 15px;
+      color: var(--star);
+    }
+    .followers,
+    .friends {
+      font: var(--title);
+      color: var(--text-color-2);
+    }
+    .link {
+      padding-top: 10px;
+      cursor: pointer;
+      font: var(--sub-title);
+      color: var(--background-header);
+    }
+  }
+}
