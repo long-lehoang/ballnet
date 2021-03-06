@@ -8,7 +8,12 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import InputField from '../commons/custom-fields/InputField';
 import CheckField from '../commons/custom-fields/CheckField';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import {LOGIN_API} from "../../config/config";
+import axios from 'axios';
+import {setError} from "./loginErrorSlice";
+import {setUser} from "./infoUserSlice";
 
 LoginForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -19,9 +24,75 @@ LoginForm.defaultProps = {
 }
 
 export default function LoginForm(props){
-    const error = useSelector(state => state.loginError);
+    const router = useRouter();
+    const dispatch = useDispatch();
 
-    const { initialValues } = props;
+    const handleSubmit = (values) => {
+        console.log('Form submit: ', LOGIN_API);
+
+        axios.post(LOGIN_API,values)
+        .then((response) => { 
+            console.log(response);
+
+            // Code for handling the response 
+            // save token
+            if(response.data.success){
+                console.log(response.data.data.user);
+                localStorage.setItem(
+                    'access_token',
+                    response.data.data.token_type +' '+ response.data.data.access_token
+                );
+                localStorage.setItem(
+                    'user',
+                    JSON.stringify(response.data.data.user)
+                );
+                
+                //set user info
+                console.log(response.data.data.user);
+                const actionUser = setUser(response.data.data.user);
+                dispatch(actionUser);
+                //set success
+                
+
+                const actionError = setError(false);
+                dispatch(actionError);
+                router.push('/');
+                console.log(response.data.message);
+            } else{
+                const actionError = setError(true);
+                dispatch(actionError);
+                console.log(response.data.message);
+            }
+            
+        })
+        .catch((error) => { 
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                const actionError = setError(true);
+                dispatch(actionError);
+                console.log(error.response.data)
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                const actionError = setError(true);
+                dispatch(actionError);
+                console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                const actionError = setError(true);
+                dispatch(actionError);
+                console.log(error.message)
+            }
+        })
+    }
+    const initialValues={
+        username: '',
+        password: '',
+        remember: false
+    }
+    const error = useSelector(state => state.loginError);
 
     const validationSchema = Yup.object().shape({
         username: Yup.string().required('This field is required.'),
@@ -33,7 +104,7 @@ export default function LoginForm(props){
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={props.onSubmit}
+            onSubmit={handleSubmit}
         >
             {formikProps => {
                 const {values, errors, touched} = formikProps;

@@ -2,8 +2,30 @@ import styles from './styles.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol, faSearch, faHome, faUsers, faCalendarAlt, faMap, faUserPlus, faEnvelope, faBell, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import axios from 'axios';
+import {LOGOUT_API} from '../../../config/config'
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Header(){
+    const router = useRouter()
+    function handleLoggout(e){
+        const token = localStorage.getItem('access_token');
+        axios.get(LOGOUT_API,{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>{
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('user');
+            router.push('/login');
+        }).catch((error)=>{
+            
+        });
+    }
+    const user = useSelector(state => state.infoUser);
+
     return(
         <div className={styles.container}>
             <div className={styles.col}>
@@ -107,13 +129,21 @@ export default function Header(){
                     <div className={styles.avatar}>
                         <img src="/avatar.jpg"></img>
                     </div>
-                    <div className={styles.name}>Lê Hoàng Long</div>
+                    <div className={styles.name}>{user !== null ? user.name : 'No Name' }</div>
                 </div>
                 </Link>
                 <div className={styles.setting}>
                     <button><FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon></button>
+                    <div className={styles.dropdown_setting}>
+                        <p>Setting</p>
+                        <Link href="/setting">
+                            <a>Account Setting</a>
+                        </Link>
+                        <button onClick={handleLoggout}>Logout</button>                   
+                    </div>
                 </div>
             </div>
         </div>
+        
     )
 }

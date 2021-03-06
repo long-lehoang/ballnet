@@ -64,7 +64,8 @@
       color: var(--text-color-1);
     }
     .setting {
-      display: flex;
+      display: inline-block;
+      position: relative;
       align-items: center;
       padding-left: 20px;
       button {
@@ -76,7 +77,48 @@
         padding: 0;
         color: var(--text-color-4);
       }
+      .dropdown_setting{
+        color: var(--text-color-3);
+        display: none;
+        position: absolute;
+        top: 40px;
+        right: -10px;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        border: 1px solid var(--background);
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding-bottom: 20px;
+        z-index: 1;
+        p{
+          font: var(--sub-title);
+          padding: 10px 10px;
+          border-bottom: 1px solid grey;
+        }
+        a{
+          color: var(--text-color-2);
+          padding-left: 20px;
+          padding-bottom: 10px;
+          cursor: pointer;
+          display: block;
+          text-decoration: none;
+        }
+        button{
+          font: var(--sub-title);
+
+          color: var(--text-color-3);
+          padding: 10px 10px;
+          outline: none;
+          background: none;
+          display: block;
+          width: 100%;
+          border-top: 1px solid var(--text-color-2);
+        }
+      }
+      button:focus + .dropdown_setting, .dropdown_setting:hover{
+        display: block;
+      }
     }
+    
 
     .nav {
       height: 57px;
@@ -89,9 +131,12 @@
         padding-right: 10px;
         .iconNav {
           height: 20px;
-          max-width: 20px;
+          width: 20px;
+
           margin: 0 auto;
           overflow: hidden;
+        }
+        .textNav{
         }
       }
       .btnNav:hover {
@@ -104,12 +149,18 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .container {
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: space-between;
     .col {
       .logo {
+        display: none;
       }
       .search {
         .btnSearch {
+          padding-left: 0px;
           input {
+            width: 10px;
           }
         }
         .iconSearch {
@@ -125,6 +176,7 @@
         }
       }
       .setting {
+        padding-left: 0px;
         button {
         }
       }
@@ -167,6 +219,9 @@
           img {
           }
         }
+        .name{
+          display: none;
+        }
       }
       .profile:hover {
       }
@@ -178,6 +233,9 @@
       .nav {
         .btnNav {
           .iconNav {
+          }
+          .textNav{
+            display: none;
           }
         }
         .btnNav:hover {
@@ -198,6 +256,7 @@
       .search {
         .btnSearch {
           input {
+            width: 120px;
           }
           input:focus {
           }
@@ -210,6 +269,9 @@
           img {
           }
         }
+        .name{
+          display: block;
+        }
       }
       .profile:hover {
       }
@@ -221,6 +283,10 @@
       .nav {
         .btnNav {
           .iconNav {
+            
+          }
+          .textNav{
+            display: none;
           }
         }
         .btnNav:hover {
@@ -253,6 +319,9 @@
           img {
           }
         }
+        .name{
+          display: block;
+        }
       }
       .profile:hover {
       }
@@ -264,6 +333,9 @@
       .nav {
         .btnNav {
           .iconNav {
+          }
+          .textNav{
+            display: block;
           }
         }
         .btnNav:hover {
@@ -296,6 +368,9 @@
           img {
           }
         }
+        .name{
+          display: block;
+        }
       }
       .profile:hover {
       }
@@ -307,6 +382,9 @@
       .nav {
         .btnNav {
           .iconNav {
+          }
+          .textNav{
+            display: block;
           }
         }
         .btnNav:hover {

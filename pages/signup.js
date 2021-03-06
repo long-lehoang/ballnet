@@ -1,11 +1,14 @@
 import LayoutLogin from "../components/layout/login";
 import SignupForm from "../components/signup";
-import {SIGNUP_API} from "../constants/config";
+import {SIGNUP_API} from "../config/config";
 import axios from 'axios';
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 export default function Signup(){
     const router = useRouter();
+    const test = useSelector(state => state.infoUser);
+    console.log(test);
 
     const handleSubmit = (values) => {
         console.log('Form submit: ', SIGNUP_API);
