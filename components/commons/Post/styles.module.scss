@@ -72,7 +72,7 @@
           padding-left: 10px;
         }
       }
-      .comment button {
+      .comment button,.activeComment button {
         border: none;
         background-color: var(--background-component);
         color: var(--text-color-2);
@@ -84,6 +84,9 @@
         .txtComment {
           padding-left: 10px;
         }
+      }
+      .activeComment button{
+        color: var(--background-header) !important;
       }
       .share {
         background-color: var(--background-component);
@@ -102,10 +105,10 @@
       .comment button:hover,
       .share:hover,
       .like button:focus,
-      .comment button:focus,
       .share:focus {
         color: var(--background-header);
       }
     }
   }
+
 }

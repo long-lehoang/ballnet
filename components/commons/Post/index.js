@@ -1,8 +1,11 @@
 import { faClock, faComment, faEllipsisV, faHeart, faShare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './styles.module.scss';
-
+import Comment from './Comment'
+import { useState } from 'react';
 export default function Post(){
+    const [comment, toggleComment] = useState(false);
+
     return(
         <div className={styles.container}>
             <div className={styles.header}>
@@ -36,8 +39,8 @@ export default function Post(){
                             <span className={styles.txtLike}>Like 20</span>
                         </button>
                     </div>
-                    <div className={styles.comment}>
-                        <button>
+                    <div className={comment ? styles.activeComment : styles.comment}>
+                        <button onClick={()=>{toggleComment(!comment)}}>
                             <FontAwesomeIcon icon={faComment} className={styles.iconComment}></FontAwesomeIcon>
                             <span className={styles.txtComment}>Comment 20</span>
                         </button>
@@ -51,6 +54,7 @@ export default function Post(){
                 </div>
 
             </div>
+            {comment ? <Comment/> : <div></div>}
         </div>
     )
 }

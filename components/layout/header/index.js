@@ -5,7 +5,6 @@ import Link from 'next/link';
 import axios from 'axios';
 import {LOGOUT_API} from '../../../config/config'
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function Header(){
@@ -16,15 +15,13 @@ export default function Header(){
             headers:{
                 'Authorization': token
             }
-        }).then((response)=>{
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('user');
-            router.push('/login');
-        }).catch((error)=>{
-            
-        });
+        })
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+        router.push('/login');
     }
     const user = useSelector(state => state.infoUser);
+    const avatar = useSelector(state => state.avatar);
 
     return(
         <div className={styles.container}>
@@ -127,9 +124,9 @@ export default function Header(){
                 <Link href="/long-lehoang">
                 <div className={styles.profile}>
                     <div className={styles.avatar}>
-                        <img src="/avatar.jpg"></img>
+                        <img src={avatar}></img>
                     </div>
-                    <div className={styles.name}>{user !== null ? user.name : 'No Name' }</div>
+                    <div className={styles.name}>{user != null ? user.name : "No Name" }</div>
                 </div>
                 </Link>
                 <div className={styles.setting}>
