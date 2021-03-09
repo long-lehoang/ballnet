@@ -22,4 +22,105 @@
     color: var(--text-color-4);
     font: var(--sub-title);
   }
+  
+  
+}
+
+.modal_container{
+  .header{
+    background-color: var(--background-header);
+    color: var(--text-color-4);
+    font: var(--title);
+    
+    .title{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        
+    }
+  }
+  .body{
+    .title{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .name{
+            padding-left: 10px;
+            display: block;
+            span{
+                display: block;
+            }
+            select{
+                outline: none;
+                border:none;
+                background: none;
+                color: var(--text-color-2);
+            }
+        }
+        .avatar{
+            border-radius: 50%;
+        }
+    }
+    .textInput{
+        padding:30px 20px;
+        textarea{
+            height: 100px;
+            border: none;
+            resize: none;
+            width: 100%;
+            outline: none;
+            font: var(--sub-title);
+            color: var(--text-color-2);
+        }
+        
+    }
+    .groupButton{
+        display: flex;
+        border: 1px solid var(--text-color-2);
+        border-radius: 5px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        .left{
+            padding-left: 20px;
+            color: var(--text-color-2);
+            cursor: context-menu;
+        }
+        .right{
+            width: 130px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 20px;
+            label{
+                cursor: pointer;
+            }
+            input{
+                display: none;
+            }
+            .iconImage,.iconTag,.iconLocation{
+                width: 20px;
+                height: 20px;
+            }
+            .iconImage{
+                color: var(--button-color-1);
+            }
+            .iconTag{
+                color: var(--button-color-2);
+            }
+            .iconLocation{
+                color: var(--background-header);
+            }
+        }
+    }
+    .btnSubmit{
+        width: 100%;
+        background-color: var(--background-header);
+        border-radius: 5px;
+        border: none;
+        color: var(--text-color-4);
+        height: 30px;
+        margin-top: 20px;
+    }
+  }
 }

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit"
-import showCreateForm from "./components/commons/CreatePostForm/showCreateFormSlice";
-import loginError from "./components/login/loginErrorSlice";
-import infoUSer from "./components/login/infoUserSlice";
-import profile from "./components/profile/profileSlice";
-import avatar from "./components/profile/avatarSlice";
+import showCreateForm from "./slices/showCreateFormSlice";
+import loginError from "./slices/loginErrorSlice";
+import infoUSer from "./slices/infoUserSlice";
+import profile from "./slices/profileSlice";
+import token from "./slices/tokenSlice";
 
 const store = configureStore({ 
     reducer: {
@@ -11,7 +11,7 @@ const store = configureStore({
         loginError: loginError,
         infoUser: infoUSer,
         profile: profile,
-        avatar: avatar,
+        token: token,
     } 
 })
 

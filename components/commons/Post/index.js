@@ -35,7 +35,7 @@ export default function Post(props){
                 </div>
             </div>
             <div className={styles.body}>
-                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet...</span>
+                <span>{props.post.content}</span>
             </div>
             <hr></hr>
             <div className={styles.reaction}>
@@ -59,7 +59,6 @@ export default function Post(props){
                         <span className={styles.txtShare}>Share 20</span>
                     </button>
                 </div>
-
             </div>
             {comment ? <Comment/> : <div></div>}
         </div>

@@ -12,8 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {LOGIN_API} from "../../config/config";
 import axios from 'axios';
-import {setError} from "./loginErrorSlice";
-import {setUser} from "./infoUserSlice";
+import {setError} from "../../slices/loginErrorSlice";
+import {setUser} from "../../slices/infoUserSlice";
 
 LoginForm.propTypes = {
     onSubmit: PropTypes.func,

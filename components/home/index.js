@@ -6,26 +6,43 @@ import StadiumSuggest from '../commons/StadiumSuggest';
 import MatchSuggest from '../commons/MatchSuggest';
 import FriendSuggest from '../commons/FriendSuggest';
 import FriendRequest from '../commons/FriendRequest';
-import CreateForm from '../commons/CreatePostForm/CreateForm';
 import axios from 'axios';
 import { POSTS_API } from '../../config/config';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
-function extractData(data){
-    if (is_array(data))
+function extractData(data,result = []){
+    if(Array.isArray(data))
     data.forEach(element => {
-        extractData(element);
+        if(Array.isArray(element))
+        element.forEach(subele => {
+            result.push(subele);
+        });
+        else result.push(element);
     });
-    return 
+    else result.push(data);
+    return result;
 }
 
 export default function HomePage(){
-    // let data;
-    // axios.get(POSTS_API).then((response)=>{
-    //     data = response.data.data;
-    // });
-    // data.forEach(element => {
+    const [posts, setPosts] = useState([]);
+    const token = useSelector(state => state.token);
+    let data = [];
+    useEffect(()=>{
+        if(token != ''){
+            fetchPosts();
+        }
+    },[token])
     
-    // });
+    async function fetchPosts(){
+        const response = await axios.get(POSTS_API,{
+            headers:{
+                'Authorization': token
+            }
+        });
+        setPosts(extractData(response.data.data.data));
+    }
+
     return(
         <div className={styles.container}>
             <div className={styles.col_1}>
@@ -41,20 +58,16 @@ export default function HomePage(){
             </div>
             <div className={styles.col_2} >
                 <div className={styles.row}>
-                    <CreateForm></CreateForm>
-                </div>
-                <div className={styles.row}>
                     <CreatePostForm></CreatePostForm>
                 </div>
-                <div className={styles.row}>
-                    <Post></Post>
-                </div>
-                <div className={styles.row}>
-                    <Post></Post>
-                </div>
-                <div className={styles.row}>
-                    <Post></Post>
-                </div>
+                {posts.map(element => {
+                    return(
+                    <div className={styles.row}>
+                        <Post post={element}></Post>
+                    </div>
+                    )
+                })}
+                
             </div>
             <div className={styles.col_3}>
                 <div className={styles.row}>
