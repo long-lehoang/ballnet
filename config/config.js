@@ -4,9 +4,9 @@ export const LOCATION_API = 'https://thongtindoanhnghiep.co';
 export const LOGIN_API = HOST + '/api/login';
 export const LOGOUT_API = HOST + '/api/logout';
 export const SIGNUP_API = HOST + '/api/signup';
-export const IMAGE_API = HOST + '/api/images/';
 export const PROFILE_API = HOST + '/api/profiles/';
-
+export const POSTS_API = HOST + '/api/posts';
 //LOCATION
 export const CITY_API = LOCATION_API + '/api/city';
 // Image
+export const AVATAR = '/avatar.png';

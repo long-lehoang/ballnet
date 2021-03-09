@@ -3,9 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './styles.module.scss';
 import Comment from './Comment'
 import { useState } from 'react';
-export default function Post(){
+import { useSelector } from 'react-redux';
+import { AVATAR, HOST, PROFILE_API } from '../../../config/config';
+import axios from 'axios';
+export default function Post(props){
     const [comment, toggleComment] = useState(false);
+    // const post = props.post;
+    // axios.get(PROFILE_API+post->user_id).then((response)=>{
 
+    // })
+    console.log(props.post);
     return(
         <div className={styles.container}>
             <div className={styles.header}>
@@ -15,7 +22,7 @@ export default function Post(){
                     </div>
                     <div className={styles.text}>
                         <div className={styles.name}>
-                            <span>Le Hoang Long</span>
+                            <span>Lee Parkour</span>
                         </div>
                         <div className={styles.time}>
                             <FontAwesomeIcon icon={faClock} className={styles.iconTime}></FontAwesomeIcon>

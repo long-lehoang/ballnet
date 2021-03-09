@@ -7,8 +7,25 @@ import MatchSuggest from '../commons/MatchSuggest';
 import FriendSuggest from '../commons/FriendSuggest';
 import FriendRequest from '../commons/FriendRequest';
 import CreateForm from '../commons/CreatePostForm/CreateForm';
+import axios from 'axios';
+import { POSTS_API } from '../../config/config';
+
+function extractData(data){
+    if (is_array(data))
+    data.forEach(element => {
+        extractData(element);
+    });
+    return 
+}
 
 export default function HomePage(){
+    // let data;
+    // axios.get(POSTS_API).then((response)=>{
+    //     data = response.data.data;
+    // });
+    // data.forEach(element => {
+    
+    // });
     return(
         <div className={styles.container}>
             <div className={styles.col_1}>

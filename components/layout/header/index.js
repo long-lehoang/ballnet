@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol, faSearch, faHome, faUsers, faCalendarAlt, faMap, faUserPlus, faEnvelope, faBell, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import axios from 'axios';
-import {LOGOUT_API} from '../../../config/config'
+import {LOGOUT_API,AVATAR,HOST} from '../../../config/config'
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-
+ 
 export default function Header(){
     const router = useRouter()
     function handleLoggout(e){
@@ -21,7 +21,8 @@ export default function Header(){
         router.push('/login');
     }
     const user = useSelector(state => state.infoUser);
-    const avatar = useSelector(state => state.avatar);
+    const profile = useSelector(state => state.profile);
+    let link_profile = user != null ? user.username : "";
 
     return(
         <div className={styles.container}>
@@ -121,10 +122,10 @@ export default function Header(){
                         </div>
                     </Link>
                 </div>
-                <Link href="/long-lehoang">
+                <Link href={"/" + link_profile}>
                 <div className={styles.profile}>
                     <div className={styles.avatar}>
-                        <img src={avatar}></img>
+                        <img src={profile.avatar == null ? AVATAR : HOST+profile.avatar}></img>
                     </div>
                     <div className={styles.name}>{user != null ? user.name : "No Name" }</div>
                 </div>

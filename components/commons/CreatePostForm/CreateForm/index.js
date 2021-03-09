@@ -7,12 +7,14 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faMapMarkedAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { CITY_API } from "../../../../config/config";
+import { AVATAR, CITY_API, HOST } from "../../../../config/config";
 
 export default function CreateForm(){
     const [type, setType] = useState('Public');
     const [text, setText] = useState('');
 
+    const user = useSelector(state => state.infoUser);
+    const profile = useSelector(state => state.profile);
     const show = useSelector(state => state.showCreateForm);
 
     const dispatch = useDispatch();
@@ -27,7 +29,6 @@ export default function CreateForm(){
         console.log(text);
 
     }
-    const user = useSelector(state => state.infoUser);
     
     useEffect(()=>{
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -45,7 +46,7 @@ export default function CreateForm(){
                 <Modal.Body className={styles.body}>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.title}>
-                            <Image src="/avatar.jpg" className={styles.avatar} width="40px" height="40px"></Image>
+                            <img src={profile.avatar == null ? AVATAR : HOST+profile.avatar} className={styles.avatar} width="40px" height="40px"></img>
                             <div className={styles.name}>
                                 <span>{user==null ? 'No Name' : user.name}</span>
                                 <select value={type} onChange={(event)=>{setType(event.target.value)}}>

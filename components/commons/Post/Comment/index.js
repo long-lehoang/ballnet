@@ -1,11 +1,15 @@
+import { useSelector } from 'react-redux';
+import { AVATAR, HOST } from '../../../../config/config';
 import styles from './styles.module.scss';
 
 export default function Comment(){
+    const profile = useSelector(state => state.profile);
+    
     return(
         <div className={styles.comments}>
             <hr></hr>
             <div className={styles.input}>
-                <img src="/avatar.jpg"></img>
+                <img src={profile.avatar == null ? AVATAR : HOST+profile.avatar} className={styles.avatar}></img>
                 <input placeholder="Type a comment"></input>
             </div>
             <div className={styles.comment}>

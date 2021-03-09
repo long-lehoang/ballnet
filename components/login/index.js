@@ -139,14 +139,14 @@ export default function LoginForm(props){
                                 />
                                 
                                 <FormGroup as={Row} controlId="formHorizontalCheck">
-                                    <Col xs={5} className={styles.checkbox}>
+                                    {/* <Col xs={5} className={styles.checkbox}>
                                         <FastField
                                             name="remember"
                                             component={CheckField}
                                             type="checkbox"
                                             label="Remember Me"
                                         />
-                                    </Col>
+                                    </Col> */}
                                     <Col xs={6}>
                                         <Link href="/forget_password">
                                             <a>Forget Password?</a>
