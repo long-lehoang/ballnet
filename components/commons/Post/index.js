@@ -12,7 +12,7 @@ export default function Post(props){
     // axios.get(PROFILE_API+post->user_id).then((response)=>{
 
     // })
-    console.log(props.post);
+    // console.log(props.post);
     return(
         <div className={styles.container}>
             <div className={styles.header}>
