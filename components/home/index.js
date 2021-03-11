@@ -63,7 +63,7 @@ export default function HomePage(){
                 {posts.map(element => {
                     return(
                     <div className={styles.row}>
-                        <Post post={element}></Post>
+                        <Post key={element.id} post={element}></Post>
                     </div>
                     )
                 })}
