@@ -2,15 +2,28 @@ import { faClock, faComment, faEllipsisV, faHeart, faShare } from '@fortawesome/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './styles.module.scss';
 import Comment from './Comment'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { AVATAR, HOST, PROFILE_API } from '../../../config/config';
+import { AVATAR, HOST, POSTS_API, PROFILE_API } from '../../../config/config';
 import axios from 'axios';
 export default function Post(props){
     const [comment, toggleComment] = useState(false);
-    // const post = props.post;
-    // axios.get(PROFILE_API+post->user_id).then((response)=>{
+    const [images, setImages] = useState();
+    const [detailPost, setDetailPost] = useState();
+    const post = props.post;
 
+    //get detail post
+    useEffect(()=>{
+        const token = localStorage.getItem("access_token");
+
+        axios.get(POSTS_API+props.post.id,{
+            headers:{
+                'Authorization': token
+            }
+        })
+    },[null]);
+    // axios.get(PROFILE_API+post->user_id).then((response)=>{
+    
     // })
     // console.log(props.post);
     return(
@@ -26,7 +39,7 @@ export default function Post(props){
                         </div>
                         <div className={styles.time}>
                             <FontAwesomeIcon icon={faClock} className={styles.iconTime}></FontAwesomeIcon>
-                            <span className={styles.text}>5 min ago</span>
+                            <span className={styles.text}>{props.post.update_at}</span>
                         </div>
                     </div>
                 </div>

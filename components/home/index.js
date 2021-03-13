@@ -26,22 +26,20 @@ function extractData(data,result = []){
 
 export default function HomePage(){
     const [posts, setPosts] = useState([]);
-    const token = useSelector(state => state.token);
-    let data = [];
+    const [load, setLoad] = useState(false);
+
     useEffect(()=>{
-        if(token != ''){
-            fetchPosts();
-        }
-    },[token])
-    
-    async function fetchPosts(){
-        const response = await axios.get(POSTS_API,{
+        const token = localStorage.getItem('access_token');
+        axios.get(POSTS_API,{
             headers:{
                 'Authorization': token
             }
-        });
-        setPosts(extractData(response.data.data.data));
-    }
+        }).then((response)=>{
+            setPosts(extractData(response.data.data.data));
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[load]);
 
     return(
         <div className={styles.container}>
@@ -62,7 +60,7 @@ export default function HomePage(){
                 </div>
                 {posts.map(element => {
                     return(
-                    <div className={styles.row}>
+                    <div className={styles.row} key={element.id}>
                         <Post key={element.id} post={element}></Post>
                     </div>
                     )

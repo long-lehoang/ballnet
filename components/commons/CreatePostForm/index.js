@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
-import { AVATAR, FRIENDS_API, HOST } from '../../../config/config';
+import { AVATAR, FRIENDS_API, HOST, POSTS_API } from '../../../config/config';
 import { Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,8 +22,6 @@ export default function CreatePostForm(){
     const user = useSelector(state => state.infoUser);
     const profile = useSelector(state => state.profile);
 
-    const token = useSelector(state => state.token);
-    
     function handleSelect(value){
         let tags = [];
         value.forEach(element => {
@@ -43,7 +41,7 @@ export default function CreatePostForm(){
     function handleImage(event){
         let img = images;
         let result = preview;
-
+        console.log(event.target.files);
         for(let i=0; i<event.target.files.length ; i++){
             img.push(event.target.files[i]);
             let url = URL.createObjectURL(event.target.files[i]);
@@ -55,21 +53,33 @@ export default function CreatePostForm(){
     }
 
     function handleSubmit(event){
-        event.preventDefault();
-        console.log(permission);
-        console.log(content);
-        console.log(location);
-        console.log(tags);
-        console.log(images);
-        console.log(preview);
+        const token = localStorage.getItem('access_token');
 
-        refreshForm();
-        // setShow(false);
+        event.preventDefault();
+        var formData = new FormData();
+        formData.append('private',permission);
+        formData.append('content',content);
+        formData.append('location',location);
+        formData.append('tags',tags);
+
+        console.log(images);
+        for (let i = 0; i < images.length; i++) {
+            formData.append(`images[${i}]`, images[i])
+        }
+        
+        axios.post(POSTS_API,formData,{
+            headers:{
+                'Authorization': token
+            }
+        });
+        // refreshForm();
+        setShow(false);
     }
 
     //effort load suggestion friends
     useEffect(()=>{
-        if(token != '')
+        const token = localStorage.getItem('access_token');
+        
         axios.get(FRIENDS_API,{
             headers:{
                 'Authorization': token
@@ -85,14 +95,7 @@ export default function CreatePostForm(){
             // console.log(options);
             setOptionSearch(options);
         });
-    },[token]);
-
-    // useEffect(()=>{
-    //     navigator.geolocation.getCurrentPosition(function(position) {
-    //         console.log("Latitude is :", position.coords.latitude);
-    //         console.log("Longitude is :", position.coords.longitude);
-    //     });
-    // })
+    },[null]);
 
     return(
         <div className={styles.container}>
@@ -119,8 +122,9 @@ export default function CreatePostForm(){
                         </div>
                         <div className={styles.groupPreview}>
                             {preview.map(element =>{
+                                console.log('img');
                                 return(
-                                    <img src={element} key={Math.floor(Math.random() * 100)} width={(100/preview.length)+"%"} />
+                                    <img src={element} width={(100/preview.length)+"%"} />
                                 )
                             })}
                         </div>
@@ -128,7 +132,7 @@ export default function CreatePostForm(){
                             <span className={styles.left}>Add to your post</span>
                             <div className={styles.right}>
                                 <label for="image"><FontAwesomeIcon className={styles.iconImage} icon={faImage}></FontAwesomeIcon></label>
-                                <input id="image" type="file" multiple onChange={handleImage}/>
+                                <input id="image" type="file" multiple onChange={(event)=>handleImage(event)}/>
                                 <label for="tag"><FontAwesomeIcon className={styles.iconTag} icon={faUser}></FontAwesomeIcon></label>
                                 <input id="tag" type="button" onClick={()=>setShowListFriends(true)}></input>
                                 <label for="location"><FontAwesomeIcon className={styles.iconLocation} icon={faMapMarkedAlt}></FontAwesomeIcon></label>
