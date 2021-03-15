@@ -10,6 +10,7 @@ import axios from 'axios';
 import { POSTS_API } from '../../config/config';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import LazyLoad from 'react-lazyload';
 
 function extractData(data,result = []){
     if(Array.isArray(data))
@@ -35,7 +36,13 @@ export default function HomePage(){
                 'Authorization': token
             }
         }).then((response)=>{
-            setPosts(extractData(response.data.data.data));
+            setPosts(extractData(response.data.data.data).sort(function(a, b) {
+                let time1 = new Date(a.updated_at);
+                let time2 = new Date(b.updated_at);
+
+                return time2 - time1;
+              })
+            );
         }).catch((error)=>{
             console.log(error);
         })
@@ -60,9 +67,11 @@ export default function HomePage(){
                 </div>
                 {posts.map(element => {
                     return(
-                    <div className={styles.row} key={element.id}>
-                        <Post key={element.id} post={element}></Post>
-                    </div>
+                    <LazyLoad key={element.id} placeholder="Loading...">
+                        <div className={styles.row} key={element.id}>
+                            <Post key={element.id} post={element}></Post>
+                        </div>
+                    </LazyLoad>
                     )
                 })}
                 

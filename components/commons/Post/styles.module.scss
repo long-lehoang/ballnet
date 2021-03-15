@@ -44,6 +44,25 @@
         border: none;
         background-color: var(--background-component);
       }
+      .popup{
+        display: none;
+        position: absolute;
+        background-color: var(--background-component);
+        width: 100px;
+        border-radius: 5px;
+
+        button{
+          display: block;
+          outline: none;
+          width: 100%;
+          border: none;
+          padding: 5px;
+        }
+      }
+      .btn:focus + .popup, .popup:hover{
+        display: block;
+      }
+
     }
   }
   .body {

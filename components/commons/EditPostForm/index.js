@@ -8,13 +8,13 @@ import { faImage, faMapMarkedAlt, faUser } from "@fortawesome/free-solid-svg-ico
 import Select from 'react-select';
 import axios from 'axios';
 
-export default function CreatePostForm(){
+export default function EditPostForm(props){
     const [show, setShow] = useState(false);
-    const [permission, setPermission] = useState('Public');
-    const [content, setContent] = useState('');
-    const [location, setLocation] = useState('');
-    const [tags, setTags] = useState([]);
-    const [images, setImages] = useState([]);
+    const [permission, setPermission] = useState(props.post.private);
+    const [content, setContent] = useState(props.post.content);
+    const [location, setLocation] = useState(props.post.location);
+    const [tags, setTags] = useState(props.post.tags);
+    const [images, setImages] = useState(props.post.image);
     const [showListFriends, setShowListFriends] = useState(false);
     const [optionSearch, setOptionSearch] = useState([]);
     const [preview,setPreview] = useState([]);
