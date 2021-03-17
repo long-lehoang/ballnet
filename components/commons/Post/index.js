@@ -11,7 +11,6 @@ import EditPostForm from '../EditPostForm';
 import tagging from '../../../lib/tags';
 
 export default function Post(props){
-    const [comment, toggleComment] = useState(false);
     const [images, setImages] = useState();
     const [avatarAuthor, setAvatarAuthor] = useState('');
     const [nameAuthor, setNameAuthor] = useState('');
@@ -21,16 +20,38 @@ export default function Post(props){
     const [countShare, setCountShare] = useState(0);
     const [edit, toggleEdit] = useState(false);
     const [tags, setTags] = useState();
+    const [del, setDel] = useState(false);
+    const [like, toggleLike] = useState(false);
+    const [share, toggleShare] = useState(false);
+    const [comment, toggleComment] = useState(false);
+    const [activeComment, toggleActiveComment] = useState(false);
 
     const post = props.post;
     // console.log(props.post);
     //get detail post
+
+    function handleDelete(){
+        const token = localStorage.getItem("access_token");
+
+        setDel(true);
+        axios.delete(POSTS_API+props.post.id,{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>
+        {
+            console.log(response.data.message);
+        }).catch((error)=>{
+            console.log(error.message);
+        });
+    }
+
     useEffect(()=>{
         const token = localStorage.getItem("access_token");
 
         axios.get(POSTS_API+props.post.id,{
             headers:{
-                'Authorization': token
+            'Authorization': token
             }
         }).then((response)=>{
             console.log(response);
@@ -39,18 +60,105 @@ export default function Post(props){
             setUsernameAuthor(result.author.username);
             setAvatarAuthor(HOST + result.author.avatar);
             setCountLike(result.like);
+            toggleLike(result.isLike);
             setCountComment(result.comment);
+            toggleComment(result.isComment);
             setCountShare(result.share);
+            toggleShare(result.isShare);
             setImages(result.images);
             setTags(result.tags);
-            
         }).catch((error)=>{
             console.log(error.message);
         })
     },[null]);
 
+    function handleLike(){
+        const token = localStorage.getItem("access_token");
+
+        if(like){
+            toggleLike(false);
+            setCountLike(countLike-1);
+
+            axios.delete(POSTS_API+props.post.id+'/like',{
+                headers:{
+                'Authorization': token
+                }
+            }).then((response)=>
+            {
+                console.log(response.data.message);
+            }).catch((error)=>{
+                console.log(error.message);
+            });
+        }else{
+            toggleLike(true);
+            setCountLike(countLike+1);
+            axios.post(POSTS_API+props.post.id+'/like',{
+                headers:{
+                'Authorization': token
+                }
+            }).then((response)=>
+            {
+                console.log(response.data.message);
+            }).catch((error)=>{
+                console.log(error.message);
+            });
+        }
+    }
+
+    function handleComment(value){
+        const token = localStorage.getItem("access_token");
+        var formData = new FormData();
+        formData.append("comment",value);
+        toggleComment(true);
+        setCountComment(countComment+1);
+
+        axios.post(POSTS_API+props.post.id+'/comment',formData,{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>
+        {
+            console.log(response.data.message);
+        }).catch((error)=>{
+            console.log(error.message);
+        });
+    }
+
+    function handleShare(){
+        const token = localStorage.getItem("access_token");
+
+        if(share){
+            toggleShare(false);
+            setCountShare(countShare-1);
+            axios.delete(POSTS_API+props.post.id+'/share',{},{
+                headers:{
+                    'Authorization': token
+                }
+            }).then((response)=>
+            {
+                console.log(response.data.message);
+            }).catch((error)=>{
+                console.log(error.message);
+            });
+        }else{
+            toggleShare(true);
+            setCountShare(countShare+1);
+
+            axios.post(POSTS_API+props.post.id+'/share',{
+                headers:{
+                    'Authorization': token
+                }
+            }).then((response)=>
+            {
+                console.log(response.data.message);
+            }).catch((error)=>{
+                console.log(error.message);
+            });
+        }
+    }
+
     return(
-        <div className={styles.container}>
+        <div className={del ? styles.none : styles.container}>
             <div className={styles.header}>
                 <div className={styles.col}>
                     <div className={styles.avatar}>
@@ -70,7 +178,7 @@ export default function Post(props){
                     <button className={styles.btn}><FontAwesomeIcon icon={faEllipsisV}></FontAwesomeIcon></button>
                     <div className={styles.popup}>
                         <button onClick={()=>{toggleEdit(!edit)}}>Edit</button>
-                        <button onclick={()=>{}}>Delete</button>
+                        <button onClick={handleDelete}>Delete</button>
                     </div>
                 </div>
             </div>
@@ -80,39 +188,39 @@ export default function Post(props){
             <hr></hr>
             <div className={styles.reaction}>
                 <div className={styles.col}>
-                    <div className={styles.like}>
-                        <button>
+                    <div className={like ? styles.activeLike : styles.like}>
+                        <button onClick={handleLike}>
                             <FontAwesomeIcon icon={faHeart} className={styles.iconLike}></FontAwesomeIcon>
                             <span className={styles.txtLike}>Like {countLike}</span>
                         </button>
                     </div>
                     <div className={comment ? styles.activeComment : styles.comment}>
-                        <button onClick={()=>{toggleComment(!comment)}}>
+                        <button onClick={()=>{toggleActiveComment(!activeComment)}}>
                             <FontAwesomeIcon icon={faComment} className={styles.iconComment}></FontAwesomeIcon>
                             <span className={styles.txtComment}>Comment {countComment}</span>
                         </button>
                     </div>
                 </div>
                 <div className={styles.col}>
-                    <button className={styles.share}>
+                    <button className={share ? styles.activeShare : styles.share} onClick={handleShare}>
                         <FontAwesomeIcon icon={faShare} className={styles.iconShare}></FontAwesomeIcon>
                         <span className={styles.txtShare}>Share {countShare}</span>
                     </button>
                 </div>
             </div>
-            {comment ? <Comment/> : <div></div>}
+            {activeComment ? <Comment handleComment={handleComment}/> : <div></div>}
             {
                 edit ? 
-                    <EditPostForm 
-                        show={edit} 
-                        toggle={toggleEdit} 
-                        content={props.post.content} 
-                        permission={props.post.private}
-                        images={images}
-                        location={props.post.location}
-                        tags={tags}
-                    /> : 
-                    <div></div>
+                <EditPostForm 
+                    show={edit} 
+                    toggle={toggleEdit} 
+                    content={props.post.content} 
+                    permission={props.post.private}
+                    images={images}
+                    location={props.post.location}
+                    tags={tags}
+                /> : 
+                <div></div>
             }
         </div>
     )

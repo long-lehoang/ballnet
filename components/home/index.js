@@ -67,10 +67,8 @@ export default function HomePage(){
                 </div>
                 {posts.map(element => {
                     return(
-                    <LazyLoad key={element.id} placeholder="Loading...">
-                        <div className={styles.row} key={element.id}>
-                            <Post key={element.id} post={element}></Post>
-                        </div>
+                    <LazyLoad key={element.id} placeholder="Loading...">                       
+                        <Post key={element.id} post={element}></Post>
                     </LazyLoad>
                     )
                 })}
