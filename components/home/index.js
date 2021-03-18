@@ -27,7 +27,6 @@ function extractData(data,result = []){
 
 export default function HomePage(){
     const [posts, setPosts] = useState([]);
-    const [load, setLoad] = useState(false);
 
     useEffect(()=>{
         const token = localStorage.getItem('access_token');
@@ -46,7 +45,7 @@ export default function HomePage(){
         }).catch((error)=>{
             console.log(error);
         })
-    },[load]);
+    },[false]);
 
     return(
         <div className={styles.container}>
