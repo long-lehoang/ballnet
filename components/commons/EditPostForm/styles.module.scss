@@ -1,30 +1,12 @@
-.container {
-  width: 100%;
-  border-top: 20px solid var(--background-header);
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 30px;
-  background-color: var(--background-component);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--text-color-2);
-  }
-  .btn {
-    width: 120px;
-    height: 35px;
-    background-color: var(--background-header);
-    border: none;
-    border-radius: 4px;
-    color: var(--text-color-4);
-    font: var(--sub-title);
-  }
-  
-  
-}
+// .container {
+//   width: 100%;
+//   border-top: 20px solid var(--background-header);
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 20px 30px;
+//   background-color: var(--background-component);
+//   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+// }
 
 .modal_container{
   .header{

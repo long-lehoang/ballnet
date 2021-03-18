@@ -27,7 +27,6 @@ export default function Post(props){
     const [activeComment, toggleActiveComment] = useState(false);
 
     const post = props.post;
-    // console.log(props.post);
     //get detail post
 
     function handleDelete(){
@@ -54,7 +53,7 @@ export default function Post(props){
             'Authorization': token
             }
         }).then((response)=>{
-            console.log(response);
+            console.log(response.data.data);
             let result = response.data.data;
             setNameAuthor(result.author.name);
             setUsernameAuthor(result.author.username);
@@ -70,7 +69,7 @@ export default function Post(props){
         }).catch((error)=>{
             console.log(error.message);
         })
-    },[null]);
+    },[edit]);
 
     function handleLike(){
         const token = localStorage.getItem("access_token");
@@ -208,13 +207,15 @@ export default function Post(props){
                     </button>
                 </div>
             </div>
-            {activeComment ? <Comment handleComment={handleComment}/> : <div></div>}
+            {activeComment ? <Comment id={props.post.id} handleComment={handleComment}/> : <div></div>}
             {
                 edit ? 
                 <EditPostForm 
                     show={edit} 
+                    setShow={toggleEdit}
                     toggle={toggleEdit} 
                     content={props.post.content} 
+                    id = {props.post.id}
                     permission={props.post.private}
                     images={images}
                     location={props.post.location}

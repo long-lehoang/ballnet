@@ -9,12 +9,11 @@ import Select from 'react-select';
 import axios from 'axios';
 
 export default function EditPostForm(props){
-    const [show, setShow] = useState(false);
-    const [permission, setPermission] = useState(props.post.private);
-    const [content, setContent] = useState(props.post.content);
-    const [location, setLocation] = useState(props.post.location);
-    const [tags, setTags] = useState(props.post.tags);
-    const [images, setImages] = useState(props.post.image);
+    const [permission, setPermission] = useState(props.permission);
+    const [content, setContent] = useState(props.content);
+    const [location, setLocation] = useState(props.location);
+    const [tags, setTags] = useState(props.tags);
+    const [images, setImages] = useState(props.images);
     const [showListFriends, setShowListFriends] = useState(false);
     const [optionSearch, setOptionSearch] = useState([]);
     const [preview,setPreview] = useState([]);
@@ -62,18 +61,17 @@ export default function EditPostForm(props){
         formData.append('location',location);
         formData.append('tags',tags);
 
-        console.log(images);
         for (let i = 0; i < images.length; i++) {
             formData.append(`images[${i}]`, images[i])
         }
         
-        axios.post(POSTS_API,formData,{
+        axios.post(POSTS_API+props.id,formData,{
             headers:{
                 'Authorization': token
             }
         });
         refreshForm();
-        setShow(false);
+        props.setShow(false);
     }
 
     //effort load suggestion friends
@@ -98,11 +96,10 @@ export default function EditPostForm(props){
     },[null]);
 
     return(
-        <div className={styles.container}>
-            <img src={profile.avatar == null ? AVATAR : HOST+profile.avatar} className={styles.avatar}></img>
-            <Modal className={styles.modal_container} show={show} onHide={()=>setShow(false)}>
+        <div>
+            <Modal className={styles.modal_container} show={props.show} onHide={()=>props.setShow(false)}>
                 <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}>Create Post</Modal.Title>
+                    <Modal.Title className={styles.title}>Edit Post</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
                     <form onSubmit={handleSubmit}>
@@ -122,7 +119,6 @@ export default function EditPostForm(props){
                         </div>
                         <div className={styles.groupPreview}>
                             {preview.map(element =>{
-                                console.log('img');
                                 return(
                                     <img src={element} width={(100/preview.length)+"%"} />
                                 )
@@ -139,27 +135,26 @@ export default function EditPostForm(props){
                                 <input id="location" type="button"></input>
                             </div>
                         </div>
-                        <button type="submit" className={styles.btnSubmit}>Post</button>
+                        <button type="submit" className={styles.btnSubmit}>Edit</button>
                     </form>
                 </Modal.Body>
             </Modal>
             <Modal className={styles.modal_container} show={showListFriends} onHide={()=>setShowListFriends(false)}>
-                <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}>Tag Friends</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className={styles.body}>
-                    <Select
-                        options={optionSearch}
-                        isMulti
-                        name="colors"
-                        onChange={(value)=>handleSelect(value)}
-                        closeMenuOnSelect={false}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                    />
-                </Modal.Body>
+            <Modal.Header className={styles.header} closeButton>
+                <Modal.Title className={styles.title}>Tag Friends</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className={styles.body}>
+                <Select
+                    options={optionSearch}
+                    isMulti
+                    name="colors"
+                    onChange={(value)=>handleSelect(value)}
+                    closeMenuOnSelect={false}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                />
+            </Modal.Body>
             </Modal>
-            <button className={styles.btn} onClick={() => setShow(true)}>Post a status</button>
         </div>
     )
 }

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faMapMarkedAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import Select from 'react-select';
 import axios from 'axios';
+import tagging from '../../../lib/tags';
 
 export default function CreatePostForm(){
     const [show, setShow] = useState(false);
@@ -92,7 +93,7 @@ export default function CreatePostForm(){
                     label: element.name
                 });
             });
-            // console.log(options);
+            console.log(options);
             setOptionSearch(options);
         });
     },[null]);
