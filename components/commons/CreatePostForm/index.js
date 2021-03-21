@@ -87,7 +87,7 @@ export default function CreatePostForm(){
             }
         }).then((response)=>{
             let options = [];
-            response.data.data.data.forEach(element => {
+            response.data.data.forEach(element => {
                 options.push({
                     value: element.id,
                     label: element.name

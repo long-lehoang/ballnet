@@ -1,0 +1,99 @@
+.container{
+    display: flex;
+    justify-content: center;
+    background-color: var(--background);
+    padding: 50px 0px;
+    width: 100%;
+    height: calc(100vh - 57px);
+    .menu{
+        display: block;
+        min-width: 200px;
+        background-color: var(--background-component);
+        margin-right: 20px;
+        button{
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            outline: none;
+            border: none;
+            background-color: var(--background-component);
+            border-bottom: 1px solid var(--text-color-3);
+            width: 100%;
+            .icon{
+                width: 20px;
+                height: 20px;
+            }
+            span{
+                padding-left: 10px;
+            }
+        }
+        button:hover, button:focus{
+            color: var(--background-header);
+        }
+    }
+    .content{
+        display: block;
+        min-width: 600px;
+        background-color: var(--background-component);
+    }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .container{
+        .menu{
+            min-width: 40px;
+            button span{
+                display: none;
+            }
+        }
+        .content{
+            min-width: 200px;
+        }
+    }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .container{
+        .menu{
+            min-width: 40px;
+            button span{
+                display: none;
+            }
+        }
+    }
+    
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .container{
+        .menu{
+            min-width: 40px;
+            button span{
+                display: none;
+            }
+        }
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .container{
+        .menu{
+            min-width: 200px;
+            button span{
+                display: flex;
+            }
+        }
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .container{
+        .menu{
+            min-width: 200px;
+            button span{
+                display: flex;
+            }
+        }
+    }
+}

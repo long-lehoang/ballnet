@@ -7,6 +7,9 @@ export const LOGIN_API = HOST + '/api/login';
 export const LOGOUT_API = HOST + '/api/logout';
 export const SIGNUP_API = HOST + '/api/signup';
 export const PROFILE_API = HOST + '/api/profiles/';
+export const USERNAME_API = HOST + '/api/username/';
+export const PASSWORD_API = HOST + '/api/password/';
+export const DELETE_API = HOST + '/api/delete/';
 //POST
 export const POSTS_API = HOST + '/api/posts/';
 

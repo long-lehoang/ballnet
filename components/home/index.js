@@ -11,6 +11,7 @@ import { POSTS_API } from '../../config/config';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import LazyLoad from 'react-lazyload';
+import Loading from '../commons/Loading';
 
 function extractData(data,result = []){
     if(Array.isArray(data))
@@ -35,7 +36,7 @@ export default function HomePage(){
                 'Authorization': token
             }
         }).then((response)=>{
-            setPosts(extractData(response.data.data.data).sort(function(a, b) {
+            setPosts(extractData(response.data.data).sort(function(a, b) {
                 let time1 = new Date(a.updated_at);
                 let time2 = new Date(b.updated_at);
 
@@ -64,10 +65,10 @@ export default function HomePage(){
                 <div className={styles.row}>
                     <CreatePostForm></CreatePostForm>
                 </div>
-                {posts.map(element => {
+                {posts.map((element,key) => {
                     return(
-                    <LazyLoad key={element.id} placeholder="Loading...">                       
-                        <Post key={element.id} post={element}></Post>
+                    <LazyLoad key={key} height={200} placeholder={<Loading/>}>                       
+                        <Post key={key} post={element}></Post>
                     </LazyLoad>
                     )
                 })}

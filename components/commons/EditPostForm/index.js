@@ -84,7 +84,7 @@ export default function EditPostForm(props){
             }
         }).then((response)=>{
             let options = [];
-            response.data.data.data.forEach(element => {
+            response.data.data.forEach(element => {
                 options.push({
                     value: element.id,
                     label: element.name

@@ -46,6 +46,7 @@ export default function SignupForm(props){
                             <div className={styles.title}>
                                 Sign up
                                 <hr/>
+                                <span>{props.error}</span>
                             </div>
                             <Form className={styles.form}>
                                 <FastField

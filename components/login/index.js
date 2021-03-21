@@ -28,16 +28,12 @@ export default function LoginForm(props){
     const dispatch = useDispatch();
 
     const handleSubmit = (values) => {
-        console.log('Form submit: ', LOGIN_API);
 
         axios.post(LOGIN_API,values)
         .then((response) => { 
-            console.log(response);
-
             // Code for handling the response 
             // save token
             if(response.data.success){
-                console.log(response.data.data.user);
                 localStorage.setItem(
                     'access_token',
                     response.data.data.token_type +' '+ response.data.data.access_token
@@ -48,7 +44,6 @@ export default function LoginForm(props){
                 );
                 
                 //set user info
-                console.log(response.data.data.user);
                 const actionUser = setUser(response.data.data.user);
                 dispatch(actionUser);
                 //set success
@@ -57,11 +52,9 @@ export default function LoginForm(props){
                 const actionError = setError(false);
                 dispatch(actionError);
                 router.push('/');
-                console.log(response.data.message);
             } else{
                 const actionError = setError(true);
                 dispatch(actionError);
-                console.log(response.data.message);
             }
             
         })

@@ -13,15 +13,15 @@ export default function Comment(props){
     const [listComment, setListComment] = useState([]);
     const [load,setLoad] = useState();
 
-    Pusher.logToConsole = true;
-    var pusher = new Pusher('903afb56e4567c43f695', {
-        cluster: 'ap1'
-    });
+    // Pusher.logToConsole = true;
+    // var pusher = new Pusher('903afb56e4567c43f695', {
+    //     cluster: 'ap1'
+    // });
 
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('comment', function(data) {
-        alert(JSON.stringify(data));
-    });
+    // var channel = pusher.subscribe('my-channel');
+    // channel.bind('comment', function(data) {
+    //     alert(JSON.stringify(data));
+    // });
 
     useEffect(()=>{
         const token = localStorage.getItem("access_token");
@@ -30,7 +30,7 @@ export default function Comment(props){
                 'Authorization': token
             }
         }).then((response)=>{
-            setListComment(response.data.data.data);
+            setListComment(response.data.data);
         })
     },[load]);
 

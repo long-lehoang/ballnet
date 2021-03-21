@@ -57,6 +57,7 @@ export default function Post(props){
             let result = response.data.data;
             setNameAuthor(result.author.name);
             setUsernameAuthor(result.author.username);
+            if(result.author.avatar!=null)
             setAvatarAuthor(HOST + result.author.avatar);
             setCountLike(result.like);
             toggleLike(result.isLike);
@@ -183,6 +184,11 @@ export default function Post(props){
             </div>
             <div className={styles.body}>
                 <span>{props.post.content}</span>
+                <div className={styles.images}>
+                    {images.map((img,key)=>{
+                        <img key={key} src={HOST+img}></img>
+                    })}
+                </div>
             </div>
             <hr></hr>
             <div className={styles.reaction}>
