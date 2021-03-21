@@ -11,7 +11,7 @@ export default function Header(){
     const router = useRouter()
     function handleLoggout(e){
         const token = localStorage.getItem('access_token');
-        axios.post(LOGOUT_API,{
+        axios.post(LOGOUT_API,{},{
             headers:{
                 'Authorization': token
             }

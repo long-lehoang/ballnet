@@ -11,7 +11,7 @@ import EditPostForm from '../EditPostForm';
 import tagging from '../../../lib/tags';
 
 export default function Post(props){
-    const [images, setImages] = useState();
+    const [images, setImages] = useState([]);
     const [avatarAuthor, setAvatarAuthor] = useState('');
     const [nameAuthor, setNameAuthor] = useState('');
     const [usernameAuthor, setUsernameAuthor] = useState('');
@@ -92,7 +92,7 @@ export default function Post(props){
         }else{
             toggleLike(true);
             setCountLike(countLike+1);
-            axios.post(POSTS_API+props.post.id+'/like',{
+            axios.post(POSTS_API+props.post.id+'/like',{},{
                 headers:{
                 'Authorization': token
                 }
@@ -186,7 +186,7 @@ export default function Post(props){
                 <span>{props.post.content}</span>
                 <div className={styles.images}>
                     {images.map((img,key)=>{
-                        <img key={key} src={HOST+img}></img>
+                        return (<img key={key} src={HOST+img}></img>)
                     })}
                 </div>
             </div>

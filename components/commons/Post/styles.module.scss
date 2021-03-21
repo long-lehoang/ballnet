@@ -72,10 +72,17 @@
     font: var(--content);
     color: var(--text-color-2);
     overflow-wrap: break-word;
+    .images{
+      img{
+        padding: 10px 2px;
+        width: 100%;
+      }
+    }
   }
   hr {
     color: var(--text-color-2);
   }
+
   .reaction {
     display: flex;
     justify-content: space-between;

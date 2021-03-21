@@ -14,8 +14,12 @@ export const DELETE_API = HOST + '/api/delete/';
 export const POSTS_API = HOST + '/api/posts/';
 
 //FRIEND
-export const FRIENDS_API = HOST + '/api/friends';
+export const FRIENDS_API = HOST + '/api/friends/';
 export const SEARCH_FRIENDS_API = HOST + 'api/friends/search';
+
+//FOLLOW
+export const FOLLOWS_API = HOST + '/api/follows/';
+
 /**
  * API GOOGLE MAP
  */
