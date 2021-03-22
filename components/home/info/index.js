@@ -21,6 +21,8 @@ export default function InfoHome(){
                 <FontAwesomeIcon icon={faStar} className={styles.star}></FontAwesomeIcon>
             )
         }
+        if(profile == null)
+            return rows;
         if(profile.points != Math.floor(profile.points)){
             rows.push(
                 <FontAwesomeIcon icon={faStarHalf} className={styles.star}></FontAwesomeIcon>

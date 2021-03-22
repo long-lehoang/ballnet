@@ -1,7 +1,7 @@
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PROFILE_API, USERNAME_API } from '../../../config/config';
 import { setUser } from '../../../slices/infoUserSlice';
@@ -11,16 +11,20 @@ import styles from './styles.module.scss';
 export default function GeneralSetting(){
     const dispatch = useDispatch();
     const user = useSelector(state => state.infoUser);
-
-    const [name,setName] = useState(user.name);
+    const [name,setName] = useState();
     const [editName,toggleEditName] = useState(false);
-    const [username,setUsername] = useState(user.username);
+    const [username,setUsername] = useState();
     const [editUsername,toggleEditUsername] = useState(false);
     const [errMsgName, setErrMsgName] = useState('');
     const [errMsgUsername, setErrMsgUsername] = useState('');
     const [error, setError] = useState(true);
     const [result, setResult] = useState(true);
 
+    useEffect(()=>{
+        setName(user.name);
+        setUsername(user.username);
+    },[null]);
+    
     function validate(){
         if(name == user.name && username == user.username)
         return false;
@@ -100,7 +104,7 @@ export default function GeneralSetting(){
                         </div>
                         <span className={styles.errMsg}>{errMsgName}</span>
                     </div>
-                    <span className={styles.txt}>{user.name==null ? '' : user.name}</span>
+                    <span className={styles.txt}>{user == null ? '' : user.name}</span>
                     {editName ? <input value={name} maxlength="30" onChange={(event)=>{setName(event.target.value)}} className={styles.input}></input> : <div></div>}
                 </div>
                 <div className={styles.group}>
@@ -111,7 +115,7 @@ export default function GeneralSetting(){
                         </div>
                         <span className={styles.errMsg}>{errMsgUsername}</span>
                     </div>
-                    <span className={styles.txt}>{user.username==null ? '' : user.username}</span>
+                    <span className={styles.txt}>{user == null ? '' : user.username}</span>
                     {editUsername ? <input value={username} maxlength="30" onChange={handleInputUsername} className={styles.input}></input> : <div></div>}
                 </div>
                 <button type="submit">Save Setting</button>
