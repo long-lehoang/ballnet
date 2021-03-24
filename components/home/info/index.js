@@ -1,11 +1,11 @@
-import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AVATAR, FOLLOWS_API, FRIENDS_API, HOST } from '../../../config/config';
 import styles from './styles.module.scss';
+import loadStar from '../../../lib/star';
 
 export default function InfoHome(){
     const user = useSelector(state => state.infoUser);
@@ -14,22 +14,6 @@ export default function InfoHome(){
     const [followers, setFollowers] = useState(0);
     const [friends, setFriends] = useState(0);
     
-    function loadStar(){
-        let rows = []
-        for (var i = 0 ; i < profile.points ; i++){
-            rows.push(
-                <FontAwesomeIcon icon={faStar} className={styles.star}></FontAwesomeIcon>
-            )
-        }
-        if(profile == null)
-            return rows;
-        if(profile.points != Math.floor(profile.points)){
-            rows.push(
-                <FontAwesomeIcon icon={faStarHalf} className={styles.star}></FontAwesomeIcon>
-            )
-        }
-        return rows;
-    }
     useEffect(()=>{
         const token = localStorage.getItem("access_token");
         axios.get(FRIENDS_API+user.id+'/count',{
@@ -60,7 +44,9 @@ export default function InfoHome(){
                 <span className={styles.name}>{user == null ? 'No Name' : user.name}</span>
             </div>
             <div className={styles.row}>
-                {loadStar()}
+                <div className={styles.star}>
+                {loadStar(profile == null ? 0 : profile.points)}
+                </div>
             </div>
             <div className={styles.row}>
                 <span className={styles.followers}>Followers: {followers}</span>
