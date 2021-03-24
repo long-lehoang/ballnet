@@ -11,28 +11,36 @@
             .header{
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
-                .label{
-                    font: var(--sub-title);
-                }
-                button{
+                div{
+                    display: flex;
                     align-items: center;
-                    border: none;
-                    outline: none;
-                    background: none;
-                    width: 30px;
-                    height: 20px;
-                    .icon{
-                        width: 15px;
-                        height: 15px;
+                    .label{
+                        font: var(--content);
+                        color: var(--text-color-2);
+                        padding-right: 10px;
+                    }
+                    button{
+                        align-items: center;
+                        border: none;
+                        outline: none;
+                        background: none;
+                        width: 30px;
+                        height: 20px;
+                        .icon{
+                            width: 15px;
+                            height: 15px;
+                        }
+                    }
+                    
+                    .txt{
+                        color: var(--text-color-3);
+                        font: var(--sub-title);
+                        padding-right: 10px;
                     }
                 }
                 .errMsg{
                     color: var(--background-header);
                 }
-            }
-            .txt{
-                color: var(--text-color-2);
             }
             input{
                 margin-top: 10px;

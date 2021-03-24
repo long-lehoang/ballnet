@@ -99,23 +99,23 @@ export default function GeneralSetting(){
                 <div className={styles.group}>
                     <div className={styles.header}>
                         <div>
-                            <span className={styles.label}>Name</span>
+                            <span className={styles.label}>Name: </span>
+                            <span className={styles.txt}>{user == null ? '' : user.name}</span>
                             <button onClick={()=>{toggleEditName(!editName)}}><FontAwesomeIcon className={styles.icon} icon={faEdit}></FontAwesomeIcon></button>
                         </div>
                         <span className={styles.errMsg}>{errMsgName}</span>
                     </div>
-                    <span className={styles.txt}>{user == null ? '' : user.name}</span>
                     {editName ? <input value={name} maxlength="30" onChange={(event)=>{setName(event.target.value)}} className={styles.input}></input> : <div></div>}
                 </div>
                 <div className={styles.group}>
                     <div className={styles.header}>
                         <div>
-                            <span className={styles.label}>Username</span>
+                            <span className={styles.label}>Username: </span>
+                            <span className={styles.txt}>{user == null ? '' : user.username}</span>
                             <button onClick={()=>{toggleEditUsername(!editUsername)}}><FontAwesomeIcon className={styles.icon} icon={faEdit}></FontAwesomeIcon></button>
                         </div>
                         <span className={styles.errMsg}>{errMsgUsername}</span>
                     </div>
-                    <span className={styles.txt}>{user == null ? '' : user.username}</span>
                     {editUsername ? <input value={username} maxlength="30" onChange={handleInputUsername} className={styles.input}></input> : <div></div>}
                 </div>
                 <button type="submit">Save Setting</button>
