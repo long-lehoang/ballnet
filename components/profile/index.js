@@ -11,6 +11,8 @@ import Friend from './Friend';
 
 import { useState } from 'react';
 import loadStar from '../../lib/star';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar, faIdCard, faMap, faNewspaper, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 function loadComponent(option){
     switch (option){
@@ -62,12 +64,30 @@ export default function Profile(){
                         </div>
                     </div>
                     <div className={styles.menu}>
-                        <button onClick={()=>setOption(1)}>Feed</button>
-                        <button onClick={()=>setOption(2)}>Info</button>
-                        <button onClick={()=>setOption(3)}>Teams</button>
-                        <button onClick={()=>setOption(4)}>Friends</button>
-                        <button onClick={()=>setOption(5)}>Matchs</button>
-                        <button onClick={()=>setOption(6)}>Stadiums</button>
+                        <button onClick={()=>setOption(1)} className={option==1 ? styles.active : ''}>
+                            <FontAwesomeIcon className={styles.icon} icon={faNewspaper} height={20}></FontAwesomeIcon>
+                            <span>Feed</span>
+                        </button>
+                        <button onClick={()=>setOption(2)} className={option==2 ? styles.active : ''}>
+                            <FontAwesomeIcon className={styles.icon} icon={faIdCard} height={20}></FontAwesomeIcon>
+                            <span>Info</span>
+                        </button>
+                        <button onClick={()=>setOption(3)} className={option==3 ? styles.active : ''}>
+                            <FontAwesomeIcon className={styles.icon} icon={faUsers} height={20}></FontAwesomeIcon>
+                            <span>Teams</span>
+                        </button>
+                        <button onClick={()=>setOption(4)} className={option==4 ? styles.active : ''}>
+                            <FontAwesomeIcon className={styles.icon} icon={faUser} height={20}></FontAwesomeIcon>
+                            <span>Friends</span>
+                        </button>
+                        <button onClick={()=>setOption(5)} className={option==5 ? styles.active : ''}>
+                            <FontAwesomeIcon className={styles.icon} icon={faCalendar} height={20}></FontAwesomeIcon>
+                            <span>Matchs</span>
+                        </button>
+                        <button onClick={()=>setOption(6)} className={option==6 ? styles.active : ''}>
+                            <FontAwesomeIcon className={styles.icon} icon={faMap} height={20}></FontAwesomeIcon>
+                            <span>Stadiums</span>
+                        </button>
                     </div>
                     {loadComponent(option)}
                 </div>

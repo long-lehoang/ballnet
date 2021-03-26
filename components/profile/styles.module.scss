@@ -27,9 +27,9 @@
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 2.2fr 1fr;
-        grid-gap: 20px;
+        grid-gap: 50px;
         background-color: inherit;
-        padding: 20px 50px;
+        padding: 20px 10%;
         .left{
             .item{
                 padding-bottom: 20px;
@@ -57,6 +57,27 @@
             .menu{
                 padding-bottom: 30px;
                 padding-left: 20px;
+                display: flex;
+                button{
+                    color: var(--text-color-2);
+                    width: 65px;
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                    text-align: center;
+                    display: block;
+                    .icon{
+                        width: 100%;
+                        display: block;
+                    }
+                    span{
+                        width: 100%;
+                        display: block;
+                    }
+                }
+                button:hover, button:focus, button.active{
+                    color: var(--background-header);
+                }
             }
         }
         .right{
