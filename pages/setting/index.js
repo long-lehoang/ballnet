@@ -11,9 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCalendar, faCog, faCogs, faLock, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default function Setting() {
-    const [option, setOption] = useState(1);
-    
     checkLogin();
+    const [option, setOption] = useState(1);
     function loadComponent(option){
         switch (option){
             case 1:
