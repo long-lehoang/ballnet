@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import styles from './styles.module.scss';
 
-export default function InfoComponent(){
+export default function InfoComponent(props){
     const [follow, setFollow] = useState(20);
     const [friend, setFriend] = useState(20);
-    const [location, setLocation] = useState("Tan Phu, HCM");
+    const [location, setLocation] = useState("Quận Tân Phú, TP. Hồ Chí Minh");
     const [match, setMatch] = useState(20);
     const [sport, setSport] = useState("Football");
     const [phone, setPhone] = useState("0938186100");

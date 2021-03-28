@@ -12,7 +12,7 @@ import Friend from './Friend';
 import { useState } from 'react';
 import loadStar from '../../lib/star';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faIdCard, faMap, faNewspaper, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faIdCard, faMap, faNewspaper, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 function loadComponent(option){
     switch (option){
@@ -81,7 +81,7 @@ export default function Profile(){
                             <span>Friends</span>
                         </button>
                         <button onClick={()=>setOption(5)} className={option==5 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faCalendar} height={20}></FontAwesomeIcon>
+                            <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
                             <span>Matchs</span>
                         </button>
                         <button onClick={()=>setOption(6)} className={option==6 ? styles.active : ''}>

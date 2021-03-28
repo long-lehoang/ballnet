@@ -17,7 +17,7 @@ export default function GeneralSetting(){
     const [editUsername,toggleEditUsername] = useState(false);
     const [errMsgName, setErrMsgName] = useState('');
     const [errMsgUsername, setErrMsgUsername] = useState('');
-    const [error, setError] = useState(true);
+    const [error, setError] = useState(false);
     const [result, setResult] = useState(true);
 
     useEffect(()=>{
@@ -63,6 +63,7 @@ export default function GeneralSetting(){
     }
 
     function handleSubmit(event){
+        console.log("ok");
         event.preventDefault();
         if(error){
             return false;
@@ -70,10 +71,9 @@ export default function GeneralSetting(){
         if(validate()){
             const token = localStorage.getItem('access_token');
 
-            var formData = new FormData();
-            formData.append("name",name);
-            formData.append("username",username);
-            axios.post(PROFILE_API+user.id,formData,{
+            var nameData = new FormData();
+            nameData.append("name",name);
+            axios.post(PROFILE_API+'name',nameData,{
                 headers:{
                     'Authorization': token
                 }
@@ -85,9 +85,28 @@ export default function GeneralSetting(){
                 const actionUser = setUser(response.data.data);
                 dispatch(actionUser);
             }).catch((error)=>{
-                setResult("Failed to save");
+                setResult("Failed to save name");
+            });
+            
+            var usernameData = new FormData();
+            usernameData.append("username",username);
+            
+            axios.post(PROFILE_API+'username',usernameData,{
+                headers:{
+                    'Authorization': token
+                }
+            }).then((response)=>{
+                localStorage.setItem(
+                    'user',
+                    JSON.stringify(response.data.data)
+                );
+                const actionUser = setUser(response.data.data);
+                dispatch(actionUser);
+            }).catch((error)=>{
+                setResult("Failed to save username");
             })
         }else{
+            console.log("false");
             return false;
         }
     }

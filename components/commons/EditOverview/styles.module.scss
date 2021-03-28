@@ -1,0 +1,14 @@
+
+.body{
+    p{
+        color: var(--background-header);
+    }
+    textarea{
+        width: 100%;
+        outline: none;
+        resize: none;
+        height: 100px;
+        color: var(--text-color-2);
+        border: none;
+    }
+}

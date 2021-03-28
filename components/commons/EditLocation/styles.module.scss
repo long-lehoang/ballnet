@@ -1,0 +1,14 @@
+
+.body{
+    p{
+        color: var(--background-header);
+    }
+    input{
+        width: 100%;
+        outline: none;
+        resize: none;
+        height: 50px;
+        color: var(--text-color-2);
+        border: none;
+    }
+}
