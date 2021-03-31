@@ -22,26 +22,25 @@ export default function Info(props){
     const [editLocation, toggleEditLocation] = useState(false);
     const [editPInfo, toggleEditPInfo] = useState(false);
     const router = useRouter();
-    const [permission, setPermission] = useState(false);
-    const myUser = useSelector(state => state.infoUser);
+    const username = router.query.user;
 
     useEffect(()=>{
-        const username = router.query.user
-        const token = localStorage.getItem('access_token');
-        axios.get(SPORT_API+username,{
-            headers:{
-                'Authorization': token
-            }
-        }).then((response)=>{
-            setSport(response.data.data);
-            console.log(response.data.data);
-        }).catch((error)=>{
-            console.log(error.response)
-        })
+        if(username!==null){
+            const token = localStorage.getItem('access_token');
+            axios.get(SPORT_API+username,{
+                headers:{
+                    'Authorization': token
+                }
+            }).then((response)=>{
+                setSport(response.data.data);
+                console.log(response.data.data);
+            }).catch((error)=>{
+                console.log(error.response)
+            })
+        }
+    },[router]);
 
-        if(myUser.username === username)
-        setPermission(true);
-
+    useEffect(()=>{
         if(props.user !== undefined){
             setMail(props.user.email||"No email")
         }
@@ -52,7 +51,7 @@ export default function Info(props){
             setPhone(props.profile.phone||"No phone")
             setBirthday(props.profile.birthday||"")
         }
-    },[router]);
+    },[props.profile]);
 
     return(
         <div className={styles.container}>
@@ -60,7 +59,7 @@ export default function Info(props){
                 <EditOverview show={editOverview} value={overview} setValue={setOverview} setShow={toggleEditOverview}></EditOverview>
                 <div className={styles.title}>
                     <span>Overview</span>
-                    {permission ? <button onClick={()=>{toggleEditOverview(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
+                    {props.permission ? <button onClick={()=>{toggleEditOverview(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>{overview}</div>
             </div>
@@ -84,7 +83,7 @@ export default function Info(props){
                 <EditLocation show={editLocation} setShow={toggleEditLocation} value={location} setValue={setLocation}></EditLocation>
                 <div className={styles.title}>
                     <span>Location</span>
-                    {permission ?<button onClick={()=>{toggleEditLocation(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>:''}
+                    {props.permission ?<button onClick={()=>{toggleEditLocation(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>:''}
                 </div>
                 <div className={styles.content}>{location}</div>
             </div>
@@ -101,7 +100,7 @@ export default function Info(props){
                 </EditPInfo>
                 <div className={styles.title}>
                     <span>Personal Information</span>
-                    {permission ?<button onClick={()=>{toggleEditPInfo(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>:''}
+                    {props.permission ?<button onClick={()=>{toggleEditPInfo(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>:''}
                 </div>
                 <div className={styles.content}>
                     <div>

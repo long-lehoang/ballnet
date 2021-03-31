@@ -35,3 +35,4 @@ export const LOCATION_API = 'https://thongtindoanhnghiep.co';
 export const CITY_API = LOCATION_API + '/api/city';
 // Image
 export const AVATAR = '/avatar.png';
+export const COVER = '/cover.jpg';
