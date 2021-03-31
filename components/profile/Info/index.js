@@ -1,8 +1,10 @@
 import { faBirthdayCake, faEdit, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { PROFILE_API } from '../../../config/config';
+import { useSelector } from 'react-redux';
+import { PROFILE_API, SPORT_API } from '../../../config/config';
 import loadStar from '../../../lib/star';
 import EditLocation from '../../commons/EditLocation';
 import EditOverview from '../../commons/EditOverview';
@@ -10,26 +12,55 @@ import EditPInfo from '../../commons/EditPInfo';
 import styles from './styles.module.scss';
 
 export default function Info(props){
-    const [overview, setOverview] = useState("asdasdadadad lkasjdla alsdj la a lja a jl jl jl jl jl hk jk hkj kj gj jg jkh jg jfj hjk ");
-    const [sport, setSport] = useState();
-    const [location, setLocation] = useState("Quận Tân Phú, TP. Hồ Chí Minh");
-    const [phone, setPhone] = useState("0938186100");
-    const [mail, setMail] = useState("long.bk.khmt@gmail.com");
-    const [birthday, setBirthday] = useState("1999-02-24");
+    const [overview, setOverview] = useState("No overview");
+    const [sport, setSport] = useState([]);
+    const [location, setLocation] = useState("No location");
+    const [phone, setPhone] = useState("No phone");
+    const [mail, setMail] = useState("No email");
+    const [birthday, setBirthday] = useState("");
     const [editOverview, toggleEditOverview] = useState(false);
     const [editLocation, toggleEditLocation] = useState(false);
     const [editPInfo, toggleEditPInfo] = useState(false);
+    const router = useRouter();
+    const [permission, setPermission] = useState(false);
+    const myUser = useSelector(state => state.infoUser);
 
     useEffect(()=>{
-        // axios.get(PROFILE_API)
-    },[null])
+        const username = router.query.user
+        const token = localStorage.getItem('access_token');
+        axios.get(SPORT_API+username,{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>{
+            setSport(response.data.data);
+            console.log(response.data.data);
+        }).catch((error)=>{
+            console.log(error.response)
+        })
+
+        if(myUser.username === username)
+        setPermission(true);
+
+        if(props.user !== undefined){
+            setMail(props.user.email||"No email")
+        }
+
+        if(props.profile !== undefined){
+            setOverview(props.profile.overview||"No overview")
+            setLocation(props.profile.address||"No location")
+            setPhone(props.profile.phone||"No phone")
+            setBirthday(props.profile.birthday||"")
+        }
+    },[router]);
+
     return(
         <div className={styles.container}>
             <div className={styles.box}>
                 <EditOverview show={editOverview} value={overview} setValue={setOverview} setShow={toggleEditOverview}></EditOverview>
                 <div className={styles.title}>
                     <span>Overview</span>
-                    <button onClick={()=>{toggleEditOverview(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>
+                    {permission ? <button onClick={()=>{toggleEditOverview(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>{overview}</div>
             </div>
@@ -38,24 +69,22 @@ export default function Info(props){
                     <span>Sport</span>
                 </div>
                 <div className={styles.content}>
-                    <div className={styles.sport}>
-                        <span className={styles.name}>Tennis</span>
-                        <span className={styles.num}>15 Match</span>
-                        <span className={styles.star}>{loadStar(4, 12)}</span>
-                    </div>
-                    
-                    <div className={styles.sport}>
-                        <span className={styles.name}>Tennis</span>
-                        <span className={styles.num}>15 Match</span>
-                        <span className={styles.star}>{loadStar(4, 12)}</span>
-                    </div>
+                    {sport.map((val,key)=>{
+                        return(
+                            <div className={styles.sport}>
+                                <span className={styles.name}>{val.sport||''}</span>
+                                <span className={styles.num}>{val.num_match||0}</span>
+                                <span className={styles.star}>{loadStar(val.rating||0, 12)}</span>
+                            </div>
+                        )                     
+                    })}
                 </div>
             </div>
             <div className={styles.box}>
                 <EditLocation show={editLocation} setShow={toggleEditLocation} value={location} setValue={setLocation}></EditLocation>
                 <div className={styles.title}>
                     <span>Location</span>
-                    <button onClick={()=>{toggleEditLocation(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>
+                    {permission ?<button onClick={()=>{toggleEditLocation(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>:''}
                 </div>
                 <div className={styles.content}>{location}</div>
             </div>
@@ -72,7 +101,7 @@ export default function Info(props){
                 </EditPInfo>
                 <div className={styles.title}>
                     <span>Personal Information</span>
-                    <button onClick={()=>{toggleEditPInfo(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>
+                    {permission ?<button onClick={()=>{toggleEditPInfo(true)}}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button>:''}
                 </div>
                 <div className={styles.content}>
                     <div>

@@ -16,7 +16,7 @@ export default function InfoHome(){
     
     useEffect(()=>{
         const token = localStorage.getItem("access_token");
-        axios.get(FRIENDS_API+user.id+'/count',{
+        axios.get(FRIENDS_API+user.username+'/count',{
             headers:{
                 "Authorization": token
             }
@@ -25,7 +25,7 @@ export default function InfoHome(){
         }).catch((error)=>{
             console.log(error.response.data.message);
         });
-        axios.get(FOLLOWS_API+user.id+'/count',{
+        axios.get(FOLLOWS_API+user.username+'/count',{
             headers:{
                 "Authorization": token
             }

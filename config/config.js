@@ -10,6 +10,7 @@ export const PROFILE_API = HOST + '/api/profiles/';
 export const USERNAME_API = HOST + '/api/username/';
 export const PASSWORD_API = HOST + '/api/password/';
 export const DELETE_API = HOST + '/api/delete/';
+export const USER_API = HOST + '/api/user/';
 //POST
 export const POSTS_API = HOST + '/api/posts/';
 
@@ -20,6 +21,8 @@ export const SEARCH_FRIENDS_API = HOST + 'api/friends/search';
 //FOLLOW
 export const FOLLOWS_API = HOST + '/api/follows/';
 
+//SPORT
+export const SPORT_API = HOST + '/api/sports/';
 /**
  * API GOOGLE MAP
  */

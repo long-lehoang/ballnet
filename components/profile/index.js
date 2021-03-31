@@ -9,35 +9,77 @@ import Team from './Team';
 import Match from './Match';
 import Friend from './Friend';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import loadStar from '../../lib/star';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faIdCard, faMap, faNewspaper, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { PROFILE_API, USER_API } from '../../config/config';
 
-function loadComponent(option){
-    switch (option){
-        case 1:
-            return (<Feed></Feed>)
-        case 2:
-            return (<Info></Info>)
-        case 3:
-            return (<Team></Team>)
-        case 4:    
-            return (<Friend></Friend>)
-        case 5:
-            return (<Match></Match>)
-        case 6:
-            return (<Stadium></Stadium>)
-        default:
-            return (<Feed></Feed>)
-    }
-}
+
 
 export default function Profile(){
+    const user = useSelector(state => state.infoUser);
+    const [userN, setUserN] = useState();
     const [option, setOption] = useState(1);
-    const [status, setStatus] = useState("Status asasdadadadaasd");
-    const [name, setName] = useState("Le Hoang Long");
+    const [status, setStatus] = useState("");
+    const [name, setName] = useState();
     const [points , setPoints] = useState(5);
+    const router = useRouter();
+    const username = router.query.user;
+    const [profile, setProfile] = useState();
+
+    function loadComponent(option){
+        switch (option){
+            case 1:
+                return (<Feed></Feed>)
+            case 2:
+                return (<Info profile={profile} user={userN}></Info>)
+            case 3:
+                return (<Team></Team>)
+            case 4:    
+                return (<Friend></Friend>)
+            case 5:
+                return (<Match></Match>)
+            case 6:
+                return (<Stadium></Stadium>)
+            default:
+                return (<Feed></Feed>)
+        }
+    }
+
+    useEffect(()=>{
+        const token = localStorage.getItem('access_token');
+
+        axios.get(PROFILE_API+username,{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>{
+            console.log(response.data.data);
+            const profile = response.data.data;
+            setProfile(profile);
+            setStatus(profile.status||"No status");
+            setPoints(profile.points);
+        }).catch((error)=>{
+            console.log(error.response)
+        });
+
+        axios.get(USER_API+username,{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>{
+            console.log(response.data.data);
+            setUserN(response.data.data);
+            setName(response.data.data.name);
+        }).catch((error)=>{
+            console.log(error.response)
+        });
+    },[router]);
+
     return(
         <div className={styles.container}>
             <div className={styles.top}>
@@ -47,7 +89,7 @@ export default function Profile(){
             <div className={styles.content}>
                 <div className={styles.left}>
                     <div className={styles.item}>
-                        <InfoComponent></InfoComponent>
+                        <InfoComponent profile={profile}></InfoComponent>
                     </div>
                     <div className={styles.item}>
                         <StadiumSuggest></StadiumSuggest>

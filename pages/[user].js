@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import Profile from '../components/profile';
 
 export default function UserProfile() {
-    // checkLogin();
+    checkLogin();
 
     return (
         <LayoutMain>

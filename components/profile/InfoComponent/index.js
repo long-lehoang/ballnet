@@ -1,20 +1,67 @@
 import { faDirections } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { AVATAR, FOLLOWS_API, FRIENDS_API, HOST, SPORT_API } from '../../../config/config';
 import styles from './styles.module.scss';
 
 export default function InfoComponent(props){
-    const [follow, setFollow] = useState(20);
-    const [friend, setFriend] = useState(20);
-    const [location, setLocation] = useState("Quận Tân Phú, TP. Hồ Chí Minh");
-    const [match, setMatch] = useState(20);
-    const [sport, setSport] = useState("Football");
-    const [phone, setPhone] = useState("0938186100");
+    const [avatar, setAvatar] = useState(AVATAR);
+    const [follow, setFollow] = useState(0);
+    const [friend, setFriend] = useState(0);
+    const [location, setLocation] = useState("");
+    const [match, setMatch] = useState(0);
+    const [sport, setSport] = useState("");
+    const [phone, setPhone] = useState("");
+    const router = useRouter();
 
+    useEffect(()=>{
+        const token = localStorage.getItem('access_token');
+        const username = router.query.user;
+
+        axios.get(FRIENDS_API+username+'/count',{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>{
+            setFriend(response.data.data)
+        }).catch((error)=>{
+            console.log(error.response)
+        });
+
+        axios.get(FOLLOWS_API+username+'/count',{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>{
+            setFollow(response.data.data)
+        }).catch((error)=>{
+            console.log(error.response)
+        })
+
+        axios.get(SPORT_API+username+'/main',{
+            headers:{
+                'Authorization': token
+            }
+        }).then((response)=>{
+            setMatch(response.data.data.num_match||0);
+            setSport(response.data.data.sport||"");
+        }).catch((error)=>{
+            console.log(error.response)
+        })
+
+        if(props.profile !== undefined){
+            setLocation(props.profile.address||'')
+            setPhone(props.profile.phone||'')
+            setAvatar(props.profile.avatar !== null ? (HOST + props.profile.avatar) : AVATAR)
+        }
+        
+    })
     return(
         <div className={styles.container}>
             <div className={styles.avatar}>
-                <img src="/avatar.jpg" ></img>
+                <img src={avatar} ></img>
             </div>
             <div className={styles.friend_follow}>
                 <div>
