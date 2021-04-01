@@ -110,3 +110,104 @@
         }
     }
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .container{
+        .content{
+            display: flex;
+            justify-content: center;
+            .left{
+                display: none !important;
+            }
+            .main{
+                min-width: 350px;
+            }
+            .right{
+                display: none !important;
+            }
+        }
+    }
+  }
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .container{
+        .content{
+            display: flex;
+            justify-content: center;
+            .left{
+                display: none !important;
+            }
+            .main{
+                min-width: 350px;
+            }
+            .right{
+                display: none !important;
+            }
+        }
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    .container{
+        .content{
+            display: flex;
+            justify-content: center;
+            .left{
+                display: none !important;
+            }
+            .main{
+                min-width: 350px;
+            }
+            .right{
+                display: none !important;
+            }
+        }
+    }
+  }
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    .container{
+        .content{
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 2.2fr 1fr;
+            grid-gap: 30px;
+            background-color: inherit;
+            padding: 20px 10%;
+            .left{
+                display: block !important;
+            }
+            .main{
+            }
+            .right{
+                display: block !important;
+            }
+        }
+    }
+  }
+  
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    .container{
+        .content{
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 2.2fr 1fr;
+            grid-gap: 30px;
+            background-color: inherit;
+            padding: 20px 10%;
+            .left{
+                display: block !important;
+            }
+            .main{
+            }
+            .right{
+                display: block !important;
+            }
+        }
+    }
+  }

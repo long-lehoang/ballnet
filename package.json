@@ -37,5 +37,9 @@
     "sass": "^1.32.8",
     "styled-components": "^5.2.1",
     "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "laravel-echo": "^1.10.0",
+    "pusher-js": "^7.0.3"
   }
 }

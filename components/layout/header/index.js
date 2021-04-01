@@ -6,7 +6,17 @@ import axios from 'axios';
 import {LOGOUT_API,AVATAR,HOST} from '../../../config/config'
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
- 
+import Echo from 'laravel-echo';
+
+window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
+
 export default function Header(){
     const router = useRouter()
     function handleLoggout(e){
