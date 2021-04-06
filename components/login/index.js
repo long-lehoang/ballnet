@@ -14,6 +14,7 @@ import {LOGIN_API} from "../../config/config";
 import axios from 'axios';
 import {setError} from "../../slices/loginErrorSlice";
 import {setUser} from "../../slices/infoUserSlice";
+import { useCookies } from "react-cookie"
 
 LoginForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -26,6 +27,7 @@ LoginForm.defaultProps = {
 export default function LoginForm(props){
     const router = useRouter();
     const dispatch = useDispatch();
+    const [cookie, setCookie] = useCookies(["user"])
 
     const handleSubmit = (values) => {
 
@@ -34,21 +36,14 @@ export default function LoginForm(props){
             // Code for handling the response 
             // save token
             if(response.data.success){
-                localStorage.setItem(
-                    'access_token',
-                    response.data.data.token_type +' '+ response.data.data.access_token
-                );
-                localStorage.setItem(
-                    'user',
-                    JSON.stringify(response.data.data.user)
-                );
-                
-                //set user info
+                const time = new Date(response.data.data.expires_at)
+                setCookie("user", JSON.stringify(response.data.data), {
+                    path: "/",
+                    expires: time,
+                    sameSite: true,
+                })
                 const actionUser = setUser(response.data.data.user);
                 dispatch(actionUser);
-                //set success
-                
-
                 const actionError = setError(false);
                 dispatch(actionError);
                 router.push('/');
@@ -101,8 +96,6 @@ export default function LoginForm(props){
         >
             {formikProps => {
                 const {values, errors, touched} = formikProps;
-                console.log({values, errors, touched});
-
                 return (
                     <div className={styles.container}>
                         <div className={styles.button}>

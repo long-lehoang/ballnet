@@ -13,42 +13,8 @@ import { useEffect, useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import Loading from '../commons/Loading';
 
-function extractData(data,result = []){
-    if(Array.isArray(data))
-    data.forEach(element => {
-        if(Array.isArray(element))
-        element.forEach(subele => {
-            result.push(subele);
-        });
-        else result.push(element);
-    });
-    else result.push(data);
-    return result;
-}
-
-export default function HomePage(){
-    const [posts, setPosts] = useState([]);
-
-    useEffect(()=>{
-        const token = localStorage.getItem('access_token');
-        axios.get(POSTS_API,{
-            headers:{
-                'Authorization': token
-            }
-        }).then((response)=>{
-            setPosts(extractData(response.data.data).sort(function(a, b) {
-                let time1 = new Date(a.updated_at);
-                let time2 = new Date(b.updated_at);
-
-                return time2 - time1;
-              })
-            );
-        }).catch((error)=>{
-            console.log(error);
-        })
-    },[false]);
-
-    return(
+export default function HomePage({ posts }) {
+    return (
         <div className={styles.container}>
             <div className={styles.col_1}>
                 <div className={styles.row} >
@@ -72,7 +38,7 @@ export default function HomePage(){
                     </LazyLoad>
                     )
                 })}
-                
+
             </div>
             <div className={styles.col_3}>
                 <div className={styles.row}>

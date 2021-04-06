@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import LayoutMain from '../components/layout/main'
-import Profile from '../components/profile';
-import { PROFILE_API, USER_API } from '../config/config';
-import { parseCookies } from '../lib/cookie';
-import { setUser } from '../slices/infoUserSlice';
-import { setProfile } from '../slices/profileSlice';
-import { setToken } from '../slices/tokenSlice';
+import LayoutMain from '../../components/layout/main';
+import PostPage from '../../components/post';
+import { POSTS_API, PROFILE_API } from '../../config/config';
+import { parseCookies } from '../../lib/cookie';
+import { setUser } from '../../slices/infoUserSlice';
+import { setProfile } from '../../slices/profileSlice';
+import { setToken } from '../../slices/tokenSlice';
 
-export default function UserProfile({token, username, user, permission, userN, profileN}) {
+export default function Post({token, username, user, post, permisson}) {
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
@@ -35,12 +35,12 @@ export default function UserProfile({token, username, user, permission, userN, p
 
     return (
         <LayoutMain>
-            <Profile permission={permission} userN={userN} profileN={profileN}></Profile>
+            <PostPage postD={post} permisson={permisson}></PostPage>
         </LayoutMain>
     )
 }
 
-UserProfile.getInitialProps = async ({query, req, res }) => {
+Post.getInitialProps = async ({ query, req, res }) => {
     const data = parseCookies(req).user
     if (res) {
         if ((data === undefined) || (Object.keys(data).length === 0 && data.constructor === Object)) {
@@ -48,34 +48,24 @@ UserProfile.getInitialProps = async ({query, req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data);
-    const token = user.access_token;
-    let profileN, userN;
-    await axios.get(PROFILE_API + query.user, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }).then((response) => {
-        profileN = response.data.data;
-    }).catch((error) => {
-        console.log(error.message);
-    });
+    const user = JSON.parse(data)
+    const token = user.access_token
+    let post;
 
-    await axios.get(USER_API + query.user, {
+    await axios.get(POSTS_API + query.post_id, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
-    }).then((response) => {
-        userN = response.data.data;
-    }).catch((error) => {
-        console.log(error.message);
-    });
+    }).then((response)=>{
+        post = response.data.data;
+    }).catch((error)=>{
+        console.log(error);
+    })
     return {
-        token: user.access_token,
-        username: user.user.username,
+        token: user.access_token, 
+        username: user.user.username, 
         user: user.user,
-        permission: query.user === user.user.username,
-        userN: userN,
-        profileN: profileN
+        post: post,
+        permisson: post.author.username === user.user.username
     }
 }

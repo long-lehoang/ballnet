@@ -14,6 +14,7 @@
 
     .col {
       display: flex;
+      position: relative;
       .avatar {
         img {
           width: 40px;
@@ -49,16 +50,19 @@
       .popup{
         display: none;
         position: absolute;
+        right: -20px;
+        top: 20px;
         background-color: var(--background-component);
         width: 100px;
-        border-radius: 5px;
-
+        border-radius: 2px;
+        border: 0.5px solid var(--text-color-1);
         button{
           display: block;
           outline: none;
           width: 100%;
           border: none;
           padding: 5px;
+          background-color: transparent;
         }
       }
       .btn:focus + .popup, .popup:hover{

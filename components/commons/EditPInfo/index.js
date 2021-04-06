@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import styles from './styles.module.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { PROFILE_API } from '../../../config/config';
 import { setUser } from '../../../slices/infoUserSlice';
+import { useCookies } from 'react-cookie';
 
 export default function EditPInfo(props){
 
@@ -14,20 +15,24 @@ export default function EditPInfo(props){
     const [birthday, setBirthday] = useState(props.birthday);
     const [error, setError] = useState();
     const dispatch = useDispatch();
-
+    const token = useSelector(state => state.token);
+    const [cookie, setCookie] = useCookies(["user"]);
     function handleSubmit(){
-        var token = localStorage.getItem('access_token');
         var emailData = new FormData();
         emailData.append('email', email);
         axios.post(PROFILE_API+'email',emailData,{
             headers:{
-                'Authorization' : token
+                'Authorization' : `Bearer ${token}`
             }
         }).then((response)=>{
-            localStorage.setItem(
-                'user',
-                JSON.stringify(response.data.data)
-            );
+            let user = cookie.user;
+            user.user = response.data.data;
+            const time = new Date(user.expires_at);
+            setCookie("user", JSON.stringify(user), {
+                path: "/",
+                expires: time,
+                sameSite: true,
+            })
             const actionUser = setUser(response.data.data);
             dispatch(actionUser);
 
@@ -42,7 +47,7 @@ export default function EditPInfo(props){
         phoneData.append('phone', phone);
         axios.post(PROFILE_API+'phone',phoneData,{
             headers:{
-                'Authorization' : token
+                'Authorization' : `Bearer ${token}`
             }
         }).then((response)=>{
             props.setPhone(phone);
@@ -56,7 +61,7 @@ export default function EditPInfo(props){
         birthdayData.append('birthday', birthday);
         axios.post(PROFILE_API+'birthday',birthdayData,{
             headers:{
-                'Authorization' : token
+                'Authorization' : `Bearer ${token}`
             }
         }).then((response)=>{
             props.setBirthday(birthday);

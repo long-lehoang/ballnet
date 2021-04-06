@@ -21,8 +21,14 @@ export const SEARCH_FRIENDS_API = HOST + 'api/friends/search';
 //FOLLOW
 export const FOLLOWS_API = HOST + '/api/follows/';
 
+//PEOPLE
+export const PEOPLE_API = HOST + '/api/people/';
+
 //SPORT
 export const SPORT_API = HOST + '/api/sports/';
+
+//NOTIFICATION
+export const NOTIFICATION = HOST + '/api/notifications';
 /**
  * API GOOGLE MAP
  */

@@ -7,12 +7,12 @@ import { useSelector } from 'react-redux';
 import { AVATAR, HOST, POSTS_API } from '../../../../config/config';
 import styles from './styles.module.scss';
 
-export default function Comment(props){
+export default function Comment(props) {
     const profile = useSelector(state => state.profile);
     const [comment, setComment] = useState();
     const [listComment, setListComment] = useState([]);
-    const [load,setLoad] = useState();
-
+    const [load, setLoad] = useState();
+    const token = useSelector(state => state.token);
     // Pusher.logToConsole = true;
     // var pusher = new Pusher('903afb56e4567c43f695', {
     //     cluster: 'ap1'
@@ -23,33 +23,32 @@ export default function Comment(props){
     //     alert(JSON.stringify(data));
     // });
 
-    useEffect(()=>{
-        const token = localStorage.getItem("access_token");
-        axios.get(POSTS_API+props.id+'/comment',{
-            headers:{
-                'Authorization': token
+    useEffect(() => {
+        axios.get(POSTS_API + props.id + '/comment', {
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setListComment(response.data.data);
         })
-    },[load]);
+    }, [load]);
 
-    return(
+    return (
         <div className={styles.comments}>
             <hr></hr>
-            <form className={styles.input} onSubmit={(event)=>{
-                    event.preventDefault();
-                    props.handleComment(comment);
-                    setComment("");
-                    setLoad(true);
-                }}>
-                <img src={profile.avatar == null ? AVATAR : HOST+profile.avatar} className={styles.avatar}></img>
-                <input placeholder="Type a comment" value={comment} onChange={(event)=>{setComment(event.target.value)}}></input>
+            <form className={styles.input} onSubmit={(event) => {
+                event.preventDefault();
+                props.handleComment(comment);
+                setComment("");
+                setLoad(true);
+            }}>
+                <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
+                <input placeholder="Type a comment" value={comment} onChange={(event) => { setComment(event.target.value) }}></input>
             </form>
-            {listComment.map(cmt=>{
-                return(
-                    <LazyLoad className={styles.comment} key={cmt.id}  placeholder="Loading...">
-                        <img src={cmt.avatar == null ? AVATAR : HOST+cmt.avatar} className={styles.avatar}></img>
+            {listComment.map(cmt => {
+                return (
+                    <LazyLoad className={styles.comment} key={cmt.id} placeholder="Loading...">
+                        <img src={cmt.avatar == null ? AVATAR : HOST + cmt.avatar} className={styles.avatar}></img>
                         <div className={styles.content}>
                             <div className={styles.group}>
                                 <Link href={`/${cmt.username}`}><a className={styles.name}>{cmt.name}</a></Link>

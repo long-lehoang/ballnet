@@ -9,8 +9,11 @@ import convertTime from '../../../lib/time';
 import Link from 'next/link';
 import EditPostForm from '../EditPostForm';
 import tagging from '../../../lib/tags';
+import { useSelector } from 'react-redux';
 
-export default function Post(props){
+export default function Post(props) {
+    const token = useSelector(state => state.token);
+
     const [images, setImages] = useState([]);
     const [avatarAuthor, setAvatarAuthor] = useState('');
     const [nameAuthor, setNameAuthor] = useState('');
@@ -29,135 +32,125 @@ export default function Post(props){
     const post = props.post;
     //get detail post
 
-    function handleDelete(){
-        const token = localStorage.getItem("access_token");
-
+    function handleDelete() {
         setDel(true);
-        axios.delete(POSTS_API+props.post.id,{
-            headers:{
-                'Authorization': token
+        axios.delete(POSTS_API + props.post.id, {
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
-        }).then((response)=>
-        {
+        }).then((response) => {
             console.log(response.data.message);
-        }).catch((error)=>{
+        }).catch((error) => {
             console.log(error.message);
         });
     }
 
     useEffect(()=>{
-        const token = localStorage.getItem("access_token");
 
-        axios.get(POSTS_API+props.post.id,{
-            headers:{
-            'Authorization': token
-            }
-        }).then((response)=>{
-            console.log(response.data.data);
-            let result = response.data.data;
-            setNameAuthor(result.author.name);
-            setUsernameAuthor(result.author.username);
-            if(result.author.avatar!=null)
-            setAvatarAuthor(HOST + result.author.avatar);
-            setCountLike(result.like);
-            toggleLike(result.isLike);
-            setCountComment(result.comment);
-            toggleComment(result.isComment);
-            setCountShare(result.share);
-            toggleShare(result.isShare);
-            setImages(result.images);
-            setTags(result.tags);
-        }).catch((error)=>{
-            console.log(error.message);
-        })
-    },[edit]);
-
-    function handleLike(){
-        const token = localStorage.getItem("access_token");
-
-        if(like){
-            toggleLike(false);
-            setCountLike(countLike-1);
-
-            axios.delete(POSTS_API+props.post.id+'/like',{
-                headers:{
-                'Authorization': token
+        if (props.post.id !== undefined) {
+            axios.get(POSTS_API + props.post.id, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            }).then((response)=>
-            {
+            }).then((response) => {
+                console.log(response.data.data);
+                let result = response.data.data;
+                setNameAuthor(result.author.name);
+                setUsernameAuthor(result.author.username);
+                if (result.author.avatar != null)
+                    setAvatarAuthor(HOST + result.author.avatar);
+                setCountLike(result.like);
+                toggleLike(result.isLike);
+                setCountComment(result.comment);
+                toggleComment(result.isComment);
+                setCountShare(result.share);
+                toggleShare(result.isShare);
+                setImages(result.images);
+                setTags(result.tags);
+            }).catch((error) => {
+                console.log(error.message);
+            })
+        }
+    },[edit])
+
+
+    function handleLike() {
+        if (like) {
+            toggleLike(false);
+            setCountLike(countLike - 1);
+
+            axios.delete(POSTS_API + props.post.id + '/like', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((response) => {
                 console.log(response.data.message);
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error.message);
             });
-        }else{
+        } else {
             toggleLike(true);
-            setCountLike(countLike+1);
-            axios.post(POSTS_API+props.post.id+'/like',{},{
-                headers:{
-                'Authorization': token
+            setCountLike(countLike + 1);
+            axios.post(POSTS_API + props.post.id + '/like', {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            }).then((response)=>
-            {
+            }).then((response) => {
                 console.log(response.data.message);
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error.message);
             });
         }
     }
 
-    function handleComment(value){
-        const token = localStorage.getItem("access_token");
+    function handleComment(value) {
         var formData = new FormData();
-        formData.append("comment",value);
+        formData.append("comment", value);
         toggleComment(true);
-        setCountComment(countComment+1);
+        setCountComment(countComment + 1);
 
-        axios.post(POSTS_API+props.post.id+'/comment',formData,{
-            headers:{
-                'Authorization': token
+        axios.post(POSTS_API + props.post.id + '/comment', formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
-        }).then((response)=>
-        {
+        }).then((response) => {
             console.log(response.data.message);
-        }).catch((error)=>{
+        }).catch((error) => {
             console.log(error.message);
         });
     }
 
-    function handleShare(){
-        const token = localStorage.getItem("access_token");
+    function handleShare() {
 
-        if(share){
+        if (share) {
             toggleShare(false);
-            setCountShare(countShare-1);
-            axios.delete(POSTS_API+props.post.id+'/share',{},{
-                headers:{
-                    'Authorization': token
+            setCountShare(countShare - 1);
+            axios.delete(POSTS_API + props.post.id + '/share', {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            }).then((response)=>
-            {
+            }).then((response) => {
                 console.log(response.data.message);
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error.message);
             });
-        }else{
+        } else {
             toggleShare(true);
-            setCountShare(countShare+1);
+            setCountShare(countShare + 1);
 
-            axios.post(POSTS_API+props.post.id+'/share',{
-                headers:{
-                    'Authorization': token
+            axios.post(POSTS_API + props.post.id + '/share', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            }).then((response)=>
-            {
+            }).then((response) => {
                 console.log(response.data.message);
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error.message);
             });
         }
     }
 
-    return(
+    return (
         <div className={del ? styles.none : styles.container}>
             <div className={styles.header}>
                 <div className={styles.col}>
@@ -177,7 +170,7 @@ export default function Post(props){
                 <div className={styles.col}>
                     <button className={styles.btn}><FontAwesomeIcon icon={faEllipsisV}></FontAwesomeIcon></button>
                     <div className={styles.popup}>
-                        <button onClick={()=>{toggleEdit(!edit)}}>Edit</button>
+                        <button onClick={() => { toggleEdit(!edit) }}>Edit</button>
                         <button onClick={handleDelete}>Delete</button>
                     </div>
                 </div>
@@ -185,8 +178,8 @@ export default function Post(props){
             <div className={styles.body}>
                 <span>{props.post.content}</span>
                 <div className={styles.images}>
-                    {images.map((img,key)=>{
-                        return (<img key={key} src={HOST+img}></img>)
+                    {images.map((img, key) => {
+                        return (<img key={key} src={HOST + img}></img>)
                     })}
                 </div>
             </div>
@@ -200,7 +193,7 @@ export default function Post(props){
                         </button>
                     </div>
                     <div className={comment ? styles.activeComment : styles.comment}>
-                        <button onClick={()=>{toggleActiveComment(!activeComment)}}>
+                        <button onClick={() => { toggleActiveComment(!activeComment) }}>
                             <FontAwesomeIcon icon={faComment} className={styles.iconComment}></FontAwesomeIcon>
                             <span className={styles.txtComment}>Comment {countComment}</span>
                         </button>
@@ -213,21 +206,21 @@ export default function Post(props){
                     </button>
                 </div>
             </div>
-            {activeComment ? <Comment id={props.post.id} handleComment={handleComment}/> : <div></div>}
+            {activeComment ? <Comment id={props.post.id} handleComment={handleComment} /> : <div></div>}
             {
-                edit ? 
-                <EditPostForm 
-                    show={edit} 
-                    setShow={toggleEdit}
-                    toggle={toggleEdit} 
-                    content={props.post.content} 
-                    id = {props.post.id}
-                    permission={props.post.private}
-                    images={images}
-                    location={props.post.location}
-                    tags={tags}
-                /> : 
-                <div></div>
+                edit ?
+                    <EditPostForm
+                        show={edit}
+                        setShow={toggleEdit}
+                        toggle={toggleEdit}
+                        content={props.post.content}
+                        id={props.post.id}
+                        permission={props.post.private}
+                        images={images}
+                        location={props.post.location}
+                        tags={tags}
+                    /> :
+                    <div></div>
             }
         </div>
     )

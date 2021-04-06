@@ -8,6 +8,7 @@ import styles from './styles.module.scss';
 import loadStar from '../../../lib/star';
 
 export default function InfoHome(){
+    const token = useSelector(state => state.token);
     const user = useSelector(state => state.infoUser);
     const profile = useSelector(state => state.profile);
     let link_profile = user != null ? user.username : "";
@@ -15,26 +16,28 @@ export default function InfoHome(){
     const [friends, setFriends] = useState(0);
     
     useEffect(()=>{
-        const token = localStorage.getItem("access_token");
-        axios.get(FRIENDS_API+user.username+'/count',{
-            headers:{
-                "Authorization": token
-            }
-        }).then((response)=>{
-            setFriends(response.data.data);
-        }).catch((error)=>{
-            console.log(error.response.data.message);
-        });
-        axios.get(FOLLOWS_API+user.username+'/count',{
-            headers:{
-                "Authorization": token
-            }
-        }).then((response)=>{
-            setFollowers(response.data.data);
-        }).catch((error)=>{
-            console.log(error.response.data.message);
-        });
-    },[null])
+        if(user.username !== undefined){
+
+            axios.get(FRIENDS_API+user.username+'/count',{
+                headers:{
+                    "Authorization": `Bearer ${token}`
+                }
+            }).then((response)=>{
+                setFriends(response.data.data);
+            }).catch((error)=>{
+                console.log(error.response.data.message);
+            });
+            axios.get(FOLLOWS_API+user.username+'/count',{
+                headers:{
+                    "Authorization": `Bearer ${token}`
+                }
+            }).then((response)=>{
+                setFollowers(response.data.data);
+            }).catch((error)=>{
+                console.log(error.response.data.message);
+            });
+        }
+    },[user])
     return(
         <div className={styles.container}>
             <div className={styles.row}>

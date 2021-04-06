@@ -2,56 +2,58 @@ import axios from 'axios';
 import { route } from 'next/dist/next-server/server/router';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 import { DELETE_API } from '../../../config/config';
 import styles from './styles.module.scss';
 
-export default function DeadactiveAccount(){
+export default function DeadactiveAccount() {
     const [password, setPassword] = useState('');
     const [mail, setMail] = useState('');
     const [errMsgMail, setErrMsgMail] = useState('');
     const [errMsgPassword, setErrMsgPassword] = useState('');
     const router = useRouter();
-    
-    function validate(){
+    const token = useSelector(state => state.token);
+    const [cookie, setCookie, removeCookie] = useCookies(["user"]);
+
+    function validate() {
         let error = false;
-        if(password == ''){
+        if (password == '') {
             setErrMsgPassword('Field is not empty !');
             error = true;
-        }else{
+        } else {
             setErrMsgPassword('');
         }
 
-        if(mail == ''){
+        if (mail == '') {
             setErrMsgMail('Field is not empty !');
             error = true;
-        }else{
+        } else {
             setErrMsgMail('');
         }
 
         return !error;
     }
 
-    function handleSubmit(event){
+    function handleSubmit(event) {
         event.preventDefault();
-        if(validate()){
-            const token = localStorage.getItem('access_token');
+        if (validate()) {
 
             var formData = new FormData();
             formData.append("password", password);
             formData.append("email", mail);
             axios.post(DELETE_API, formData, {
-                headers:{
-                    'Authorization': token
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            }).then((response)=>{
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("user");
+            }).then((response) => {
+                removeCookie("user");
                 router.push('/login');
-            }).catch((error)=>{
+            }).catch((error) => {
                 setErrMsgMail(error.response.data.message);
                 setErrMsgPassword(error.response.data.message);
             })
-        }else{
+        } else {
             return false;
         }
     }
@@ -65,14 +67,14 @@ export default function DeadactiveAccount(){
                         <span className={styles.label}>Password</span>
                         <span className={styles.errMsg}>{errMsgPassword}</span>
                     </div>
-                    <input type="password" placeholder="Password" onChange={(event)=>{setPassword(event.target.value)}}></input>
+                    <input type="password" placeholder="Password" onChange={(event) => { setPassword(event.target.value) }}></input>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.header}>
                         <span className={styles.label}>Email</span>
                         <span className={styles.errMsg}>{errMsgMail}</span>
                     </div>
-                    <input type="email" placeholder="Email" onChange={(event)=>{setMail(event.target.value)}}></input>
+                    <input type="email" placeholder="Email" onChange={(event) => { setMail(event.target.value) }}></input>
                 </div>
                 <button type="submit">Delete</button>
                 <button>Cancel</button>

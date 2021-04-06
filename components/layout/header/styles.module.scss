@@ -4,6 +4,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position: relative;
   font: var(--content);
   color: var(--text-color-4);
   .col {
@@ -121,6 +122,7 @@
     
 
     .nav {
+      position: relative;
       height: 57px;
       display: flex;
       justify-content: center;
@@ -129,20 +131,61 @@
         cursor: pointer;
         padding-left: 10px;
         padding-right: 10px;
+        position: relative;
         .iconNav {
-          height: 20px;
-          width: 20px;
-
+          padding: 0 5px;
           margin: 0 auto;
           overflow: hidden;
         }
         .textNav{
+          display: none;
+          position: absolute;
+          background-color: var(--text-color-4);
+          border-radius: 5px;
+          padding: 5px 20px;
+          text-align: center;
+          top: 25px;
+          left: -10px;
+          z-index: 3;
         }
+        .iconNav:hover + .textNav{
+          display: block;
+        }
+
       }
       .btnNav:hover {
         color: var(--text-color-1);
       }
+      .group_notice{
+        position: relative;
+        .number{
+          position: absolute;
+          padding: 1px 5px;
+          border-radius: 50%;
+          background-color: rgb(0, 153, 255);
+          color: white;
+          top: -5px;
+          right: 5px;
+          z-index: 1;
+        }
+      }
     }
+  }
+  .notification{
+    position: absolute;
+    width: 300px;
+    top: 57px;
+    right: 60px;
+    background-color: var(--background-component);
+    border: 0.2px solid var(--text-color-1);
+    border-radius: 0px 0px 10px 10px;
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 2;
+  }
+  .hideNotification{
+    display: none;
   }
 }
 
@@ -160,7 +203,7 @@
         .btnSearch {
           padding-left: 0px;
           input {
-            width: 10px;
+            width: 100px;
           }
         }
         .iconSearch {
@@ -182,10 +225,12 @@
       }
 
       .nav {
+        width: 130px;
+        overflow-x: scroll;
+        margin-right: 10px;
         .btnNav {
           .iconNav {
-            height: 20px;
-            width: 20px;
+            padding: 0;
           }
           .textNav{
             display: none;
@@ -207,6 +252,8 @@
       .search {
         .btnSearch {
           input {
+            width: 120px;
+
           }
           input:focus {
           }
@@ -233,6 +280,7 @@
       .nav {
         .btnNav {
           .iconNav {
+            padding: 0;
           }
           .textNav{
             display: none;
@@ -283,6 +331,7 @@
       .nav {
         .btnNav {
           .iconNav {
+            padding: 0;
             
           }
           .textNav{
@@ -334,9 +383,11 @@
       .nav {
         .btnNav {
           .iconNav {
+            padding: 0 5px;
+
           }
           .textNav{
-            display: block;
+            display: none;
           }
         }
         .btnNav:hover {
@@ -384,9 +435,11 @@
       .nav {
         .btnNav {
           .iconNav {
+            padding: 0 5px;
+
           }
           .textNav{
-            display: block;
+            display: none;
           }
         }
         .btnNav:hover {

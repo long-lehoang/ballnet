@@ -2,20 +2,20 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { PROFILE_API } from '../../../config/config';
 import styles from './styles.module.scss';
 
 export default function EditOverview(props){
     const [value, setValue] = useState(props.value);
     const [error, setError] = useState();
-
+    const token = useSelector(state => state.token)
     function handleSubmit(){
         var formData = new FormData();
-        var token = localStorage.getItem('access_token');
         formData.append('overview', value);
         axios.post(PROFILE_API+'overview',formData,{
             headers:{
-                'Authorization' : token
+                'Authorization' : `Bearer ${token}`
             }
         }).then((response)=>{
             props.setValue(value);

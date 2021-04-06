@@ -1,17 +1,24 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import LayoutLogin from "../components/layout/login";
 import LoginForm from "../components/login";
+import { parseCookies } from "../lib/cookie";
 
-export default function Login(){
-    const router = useRouter()
-    useEffect(()=>{
-        if(localStorage.getItem('user') !== null)
-            router.replace('/');
-    })
+export default function Login() {
     return (
         <LayoutLogin>
             <LoginForm />
         </LayoutLogin>
     );
+}
+
+Login.getInitialProps = async ({ req, res }) => {
+    const data = parseCookies(req).user
+    if (res) {
+        if (!((data === undefined) || (Object.keys(data).length === 0 && data.constructor === Object))) {
+            res.writeHead(301, { Location: "/", 'Cache-Control': 'no-cache' })
+            res.end()
+        }
+    }
+    return {
+
+    }
 }
