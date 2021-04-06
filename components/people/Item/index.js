@@ -2,16 +2,16 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useState } from 'react';
-import { AVATAR } from '../../../config/config';
+import { AVATAR, HOST } from '../../../config/config';
 import loadStar from '../../../lib/star';
 import styles from './styles.module.scss';
 
-export default function Item(props){
-    const [img, setImg] = useState(AVATAR);
-    const [name, setName] = useState("Le Hoang Long");
-    const [numStar, setNumStar] = useState(5);
-    const [url, setUrl] = useState('/'+'admin');
-    const [location, setLocation] = useState("TP. Hồ Chí Minh")
+export default function Item({item}){
+    const [img, setImg] = useState(item.avatar == null ? AVATAR : HOST + item.avatar);
+    const [name, setName] = useState(item.name);
+    const [numStar, setNumStar] = useState(item.points);
+    const [url, setUrl] = useState('/'+item.username);
+    const [location, setLocation] = useState(item.address);
     function handleAdd(){
         console.log("add");   
     }
