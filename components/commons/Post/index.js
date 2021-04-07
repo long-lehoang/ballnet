@@ -125,7 +125,7 @@ export default function Post(props) {
         if (share) {
             toggleShare(false);
             setCountShare(countShare - 1);
-            axios.delete(POSTS_API + props.post.id + '/share', {}, {
+            axios.delete(POSTS_API + props.post.id + '/share', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -138,7 +138,7 @@ export default function Post(props) {
             toggleShare(true);
             setCountShare(countShare + 1);
 
-            axios.post(POSTS_API + props.post.id + '/share', {
+            axios.post(POSTS_API + props.post.id + '/share',{}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
