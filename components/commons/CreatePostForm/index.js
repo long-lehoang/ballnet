@@ -2,14 +2,14 @@ import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { AVATAR, FRIENDS_API, HOST, POSTS_API } from '../../../config/config';
 import { Modal } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faMapMarkedAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import Select from 'react-select';
 import axios from 'axios';
 import tagging from '../../../lib/tags';
 
-export default function CreatePostForm({ token, optionSearch }) {
+export default function CreatePostForm() {
     const [show, setShow] = useState(false);
     const [permission, setPermission] = useState('Public');
     const [content, setContent] = useState('');
@@ -18,9 +18,10 @@ export default function CreatePostForm({ token, optionSearch }) {
     const [images, setImages] = useState([]);
     const [showListFriends, setShowListFriends] = useState(false);
     const [preview, setPreview] = useState([]);
-
+    const [optionSearch, setOptionSearch] = useState([]);
     const user = useSelector(state => state.infoUser);
     const profile = useSelector(state => state.profile);
+    const token = useSelector(state => state.token);
 
     function handleSelect(value) {
         let tags = [];
@@ -74,6 +75,24 @@ export default function CreatePostForm({ token, optionSearch }) {
         setShow(false);
     }
 
+    useEffect(()=>{
+        axios.get(FRIENDS_API, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) => {
+            let options = [];
+            response.data.data.forEach(element => {
+                options.push({
+                    value: element.id,
+                    label: element.name
+                });
+            });
+            setOptionSearch(options);
+        }).catch((error) => {
+            console.log(error.message);
+        });
+    },[null]);
     return (
         <div className={styles.container}>
             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
@@ -139,37 +158,4 @@ export default function CreatePostForm({ token, optionSearch }) {
             <button className={styles.btn} onClick={() => setShow(true)}>Post a status</button>
         </div>
     )
-}
-CreatePostForm.getInitialProps = async ({ req, res }) => {
-    const data = parseCookies(req)
-    const user = JSON.parse(data.user)
-    if (res) {
-        if ((user === undefined) || (Object.keys(user).length === 0 && user.constructor === Object)) {
-            res.writeHead(301, { Location: "/login", 'Cache-Control': 'no-cache' })
-            res.end()
-        }
-    }
-    const token = user.access_token;
-
-    let options = [];
-    await axios.get(FRIENDS_API, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }).then((response) => {
-        response.data.data.forEach(element => {
-            options.push({
-                value: element.id,
-                label: element.name
-            });
-        });
-    }).catch((error) => {
-        console.log(error.message);
-    });
-
-    return {
-        token: token,
-        optionSearch: options,
-        user: user.user
-    }
 }
