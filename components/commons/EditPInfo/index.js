@@ -13,14 +13,20 @@ export default function EditPInfo(props){
     const [email, setEmail] = useState(props.email);
     const [phone, setPhone] = useState(props.phone);
     const [birthday, setBirthday] = useState(props.birthday);
-    const [error, setError] = useState();
+    const [errEmail, setErrEmail] = useState("");
+    const [errPhone, setErrPhone] = useState("");
+    const [errBirthday, setErrBirthday] = useState("");
     const dispatch = useDispatch();
     const token = useSelector(state => state.token);
     const [cookie, setCookie] = useCookies(["user"]);
-    function handleSubmit(){
+    async function handleSubmit(){
         var emailData = new FormData();
         emailData.append('email', email);
-        axios.post(PROFILE_API+'email',emailData,{
+        let err = false ;
+        setErrEmail("");
+        setErrPhone("");
+        setErrBirthday("");
+        await axios.post(PROFILE_API+'email',emailData,{
             headers:{
                 'Authorization' : `Bearer ${token}`
             }
@@ -39,13 +45,13 @@ export default function EditPInfo(props){
             props.setEmail(email);
         }).catch((error)=>{
             console.log(error);
-
-            setError("Can't update email !");
+            err = true;
+            setErrEmail("Can't update email !");
         });
 
         var phoneData = new FormData();
         phoneData.append('phone', phone);
-        axios.post(PROFILE_API+'phone',phoneData,{
+        await axios.post(PROFILE_API+'phone',phoneData,{
             headers:{
                 'Authorization' : `Bearer ${token}`
             }
@@ -53,26 +59,26 @@ export default function EditPInfo(props){
             props.setPhone(phone);
         }).catch((error)=>{
             console.log(error);
+            err = true;
 
-            setError("Can't update phone !");
+            setErrPhone("Can't update phone !");
         });
 
         var birthdayData = new FormData();
         birthdayData.append('birthday', birthday);
-        axios.post(PROFILE_API+'birthday',birthdayData,{
+        await axios.post(PROFILE_API+'birthday',birthdayData,{
             headers:{
                 'Authorization' : `Bearer ${token}`
             }
         }).then((response)=>{
             props.setBirthday(birthday);
         }).catch((error)=>{
+            err = true;
             console.log(error);
-            setError("Can't update birthday !");
+            setErrBirthday("Can't update birthday !");
         });
-        setTimeout(()=>{
-            if(error == "")
-            props.setShow(false)
-        }, 2000);
+        if(!err)
+        props.setShow(false)
 
     }
 
@@ -82,13 +88,15 @@ export default function EditPInfo(props){
                 <Modal.Title >Personal Information</Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <p>{error}</p>
+                <p>{errEmail}</p>
                 <input type="email" placeholder="Email" value={email} onChange={(event)=>{setEmail(event.target.value)}}></input>
+                <p>{errPhone}</p>
                 <input type="text" placeholder="Phone" value={phone} onChange={(event)=>{setPhone(event.target.value)}}></input>
+                <p>{errBirthday}</p>
                 <input type="date" placeholder="dd/mm/yyyy" value={birthday} onChange={(event)=>{setBirthday(event.target.value)}}></input>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={()=>{setError("");props.setShow(false)}}>Close</Button>
+                <Button variant="secondary" onClick={()=>{props.setShow(false)}}>Close</Button>
                 <Button variant="primary" onClick={()=>{handleSubmit()}}>Save changes</Button>
             </Modal.Footer>
         </Modal>
