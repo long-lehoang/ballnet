@@ -18,6 +18,9 @@ export const POSTS_API = HOST + '/api/posts/';
 export const FRIENDS_API = HOST + '/api/friends/';
 export const SEARCH_FRIENDS_API = HOST + 'api/friends/search';
 
+//FRIEND REQUEST
+export const FRIEND_REQUESTS_API = HOST + '/api/friend_requests/';
+
 //FOLLOW
 export const FOLLOWS_API = HOST + '/api/follows/';
 

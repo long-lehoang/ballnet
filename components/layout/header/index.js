@@ -9,9 +9,9 @@ import { useSelector } from 'react-redux';
 import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
 import { useEffect, useState } from 'react';
-import Notification from '../../notifications';
-import convertTime from '../../../lib/time';
+
 import { useCookies } from 'react-cookie';
+import { showNotice } from '../../../lib/notification';
 
 
 
@@ -59,29 +59,7 @@ export default function Header() {
         setNewNotice(number);
         addNotice(list);
     }
-    function showNotice(data) {
-        const LIKE = "App\\Notifications\\LikePost"
-        const COMMENT = "App\\Notifications\\CommentPost"
-        const SHARE = "App\\Notifications\\SharePost"
-
-        //prepare text
-        switch (data.type) {
-            case LIKE:
-                const link = `/post/${data.data.post_id}`;
-                const avatar = data.data.avatar ? HOST + data.data.avatar : AVATAR;
-                const text = `${data.data.name} liked your post.`;
-                const time = convertTime(data.created_at);
-                const read = data.read_at !== null;
-                return <Notification link={link} avatar={avatar} text={text} time={time} read={read} />
-            case COMMENT:
-                break;
-            case SHARE:
-                break;
-            default:
-                break;
-        }
-        //return jsx
-    }
+    
 
     function handleReadNotice() {
         if (!notification) {
