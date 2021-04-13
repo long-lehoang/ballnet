@@ -42,3 +42,28 @@
     background-color: var(--background);
     cursor: pointer;
 }
+
+.btn{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 10px;
+    .acptBtn{
+        width: 60px;
+        height: 25px;
+        border: none;
+        background-color: var(--button-color-1);
+        outline: none;
+        color: var(--text-color-4);
+        border-radius: 5px;
+    }
+    .dnBtn{
+        width: 60px;
+        height: 25px;
+        border: none;
+        background-color: var(--background-header);
+        outline: none;
+        border-radius: 5px;
+        color: var(--text-color-4);
+    }
+}

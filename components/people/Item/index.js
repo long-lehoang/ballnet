@@ -1,8 +1,10 @@
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
-import { AVATAR, HOST } from '../../../config/config';
+import { useSelector } from 'react-redux';
+import { AVATAR, FRIEND_REQUESTS_API, HOST } from '../../../config/config';
 import loadStar from '../../../lib/star';
 import styles from './styles.module.scss';
 
@@ -12,9 +14,32 @@ export default function Item({item}){
     const [numStar, setNumStar] = useState(item.points);
     const [url, setUrl] = useState('/'+item.username);
     const [location, setLocation] = useState(item.address);
+    const token = useSelector(state => state.token);
+    const [disable, setDisable] = useState(false);
+    const [idRequest, setIdRequest] = useState('');
     function handleAdd(){
-        console.log("add");   
+        let formData = new FormData();
+        formData.append('username', item.username);
+        axios.post(FRIEND_REQUESTS_API, formData, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setDisable(true);
+            setIdRequest(response.data.data);
+        })
     }
+
+    function handleCancel(){
+        axios.post(FRIEND_REQUESTS_API + `${idRequest}/deny`, {}, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setDisable(false);
+        })
+    }
+
     function handleMessage(){
         console.log("add");   
     }
@@ -27,7 +52,7 @@ export default function Item({item}){
             </div>
             <p className={styles.location}>{location}</p>
             <div className={styles.group_btn}>
-                <button className={styles.btn_add} onClick={handleAdd}>Add Friend</button>
+                {disable ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button> : <button className={styles.btn_add} onClick={handleAdd}>Add Friend</button>}        
                 <button className={styles.btn_message} onClick={handleMessage}><FontAwesomeIcon height={15} className={styles.icon} icon={faEnvelope} /></button>
             </div>
             <Link href={url}><span className={styles.link}>View Profile</span></Link>

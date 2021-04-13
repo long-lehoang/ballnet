@@ -31,7 +31,7 @@ export const PEOPLE_API = HOST + '/api/people/';
 export const SPORT_API = HOST + '/api/sports/';
 
 //NOTIFICATION
-export const NOTIFICATION = HOST + '/api/notifications';
+export const NOTIFICATION = HOST + '/api/notifications/';
 /**
  * API GOOGLE MAP
  */

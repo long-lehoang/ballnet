@@ -41,40 +41,65 @@ export default function Header() {
             },
         },
     }
+    
     function addNotification(data, number) {
-        const list = listNotice;
         if (Array.isArray(data)) {
             data.forEach(element => {
                 if (element.read_at === null)
                     ++number;
                 const notice = showNotice(element);
-                list.push(notice);
+                addNotice([...listNotice, notice]);
             });
         } else {
             if (data.read_at === null)
-                ++number;
+                ++number;            
             const notice = showNotice(data);
-            list.push(notice);
+            addNotice([...listNotice, notice]);
         }
         setNewNotice(number);
-        addNotice(list);
     }
     
 
     function handleReadNotice() {
         if (!notification) {
-            axios.post(NOTIFICATION + '/read', [], {
+            axios.post(NOTIFICATION + 'read', [], {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             }).then(response => {
-                console.log(response.data.message)
+                console.log(response.data.message);
             }).catch(error => {
                 console.log(error.message);
             })
+            setNewNotice(0);
         }
         showNotification(!notification);
     }
+
+    
+    useEffect(() => {
+        echo = new Echo(options);
+    }, [null])
+
+    useEffect(() => {
+        if (user.id !== undefined && echo !== undefined) {
+            
+            console.log(newNotice);
+            echo.private(`App.Models.User.${user.id}`).notification((data) => {
+                debugger
+                let number = 0;
+                const obj = { data: {...data} ,type : data.type, read_at: null, created_at: (new Date()).getTime() }
+                if (obj.read_at === null)
+                ++number;            
+                const notice = showNotice(obj);
+                let list = listNotice;
+                list.push(notice);
+                addNotice(list);
+                setNewNotice(1+newNotice);
+            });
+        }
+
+    }, [newNotice]);
 
     useEffect(() => {
         axios.get(NOTIFICATION, {
@@ -83,25 +108,20 @@ export default function Header() {
                 Accept: 'application/json',
             }
         }).then((response) => {
-            addNotification(response.data.data, 0);
+            const data = response.data.data;
+            let number = newNotice;
+            let list = listNotice;
+            data.forEach(element => {
+                if (element.read_at === null)
+                number++;
+                let notice = showNotice(element);
+                list.push(notice);
+            });
+            setNewNotice(number);
+            addNotice(list);
         });
     }, [null]);
 
-    useEffect(() => {
-        echo = new Echo(options);
-    }, [null])
-
-    useEffect(() => {
-
-        if (user.id !== undefined && echo !== undefined) {
-            echo.private(`App.Models.User.${user.id}`).notification((data) => {
-                console.log(newNotice);
-                let notice = { data: { ...data }, read_at: null, created_at: (new Date()).getTime() }
-                addNotification(notice, newNotice);
-            });
-        }
-
-    }, [user, newNotice])
 
     const router = useRouter();
 
@@ -236,6 +256,7 @@ export default function Header() {
             </div>
             <div className={notification ? styles.notification : styles.hideNotification}>
                 {listNotice.length == 0 ? <h5 style={{padding: 10 ,color: "black"}}>No notifications</h5> : listNotice}
+                <button onClick={()=>{setNewNotice(newNotice+1)}}>Add</button>
             </div>
         </div>
 
