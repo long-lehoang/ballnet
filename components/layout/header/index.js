@@ -1,3 +1,7 @@
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import {showNotice} from '../../../lib/notification'
 import styles from './styles.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol, faSearch, faHome, faUsers, faCalendarAlt, faMap, faUserPlus, faEnvelope, faBell, faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -5,15 +9,9 @@ import Link from 'next/link';
 import axios from 'axios';
 import { LOGOUT_API, AVATAR, HOST, NOTIFICATION } from '../../../config/config'
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
-import { useEffect, useState } from 'react';
-
-import { useCookies } from 'react-cookie';
-import { showNotice } from '../../../lib/notification';
-
-
+var numNotice = 0;
 
 export default function Header() {
     const token = useSelector(state => state.token);
@@ -25,6 +23,7 @@ export default function Header() {
     const [newNotice, setNewNotice] = useState(0);
     const [cookie, setCookie, removeCookie] = useCookies(["user"]);
     let echo;
+
     const options = {
         broadcaster: 'pusher',
         key: '903afb56e4567c43f695',
@@ -42,64 +41,6 @@ export default function Header() {
         },
     }
     
-    function addNotification(data, number) {
-        if (Array.isArray(data)) {
-            data.forEach(element => {
-                if (element.read_at === null)
-                    ++number;
-                const notice = showNotice(element);
-                addNotice([...listNotice, notice]);
-            });
-        } else {
-            if (data.read_at === null)
-                ++number;            
-            const notice = showNotice(data);
-            addNotice([...listNotice, notice]);
-        }
-        setNewNotice(number);
-    }
-    
-
-    function handleReadNotice() {
-        if (!notification) {
-            axios.post(NOTIFICATION + 'read', [], {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }).then(response => {
-                console.log(response.data.message);
-            }).catch(error => {
-                console.log(error.message);
-            })
-            setNewNotice(0);
-        }
-        showNotification(!notification);
-    }
-
-    
-    useEffect(() => {
-        echo = new Echo(options);
-    }, [null])
-
-    useEffect(() => {
-        if (user.id !== undefined && echo !== undefined) {
-            
-            console.log(newNotice);
-            echo.private(`App.Models.User.${user.id}`).notification((data) => {
-                debugger
-                let number = 0;
-                const obj = { data: {...data} ,type : data.type, read_at: null, created_at: (new Date()).getTime() }
-                if (obj.read_at === null)
-                ++number;            
-                const notice = showNotice(obj);
-                let list = listNotice;
-                list.push(notice);
-                addNotice(list);
-                setNewNotice(1+newNotice);
-            });
-        }
-
-    }, [newNotice]);
 
     useEffect(() => {
         axios.get(NOTIFICATION, {
@@ -113,15 +54,52 @@ export default function Header() {
             let list = listNotice;
             data.forEach(element => {
                 if (element.read_at === null)
-                number++;
+                number = number + 1;
                 let notice = showNotice(element);
                 list.push(notice);
             });
+            numNotice = number;
             setNewNotice(number);
             addNotice(list);
         });
     }, [null]);
+    
+    function handleReadNotice() {
+        if (!notification) {
+            axios.post(NOTIFICATION + 'read', {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                console.log(response.data.message);
+            }).catch(error => {
+                console.log(error.message);
+            })
+        }
+        setNewNotice(0);
+        numNotice = 0;
+        showNotification(!notification);
+    }
 
+    useEffect(() => {
+        echo = new Echo(options);
+    }, [null])
+
+    useEffect(() => {
+        if (user.id !== undefined && echo !== undefined) {
+            echo.private(`App.Models.User.${user.id}`).notification((data) => {
+                const obj = { data: {...data} ,type : data.type, read_at: null, created_at: (new Date()).getTime() }
+                debugger
+                if (obj.read_at === null)
+                numNotice = numNotice + 1;            
+                const notice = showNotice(obj);
+                let list = listNotice;
+                list.unshift(notice);
+                addNotice(list);
+                setNewNotice(numNotice);
+            });
+        }
+    },[listNotice]);
 
     const router = useRouter();
 
@@ -256,7 +234,6 @@ export default function Header() {
             </div>
             <div className={notification ? styles.notification : styles.hideNotification}>
                 {listNotice.length == 0 ? <h5 style={{padding: 10 ,color: "black"}}>No notifications</h5> : listNotice}
-                <button onClick={()=>{setNewNotice(newNotice+1)}}>Add</button>
             </div>
         </div>
 
