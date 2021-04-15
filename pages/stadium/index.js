@@ -1,13 +1,11 @@
 import LayoutMain from '../../components/layout/main'
-import checkLogin from '../../lib/user'
-import { useSelector } from 'react-redux'
+import Statidum from '../../components/stadium/list'
 
 export default function Stadium() {
 
-    checkLogin();
-
     return (
         <LayoutMain>
+            <Statidum></Statidum>
         </LayoutMain>
     )
 }
