@@ -89,7 +89,7 @@ export default function Header() {
         if (user.id !== undefined && echo !== undefined) {
             echo.private(`App.Models.User.${user.id}`).notification((data) => {
                 const obj = { data: {...data} ,type : data.type, read_at: null, created_at: (new Date()).getTime() }
-                debugger
+                
                 if (obj.read_at === null)
                 numNotice = numNotice + 1;            
                 const notice = showNotice(obj);

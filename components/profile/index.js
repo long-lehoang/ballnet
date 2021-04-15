@@ -37,7 +37,7 @@ export default function Profile({permission, userN, profileN}) {
             case 3:
                 return (<Team></Team>)
             case 4:
-                return (<Friend></Friend>)
+                return (<Friend username={userN.username} permission={permission}></Friend>)
             case 5:
                 return (<Match></Match>)
             case 6:

@@ -14,13 +14,7 @@ export default function Notification(props) {
                 Authorization: `Bearer ${token}`
             }
         }).then((response) => {
-            axios.delete(props.linkDelNtf, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(response => {
-                setDel(true);
-            })
+            setDel(true);
         }).catch(error=>{
             console.log(error);
         });
@@ -33,13 +27,7 @@ export default function Notification(props) {
                 Authorization: `Bearer ${token}`
             }
         }).then((response) => {
-            axios.delete(props.linkDelNtf, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(response => {
-                setDel(true);
-            })
+            setDel(true);
         }).catch(error=>{
             console.log(error);
         });
