@@ -8,9 +8,9 @@ import Loading from '../../commons/Loading';
 import Filter from './Filter';
 import Item from './Item';
 import styles from './styles.module.scss';
-export default function Friend({username,permission}){
+export default function Friend({username}){
     const [friends, setFriend] = useState([]);
-
+    const [friendsC, setFriendC] = useState([]);
     const token = useSelector(state => state.token);
     useEffect(()=>{
         axios.get(FRIENDS_API+username,{
@@ -19,8 +19,8 @@ export default function Friend({username,permission}){
             }
         }).then(response=>{
             let data = response.data.data;
-            console.log(response.data);
             setFriend(data);
+            setFriendC(data);
         }).catch(error => {
             console.log(error);
         });
@@ -28,7 +28,7 @@ export default function Friend({username,permission}){
 
     return(
         <div className={styles.container}>
-            <Filter></Filter>
+            <Filter friends={friendsC} setFriend={setFriend} result={friends}></Filter>
             <div className={styles.list}>
             {friends.map((element,key) => {
                 return(
