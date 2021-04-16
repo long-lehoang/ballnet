@@ -2,7 +2,6 @@ import LayoutMain from '../../components/layout/main'
 import ChangePassword from '../../components/setting/ChangePassword'
 import GeneralSetting from '../../components/setting/General'
 import DeadactiveAccount from '../../components/setting/DeadactiveAccount'
-import MyBooking from '../../components/setting/MyBooking'
 
 import { useState } from 'react'
 import styles from './styles.module.scss';
@@ -25,12 +24,8 @@ export default function Setting({token, user, username}) {
                 return (<GeneralSetting></GeneralSetting>)
             case 2:
                 return (<ChangePassword></ChangePassword>)
-
             case 3:
                 return (<DeadactiveAccount></DeadactiveAccount>)
-
-            case 4:
-                return (<MyBooking></MyBooking>)
             default:
                 return (<GeneralSetting></GeneralSetting>)
         }
@@ -75,10 +70,6 @@ export default function Setting({token, user, username}) {
                     <button onClick={() => { setOption(3) }}>
                         <FontAwesomeIcon icon={faTrash} className={styles.icon}></FontAwesomeIcon>
                         <span>Deadactive Account</span>
-                    </button>
-                    <button onClick={() => { setOption(4) }}>
-                        <FontAwesomeIcon icon={faBook} className={styles.icon}></FontAwesomeIcon>
-                        <span>My booking</span>
                     </button>
                 </div>
                 <div className={styles.content}>

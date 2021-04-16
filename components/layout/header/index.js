@@ -162,7 +162,8 @@ export default function Header() {
                                 <FontAwesomeIcon height={22} icon={faCalendarAlt}></FontAwesomeIcon>
                             </div>
                             <div className={styles.textNav}>
-                                Match
+                            <Link href="/match"><div className={styles.link}>Match</div></Link>
+                            <Link href="/match/invitation"><div className={styles.link}>Match Invitation</div></Link>
                             </div>
                         </div>
                     </Link>
@@ -178,17 +179,15 @@ export default function Header() {
                         </div>
                     </Link>
 
-                    <Link href="/people">
-                        <div className={styles.btnNav}>
-                            <div className={styles.iconNav}>
-                                <FontAwesomeIcon height={22} icon={faUserPlus}></FontAwesomeIcon>
-                            </div>
-                            <div className={styles.textNav}>
-                                People
-                            </div>
+                    <div className={styles.btnNav}>
+                        <div className={styles.iconNav}>
+                            <FontAwesomeIcon height={22} icon={faUserPlus}></FontAwesomeIcon>
                         </div>
-                    </Link>
-
+                        <div className={styles.textNav}>
+                            <Link href="/people"><div className={styles.link}>People</div></Link>
+                            <Link href="/people/friend_request"><div className={styles.link}>Friend Requests</div></Link>
+                        </div>
+                    </div>
                     <Link href="/message">
                         <div className={styles.btnNav}>
 
@@ -224,11 +223,16 @@ export default function Header() {
                 <div className={styles.setting}>
                     <button><FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon></button>
                     <div className={styles.dropdown_setting}>
-                        <p>Setting</p>
                         <Link href="/setting">
                             <a>Account Setting</a>
                         </Link>
-                        <button onClick={handleLoggout}>Logout</button>
+                        <Link href="/stadium/mystadium">
+                            <a>My Stadium</a>
+                        </Link>
+                        <Link href="/my_booking">
+                            <a>My Booking</a>
+                        </Link>
+                        <a onClick={handleLoggout}>Logout</a>
                     </div>
                 </div>
             </div>

@@ -1,14 +1,14 @@
-import LayoutMain from '../../components/layout/main'
-import { useDispatch, useSelector } from 'react-redux'
-import { setToken } from '../../slices/tokenSlice';
-import { setUser } from '../../slices/infoUserSlice';
-import { PEOPLE_API, PROFILE_API } from '../../config/config';
+import LayoutMain from '../components/layout/main'
+import MyBookingPage from '../components/my_booking'
+import { parseCookies } from '../lib/cookie';
+import { setProfile } from '../slices/profileSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToken } from '../slices/tokenSlice';
+import { setUser } from '../slices/infoUserSlice';
 import axios from 'axios';
-import { setProfile } from '../../slices/profileSlice';
-import People from '../../components/people';
-import { parseCookies } from '../../lib/cookie';
+import { PROFILE_API } from '../config/config';
 
-export default function PeoplePage({token, username, user, people}) {
+export default function MyBooking({ token, username, user }) {
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
@@ -35,12 +35,13 @@ export default function PeoplePage({token, username, user, people}) {
 
     return (
         <LayoutMain>
-            <People people={people||[]}></People>
+            <MyBookingPage data={[]}></MyBookingPage>
         </LayoutMain>
     )
 }
 
-PeoplePage.getInitialProps = async ({ req, res }) => {
+
+MyBooking.getInitialProps = async ({ req, res }) => {
     const data = parseCookies(req).user
     if (res) {
         if ((data === undefined) || (Object.keys(data).length === 0 && data.constructor === Object)) {
@@ -50,20 +51,10 @@ PeoplePage.getInitialProps = async ({ req, res }) => {
     }
     const user = JSON.parse(data)
     const token = user.access_token;
-    let people;
-    await axios.get(PEOPLE_API,{
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    }).then(response=>{
-        people = response.data.data
-    }).catch(error=>{
-        console.log(error);
-    })
+
     return {
         token: user.access_token,
         username: user.user.username,
-        user: user.user,
-        people: people
+        user: user.user
     }
 }

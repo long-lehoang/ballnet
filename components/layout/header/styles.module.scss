@@ -79,6 +79,7 @@
         color: var(--text-color-4);
       }
       .dropdown_setting{
+        padding-top: 20px;
         color: var(--text-color-3);
         display: none;
         position: absolute;
@@ -88,13 +89,8 @@
         min-width: 160px;
         border: 1px solid var(--background);
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         z-index: 1;
-        p{
-          font: var(--sub-title);
-          padding: 10px 10px;
-          border-bottom: 1px solid grey;
-        }
         a{
           color: var(--text-color-2);
           padding-left: 20px;
@@ -103,16 +99,9 @@
           display: block;
           text-decoration: none;
         }
-        button{
-          font: var(--sub-title);
-
-          color: var(--text-color-3);
-          padding: 10px 10px;
-          outline: none;
-          background: none;
-          display: block;
-          width: 100%;
-          border-top: 1px solid var(--text-color-2);
+        a:hover{
+          text-decoration: underline;
+          color: var(--background-header);
         }
       }
       button:focus + .dropdown_setting, .dropdown_setting:hover{
@@ -143,19 +132,29 @@
           background-color: var(--text-color-4);
           border-radius: 5px;
           padding: 5px 20px;
-          text-align: center;
+          // text-align: center;
           top: 25px;
           left: -10px;
           z-index: 3;
+          .link{
+            white-space: nowrap;
+            padding-top: 5px;
+            padding-bottom: 5px;
+          }
+          .link:hover{
+            background-color: var(--background);
+            color: var(--star);
+          }
         }
-        .iconNav:hover + .textNav{
+        .iconNav:hover + .textNav, .textNav:hover{
           display: block;
         }
-
       }
+      
       .btnNav:hover {
         color: var(--text-color-1);
       }
+      
       .group_notice{
         position: relative;
         .number{
@@ -236,6 +235,7 @@
             display: none;
           }
         }
+        
       }
     }
   }

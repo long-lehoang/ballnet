@@ -1,8 +1,7 @@
-import { element } from 'prop-types';
 import { useState } from 'react';
 import styles from './styles.module.scss';
 
-export default function MyBooking(){
+export default function MyBookingPage({booking}){
     const[data, setData] = useState([]);
 
     return (

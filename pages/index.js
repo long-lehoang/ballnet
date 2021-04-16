@@ -48,7 +48,7 @@ export default function Home({ token, username, posts, user }) {
 
     return (
         <LayoutMain>
-            <HomePage posts={posts}></HomePage>
+            <HomePage posts={posts||[]}></HomePage>
         </LayoutMain>
     )
 }
