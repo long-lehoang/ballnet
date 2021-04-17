@@ -31,11 +31,11 @@ export default function Profile({permission, userN, profileN}) {
     function loadComponent(option) {
         switch (option) {
             case 1:
-                return (<Feed username={userN.username}></Feed>)
+                return (<Feed username={userN.username} permission={permission}></Feed>)
             case 2:
                 return (<Info username={userN.username} profile={profileN} user={userN} permission={permission}></Info>)
             case 3:
-                return (<Team></Team>)
+                return (<Team permission={permission}></Team>)
             case 4:
                 return (<Friend username={userN.username} permission={permission}></Friend>)
             case 5:

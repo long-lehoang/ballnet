@@ -27,9 +27,17 @@ export const FOLLOWS_API = HOST + '/api/follows/';
 //PEOPLE
 export const PEOPLE_API = HOST + '/api/people/';
 
+//TEAM
+export const TEAM_API = HOST + '/api/teams/';
+
+//MYTEAM
+export const MY_TEAM_API = HOST + '/api/myteam';
+
 //SPORT
 export const SPORT_API = HOST + '/api/sports/';
 
+//SPORT CATEGORY
+export const SPORT_CATEGORY_API = HOST + '/api/sport_category';
 //NOTIFICATION
 export const NOTIFICATION = HOST + '/api/notifications/';
 /**

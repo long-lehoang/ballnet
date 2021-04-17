@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import Filter from './Filter'
+import Filter from './filter'
 import Item from './Item'
 import styles from './styles.module.scss'
-export default function People({people})
+export default function Team({team})
 {
-    const [list, setList] = useState(people||[]);
+    const [list, setList] = useState(team||[]);
 
     return(
         <div className={styles.container}>
-            <h3>People</h3>
+            <h3>Teams</h3>
+
             <div className={styles.filter}>
-                <Filter people={people} setPeople={setList} result={list}/>
+                <Filter team={team} setTeam={setList} result={list}/>
             </div>
             <div className={styles.lists}>
                 {

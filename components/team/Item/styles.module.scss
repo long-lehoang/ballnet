@@ -1,0 +1,73 @@
+.container{
+    width: 260px;
+    height: 280px;
+    padding: 10px 15px;
+    background-color: var(--background-component);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: grid;
+    .img{
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .name{
+        font: var(--title);
+        color: var(--text-color-3);
+        text-align: center;
+    }
+    .stars{
+        margin-left: auto;
+        margin-right: auto;
+        color: var(--star);
+    }
+    .location{
+        text-align: center;
+        color: var(--text-color-2);
+    }
+    .group_btn{
+        display: flex;
+        justify-content: space-evenly;
+        .btn_add{
+            width: 90px;
+            height: 30px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            background-color: var(--button-color-1);
+            color: var(--text-color-4);
+            font: var(--content);
+        }
+        .btn_message{
+            width: 90px;
+            height: 30px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            background-color: var(--button-color-2);
+            color: var(--text-color-4);
+        }
+        .btn_cancel{
+            width: 90px;
+            height: 30px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            background-color: var(--background-header);
+            color: var(--text-color-4);
+        }
+    }
+    .link{
+        font: var(--sub-title);
+        color: var(--text-color-2);
+        text-align: center;
+        cursor: pointer;
+    }
+    .link:hover{
+        color: var(--background-header);
+    }
+}
+.container:hover{
+    background-color: var(--background);
+}

@@ -22,7 +22,7 @@ function extractData(data, result = []) {
     return result;
 }
 
-export default function Feed({username}) {
+export default function Feed({username, permission}) {
     const token = useSelector(state => state.token)
     const [posts, setPosts] = useState([]);
 
@@ -46,9 +46,9 @@ export default function Feed({username}) {
 
     return (
         <div className={styles.container}>
-            <div className={styles.row}>
+            {permission ? <div className={styles.row}>
                 <CreatePostForm></CreatePostForm>
-            </div>
+            </div> : ''}
             {posts.map((element, key) => {
                 return (
                     <LazyLoad key={key} height={200} placeholder={<Loading />}>
