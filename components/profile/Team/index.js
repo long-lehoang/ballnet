@@ -6,9 +6,9 @@ import LazyLoad from 'react-lazyload';
 import Loading from '../../commons/Loading';
 import { MY_TEAM_API, POSTS_API, TEAM_API } from '../../../config/config';
 import { useSelector } from 'react-redux';
-import Item from '../../team/Item';
+import Item from './Item';
 
-export default function Team({username, permission}) {
+export default function Team({permission}) {
     const token = useSelector(state => state.token)
     const [teams, setTeams] = useState([]);
 
@@ -30,6 +30,7 @@ export default function Team({username, permission}) {
             {permission ? <div className={styles.row}>
                 <CreateTeamForm></CreateTeamForm>
             </div> : ''}
+            <div className={styles.list}>
             {teams.map((element, key) => {
                 return (
                     <LazyLoad key={key} height={200} placeholder={<Loading />}>
@@ -37,6 +38,7 @@ export default function Team({username, permission}) {
                     </LazyLoad>
                 )
             })}
+            </div>
         </div>
     )
 }

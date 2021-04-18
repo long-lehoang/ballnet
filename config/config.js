@@ -29,7 +29,7 @@ export const PEOPLE_API = HOST + '/api/people/';
 
 //TEAM
 export const TEAM_API = HOST + '/api/teams/';
-
+export const TEAM_REQUEST_API = HOST + '/api/team_requests/';
 //MYTEAM
 export const MY_TEAM_API = HOST + '/api/myteam';
 
@@ -53,3 +53,4 @@ export const CITY_API = LOCATION_API + '/api/city';
 // Image
 export const AVATAR = '/avatar.png';
 export const COVER = '/cover.jpg';
+export const AVATAR_TEAM = '/avatar_team.jpg';

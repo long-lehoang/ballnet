@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import Head from 'next/head';
 import Header from '../header';
+import MessageBox from '../../commons/MessageBox';
 
 export default function LayoutMain({children}){
     return (
@@ -11,6 +12,7 @@ export default function LayoutMain({children}){
             </Head>
 
             <main className={styles.main}>
+                <MessageBox></MessageBox>
                 <header className={styles.header}>
                     <Header></Header>
                 </header>

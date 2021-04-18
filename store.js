@@ -4,6 +4,7 @@ import loginError from "./slices/loginErrorSlice";
 import infoUSer from "./slices/infoUserSlice";
 import profile from "./slices/profileSlice";
 import token from "./slices/tokenSlice";
+import message from "./slices/messageSlice";
 
 const store = configureStore({ 
     reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
         infoUser: infoUSer,
         profile: profile,
         token: token,
+        message: message,
     } 
 })
 

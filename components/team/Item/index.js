@@ -47,6 +47,7 @@ export default function Item({item}){
             <div className={styles.stars}>
                 {loadStar(item.rating, 15)}
             </div>
+            <p className={styles.location}>{item.sport}</p>
             <p className={styles.location}>{item.location}</p>
             <div className={styles.group_btn}>
                 {disable ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button> : <button className={styles.btn_add} onClick={handleJoin}>Join</button>}        
