@@ -145,16 +145,15 @@ export default function Header() {
                         </div>
                     </Link>
 
-                    <Link href="/team">
-                        <div className={styles.btnNav}>
-                            <div className={styles.iconNav}>
-                                <FontAwesomeIcon height={22} icon={faUsers}></FontAwesomeIcon>
-                            </div>
-                            <div className={styles.textNav}>
-                                Team
-                            </div>
+                    <div className={styles.btnNav}>
+                        <div className={styles.iconNav}>
+                            <FontAwesomeIcon height={22} icon={faUsers}></FontAwesomeIcon>
                         </div>
-                    </Link>
+                        <div className={styles.textNav}>
+                            <Link href="/team"><div className={styles.link}>Team</div></Link>
+                            <Link href="/team/invitation"><div className={styles.link}>Team Invitations</div></Link>
+                        </div>
+                    </div>
 
                     <Link href="/match">
                         <div className={styles.btnNav}>

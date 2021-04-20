@@ -83,7 +83,7 @@ export default function Item({item}){
                         
                 <button className={styles.btn_message} onClick={handleMessage}><FontAwesomeIcon height={15} className={styles.icon} icon={faEnvelope} /></button>
             </div>
-            <Link href={'/teams/'+item.id}><span className={styles.link}>View Profile</span></Link>
+            <Link href={'/team/'+item.id}><span className={styles.link}>View Profile</span></Link>
         </div>
     )
 }

@@ -2,23 +2,23 @@ import styles from './styles.module.scss';
 import location from '../../../data/location.json';
 import { useState } from 'react';
 
-export default function Filter({people, setPeople, result}){
+export default function Filter({team, setTeam, result}){
     const [district, setDistrict] = useState(location[0].Districts);
-    const [resultWithCity, setResultCity] = useState(people);
+    const [resultWithCity, setResultCity] = useState(team);
 
     function handleSearch(event){
         let search = event.target.value;
-        let arr = [...people];
+        let arr = [...team];
         let pp = arr.filter( element => {
             return element.name.toLowerCase().includes(search.trim());
         });
-        setPeople(pp);
+        setTeam(pp);
     }
 
     function handleSelectCity(event){
         const idCity = event.target.value;
         if(idCity === 'all'){
-            setPeople(people);
+            setTeam(team);
             return;
         }
         //set options for select district
@@ -27,21 +27,21 @@ export default function Filter({people, setPeople, result}){
 
         //search
         let nameCity = obj.Name;
-        let arr = [...people];
+        let arr = [...team];
         let pp = arr.filter( element => {
-            if (element.address == null) return false;
-            let address = element.address.split(', ');
-            let city = address[address.length - 1];
+            if (element.location == null) return false;
+            let location = element.location.split(', ');
+            let city = location[location.length - 1];
             return city == nameCity;
         });
-        setPeople(pp);
+        setTeam(pp);
         setResultCity(pp);
     }
 
     function handleSelectDistrict(event){
         const idDistrict = event.target.value;
         if(idDistrict === 'all'){
-            setPeople(resultWithCity);
+            setTeam(resultWithCity);
             return;
         }
         //set options for select district
@@ -51,12 +51,12 @@ export default function Filter({people, setPeople, result}){
         let nameDistrict = obj.Name;
         let arr = [...resultWithCity];
         let pp = arr.filter( element => {
-            if (element.address == null) return false;
-            let address = element.address.split(', ');
-            let district = address[address.length - 2];
+            if (element.location == null) return false;
+            let location = element.location.split(', ');
+            let district = location[location.length - 2];
             return district == nameDistrict;
         });
-        setPeople(pp);
+        setTeam(pp);
     }
 
     return (

@@ -1,7 +1,7 @@
-import Filter from '../Filter'
+import Filter from '../filter'
 import Item from '../Item'
 import styles from './styles.module.scss'
-export default function FriendRequest({friendRequest})
+export default function Invitation({team})
 {
     return(
         <div className={styles.container}>
@@ -11,7 +11,7 @@ export default function FriendRequest({friendRequest})
             </div>
             <div className={styles.lists}>
                 {
-                    friendRequest.map((item, key)=>{
+                    team.map((item, key)=>{
                         return(
                             <Item item={item} key={key}/>
                         )

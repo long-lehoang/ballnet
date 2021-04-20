@@ -29,7 +29,7 @@
     .group_btn{
         display: flex;
         justify-content: space-evenly;
-        .btn_add{
+        .btn_join{
             width: 90px;
             height: 30px;
             border: none;
@@ -55,6 +55,33 @@
             outline: none;
             border-radius: 5px;
             background-color: var(--background-header);
+            color: var(--text-color-4);
+        }
+        .btn_leave{
+            width: 90px;
+            height: 30px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            background-color: var(--background-header);
+            color: var(--text-color-4);
+        }
+        .btn_deny{
+            width: 90px;
+            height: 30px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            background-color: var(--background-header);
+            color: var(--text-color-4);
+        }
+        .btn_approve{
+            width: 90px;
+            height: 30px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            background-color: var(--button-color-1);
             color: var(--text-color-4);
         }
     }
