@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken } from '../../../slices/tokenSlice';
 import { setUser } from '../../../slices/infoUserSlice';
 import { setProfile } from '../../../slices/profileSlice';
-import { PROFILE_API, TEAM_API } from "../../../config/config";
+import { PROFILE_API, TEAM_API, TEAM_REQUEST_API } from "../../../config/config";
 import axios from 'axios';
 import { parseCookies } from '../../../lib/cookie';
 import Invitation from '../../../components/team/invitation';
@@ -51,7 +51,7 @@ InvitationPage.getInitialProps = async ({ req, res }) => {
     const user = JSON.parse(data)
     const token = user.access_token;
     let team;
-    await axios.get(TEAM_API,{
+    await axios.get(TEAM_REQUEST_API,{
         headers:{
             Authorization: `Bearer ${token}`
         }

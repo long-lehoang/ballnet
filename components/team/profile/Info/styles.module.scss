@@ -1,0 +1,56 @@
+.container{
+    width: 100%;
+    display: block;
+    .box{
+        background-color: var(--background-component);
+        margin: 20px 0px;
+        width: 100%;
+        display: block;
+        padding: 20px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: var(--background-component);
+        color: var(--text-color-2);
+        .title{
+            display: flex;
+            align-items: center;
+            font: var(--title);
+            span{
+                color: var(--text-color-3);
+                padding-right: 10px;
+            }
+            button{
+                outline: none;
+                border: none;
+                background-color: transparent;
+            }
+            padding-bottom: 20px;
+        }
+        .content{
+            div{
+                .icon{
+                    color: var(--text-color-3);
+
+                }
+                span{
+                    color: var(--text-color-3);
+                    padding-left: 10px;
+                }
+                padding-bottom: 10px;
+            }
+            
+            .name{
+                color: var(--text-color-3);
+                padding-right: 10px;
+            }
+            .num{
+                padding-right: 10px;
+                color: var(--text-color-1);
+            }
+            .star{
+                padding-right: 10px;
+                color: var(--star);
+            }
+            
+        }
+    }
+}

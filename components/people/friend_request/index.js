@@ -12,6 +12,8 @@ export default function FriendRequest({friendRequest})
             <div className={styles.lists}>
                 {
                     friendRequest.map((item, key)=>{
+                        item.idRequest = item.id;
+                        item.isRequest = true;
                         return(
                             <Item item={item} key={key}/>
                         )

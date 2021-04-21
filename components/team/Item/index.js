@@ -47,7 +47,7 @@ export default function Item({item}){
         });
     }
     function handleCancel(){
-        axios.delete(TEAM_REQUEST_API + `${idRequest}`, {
+        axios.post(TEAM_REQUEST_API + `${idRequest}/deny`,{} , {
             headers:{
                 Authorization: `Bearer ${token}`
             }
@@ -75,7 +75,7 @@ export default function Item({item}){
     }
 
     function handleDeny(){
-        axios.delete(TEAM_REQUEST_API + `${idRequest}`, {
+        axios.post(TEAM_REQUEST_API + `${idRequest}/deny`,{} , {
             headers:{
                 Authorization: `Bearer ${token}`
             }

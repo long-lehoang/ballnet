@@ -1,0 +1,16 @@
+
+.body{
+    p{
+        color: var(--background-header);
+    }
+    select{
+        width: 100%;
+        outline: none;
+        height: 40px;
+        color: var(--text-color-2);
+        border: 1px solid var(--text-color-1);
+        background-color: var(--background-component);
+        margin-bottom: 15px;
+        border-radius: 4px;
+    }
+}
