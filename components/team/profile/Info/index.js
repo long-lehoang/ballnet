@@ -8,16 +8,41 @@ import loadStar from '../../../../lib/star';
 import EditLocation from './EditLocation';
 import EditOverview from './EditOverview';
 import styles from './styles.module.scss';
+import { AVATAR, HOST, TEAM_API } from '../../../../config/config';
+import Link from 'next/link';
 
 export default function Info({team, permission}) {
     const [overview, setOverview] = useState(team.overview || "No overview");
     const [location, setLocation] = useState(team.location);
     const [admins, setAdmins] = useState([]);
+    const [members, setMembers] = useState([]);
     const [editOverview, toggleEditOverview] = useState(false);
     const [editLocation, toggleEditLocation] = useState(false);
     const [editAdmin, toggleEditAdmin] = useState(false);
     const created_at = new Date(team.created_at);
-    const establish = `Team created at ${created_at.getDate()}/${created_at.getMonth()}/${created_at.getFullYear()}`
+    const establish = `Team created at ${created_at.getDate()}/${created_at.getMonth()}/${created_at.getFullYear()}`;
+    const token = useSelector(state=>state.token);
+    useEffect(()=>{
+        axios.get(TEAM_API+`${team.id}/admin`,{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            setAdmins(response.data.data);
+        }).catch(error=>{
+            console.log(error);
+        });
+        axios.get(TEAM_API+`${team.id}/member`,{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            setMembers(response.data.data);
+        }).catch(error=>{
+            console.log(error);
+        });
+    },[null])
+
     return (
         <div className={styles.container}>
             <div className={styles.box}>
@@ -41,7 +66,7 @@ export default function Info({team, permission}) {
 
             </div>
             <div className={styles.box}>
-                <EditLocation show={editLocation} setShow={toggleEditLocation} value={location} setValue={setLocation}></EditLocation>
+                <EditLocation show={editLocation} setShow={toggleEditLocation} id={team.id} value={location} setValue={setLocation}></EditLocation>
                 <div className={styles.title}>
                     <span>Location</span>
                     {permission ? <button onClick={() => { toggleEditLocation(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
@@ -55,13 +80,31 @@ export default function Info({team, permission}) {
                 <div className={styles.content}>{establish}</div>
             </div>
             <div className={styles.box}>
-                <EditAdmin show={editLocation} setShow={toggleEditAdmin} value={admins} setValue={setAdmins}></EditAdmin>
+                <EditAdmin show={editAdmin} setShow={toggleEditAdmin} value={admins} members={members} setValue={setAdmins}></EditAdmin>
                 <div className={styles.title}>
                     <span>Administrator</span>
                     {permission ? <button onClick={() => { toggleEditAdmin(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>
+                    <div className={styles.admin}>
+                        {
+                            admins.map((admin, key)=>{
+                                const src = admin.avatar===null? AVATAR: HOST + admin.avatar
 
+                                return (
+                                    <Link href={`/${admin.username}`}>
+                                    <div className={styles.item} key={key}>
+                                        <img src={src}></img>
+                                        <div>
+                                            <span className={styles.name}>{admin.name}</span>
+                                            <span className={styles.location}>{admin.address.split(', ')[1]}</span>
+                                        </div>
+                                    </div>
+                                    </Link>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         </div>

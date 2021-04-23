@@ -1,18 +1,20 @@
+import { useState } from 'react';
 import Filter from '../Filter'
 import Item from '../Item'
 import styles from './styles.module.scss'
 export default function FriendRequest({friendRequest})
 {
+    const [list, setList] = useState(friendRequest||[]);
+
     return(
         <div className={styles.container}>
             <h3>Friend Requests</h3>
             <div className={styles.filter}>
-                <Filter/>
+                <Filter people={friendRequest} setPeople={setList} result={list}/>
             </div>
             <div className={styles.lists}>
                 {
-                    friendRequest.map((item, key)=>{
-                        item.idRequest = item.id;
+                    list.map((item, key)=>{
                         item.isRequest = true;
                         return(
                             <Item item={item} key={key}/>

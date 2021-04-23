@@ -50,7 +50,35 @@
                 padding-right: 10px;
                 color: var(--star);
             }
-            
+            .admin{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 10px;
+                .item{
+                    display: flex;
+                    img{
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                    }
+                    div{
+                        .name{
+                            margin:auto;
+                            display: block;
+                            color: var(--text-color-3);
+                        }
+                        .location{
+                            display: block;
+                            color: var(--text-color-1);
+                            margin:auto;
+    
+                        }
+                    }
+                }
+                .item:hover div .name{
+                    color: var(--background-header);
+                }
+            }
         }
     }
 }

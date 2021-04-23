@@ -83,9 +83,13 @@ export default function CreatePostForm() {
         }).then((response) => {
             let options = [];
             response.data.data.forEach(element => {
+                const src = element.avatar === null ? AVATAR : HOST+element.avatar
                 options.push({
                     value: element.id,
-                    label: element.name
+                    label: <div className={styles.option}>
+                        <img src={src}></img>
+                        <span>{element.name}</span>
+                        </div>
                 });
             });
             setOptionSearch(options);
