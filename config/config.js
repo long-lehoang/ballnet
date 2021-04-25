@@ -1,7 +1,7 @@
 /**
  * API BALLNET
  */
-export const HOST = 'http://3.141.20.40:8989';
+export const HOST = 'http://localhost:8989';
 //AUTH
 export const LOGIN_API = HOST + '/api/login';
 export const LOGOUT_API = HOST + '/api/logout';
@@ -32,6 +32,9 @@ export const TEAM_API = HOST + '/api/teams/';
 export const TEAM_REQUEST_API = HOST + '/api/team_requests/';
 //MYTEAM
 export const MY_TEAM_API = HOST + '/api/myteam';
+
+//STADIUM
+export const STADIUM_API = HOST + '/api/stadiums/';
 
 //SPORT
 export const SPORT_API = HOST + '/api/sports/';
