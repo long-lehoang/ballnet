@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import Loading from '../../commons/Loading';
-import { POSTS_API } from '../../../config/config';
+import { HOST, POSTS_API } from '../../../config/config';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
@@ -27,7 +27,7 @@ export default function Feed({username, permission}) {
     const [posts, setPosts] = useState([]);
 
     useEffect(()=>{
-        axios.get(POSTS_API + 'self/' + username, {
+        axios.get(HOST + '/api/mypost', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

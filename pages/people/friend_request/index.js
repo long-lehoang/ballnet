@@ -7,8 +7,12 @@ import { setProfile } from '../../../slices/profileSlice';
 import FriendRequest from '../../../components/people/friend_request';
 import { parseCookies } from '../../../lib/cookie';
 import { FRIEND_REQUESTS_API,PROFILE_API } from '../../../config/config';
+import Error from 'next/error'
 
-export default function FriendRequestPage({token, username, user, friendRequest}) {
+export default function FriendRequestPage({errorCode,token, username, user, friendRequest}) {
+    if (errorCode) {
+        return <Error statusCode={errorCode} />
+    }
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
@@ -51,6 +55,8 @@ FriendRequestPage.getInitialProps = async ({ req, res }) => {
     const user = JSON.parse(data)
     const token = user.access_token;
     let friendRequest;
+    let errCode = false;
+
     await axios.get(FRIEND_REQUESTS_API,{
         headers:{
             Authorization: `Bearer ${token}`
@@ -58,9 +64,15 @@ FriendRequestPage.getInitialProps = async ({ req, res }) => {
     }).then(response=>{
         friendRequest = response.data.data
     }).catch(error=>{
-        console.log(error);
+        if (error.response) {
+            errCode = error.response.status;
+        }else{
+            errCode = 500;
+        }
     })
     return {
+        errorCode: errCode,
+
         token: user.access_token,
         username: user.user.username,
         user: user.user,

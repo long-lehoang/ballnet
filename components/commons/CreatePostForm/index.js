@@ -9,7 +9,7 @@ import Select from 'react-select';
 import axios from 'axios';
 import tagging from '../../../lib/tags';
 
-export default function CreatePostForm() {
+export default function CreatePostForm({team = false}) {
     const [show, setShow] = useState(false);
     const [permission, setPermission] = useState('Public');
     const [content, setContent] = useState('');
@@ -56,11 +56,15 @@ export default function CreatePostForm() {
     function handleSubmit(event) {
         event.preventDefault();
         var formData = new FormData();
-        formData.append('private', permission);
         formData.append('content', content);
         formData.append('location', location);
         formData.append('tags', tags);
-
+        if(team){
+            formData.append('team_id', team);
+            formData.append('private', 'Team');
+        }else{
+            formData.append('private', permission);
+        }
         console.log(images);
         for (let i = 0; i < images.length; i++) {
             formData.append(`images[${i}]`, images[i])
@@ -83,9 +87,13 @@ export default function CreatePostForm() {
         }).then((response) => {
             let options = [];
             response.data.data.forEach(element => {
+                const src = element.avatar === null ? AVATAR : HOST+element.avatar
                 options.push({
                     value: element.id,
-                    label: element.name
+                    label: <div className={styles.option}>
+                        <img src={src}></img>
+                        <span>{element.name}</span>
+                        </div>
                 });
             });
             setOptionSearch(options);
@@ -106,11 +114,13 @@ export default function CreatePostForm() {
                             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} width="40px" height="40px"></img>
                             <div className={styles.name}>
                                 <span>{user == null ? 'No Name' : user.name}</span>
+                                {team === false ? 
                                 <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
-                                    <option value="Only me">Only me</option>
-                                    <option value="Friends">Friends</option>
-                                    <option value="Public">Public</option>
-                                </select>
+                                <option value="Only me">Only me</option>
+                                <option value="Friends">Friends</option>
+                                <option value="Public">Public</option>
+                                </select>: ''}
+                                
                             </div>
                         </div>
                         <div className={styles.textInput}>

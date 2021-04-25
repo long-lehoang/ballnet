@@ -14,9 +14,11 @@ import loadStar from '../../lib/star';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faIdCard, faMap, faNewspaper, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { HOST, PROFILE_API } from '../../config/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { FRIENDS_API, FRIEND_REQUESTS_API, HOST, PROFILE_API } from '../../config/config';
 import Link from 'next/link';
+import { setMessage } from '../../slices/messageSlice';
+import { useRouter } from 'next/router';
 
 
 
@@ -28,6 +30,12 @@ export default function Profile({permission, userN, profileN}) {
     const points = profileN.points;
     const token = useSelector(state => state.token);
 
+    const [friend, setFriend] = useState(userN.isFriend);
+    const [request, setRequest] = useState(userN.isRequest);
+    const [waiting, setWaiting] = useState(userN.isWaiting);
+    const [idRequest, setIdRequest] = useState(userN.idRequest||'');
+    const router = useRouter();
+    const dispatch = useDispatch()
     function loadComponent(option) {
         switch (option) {
             case 1:
@@ -63,6 +71,78 @@ export default function Profile({permission, userN, profileN}) {
         });
     }
 
+    function handleAdd(){
+        let formData = new FormData();
+        formData.append('username', userN.username);
+        axios.post(FRIEND_REQUESTS_API, formData, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setWaiting(true);
+            setIdRequest(response.data.data);
+            openMessageBox("Error happened when add friend");
+
+        })
+    }
+    function handleUnfriend(){
+        axios.delete(FRIENDS_API + `${userN.username}`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setFriend(false);
+            router.push('/');
+        }).catch(error=>{
+            console.log(error);
+            openMessageBox("Error happened when unfriend");
+
+        })
+    }
+
+    function handleAccept(){
+        axios.post(FRIEND_REQUESTS_API + `${idRequest}/accept`, {}, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setFriend(true);
+        }).catch(error=>{
+            openMessageBox("Error happened when accept request");
+
+        })
+    }
+
+    function handleDeny(){
+        axios.post(FRIEND_REQUESTS_API + `${idRequest}/deny`, {}, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setRequest(false);
+        }).catch(error=>{
+            openMessageBox("Error happened when deny request");
+        })
+    }
+
+    function handleCancel(){
+        axios.post(FRIEND_REQUESTS_API + `${idRequest}/deny`, {}, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setWaiting(false);
+        }).catch(error=>{
+            openMessageBox("Error happened when cancel request");
+        })
+    }
+
+    function openMessageBox(message, title = 'Error'){
+        const data = {title: title, message: message, show: true};
+        const action = setMessage(data);
+        dispatch(action);
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -81,12 +161,25 @@ export default function Profile({permission, userN, profileN}) {
                 </div>
                 <div className={styles.main}>
                     <div className={styles.header}>
-                        <span className={styles.name}>{name}</span>
+                        <div className={styles.first}>
+                            <div>
+                                <span className={styles.name}>{name}</span>
+                                <span className={styles.star}>
+                                    {loadStar(points, 15)}
+                                </span>
+                            </div>
+                            <div className={styles.btn}>
+                                {permission ? <Link href="/setting"><button className={styles.btn_setting}>Setting</button></Link>: 
+                                friend ? <button className={styles.btn_unfr} onClick={handleUnfriend}>Unfriend</button> : 
+                                request ? <button className={styles.btn_accept} onClick={handleAccept}>Accept</button>:
+                                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
+                                <button className={styles.btn_add} onClick={handleAdd}>Add Friend</button>}        
+                                {request ?<button className={styles.btn_deny} onClick={handleDeny}>Deny</button>:''}
+                            </div>
+                        
+                        </div>
                         <div className={styles.info}>
                             <span className={styles.status}>{status}</span>
-                            <div className={styles.star}>
-                                {loadStar(points, 15)}
-                            </div>
                         </div>
                     </div>
                     <div className={styles.menu}>
@@ -106,20 +199,21 @@ export default function Profile({permission, userN, profileN}) {
                             <FontAwesomeIcon className={styles.icon} icon={faUser} height={20}></FontAwesomeIcon>
                             <span>Friends</span>
                         </button>
+                        {friend||permission ? 
                         <button onClick={() => setOption(5)} className={option == 5 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
                             <span>Matchs</span>
-                        </button>
+                        </button> : ''}
+                        {permission ?
                         <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faMap} height={20}></FontAwesomeIcon>
                             <span>Stadiums</span>
-                        </button>
+                        </button> : ''}
                     </div>
                     {loadComponent(option)}
                 </div>
                 <div className={styles.right}>
-                    {permission ? <Link href="/setting"><button className={styles.btnSetting}>Setting</button></Link> : <Link href="message"><button className={styles.btnSetting}>Message</button></Link>}
-
+                    
                     <div className={styles.component}>
                         <MatchSuggest></MatchSuggest>
                     </div>

@@ -7,8 +7,12 @@ import axios from 'axios';
 import { setProfile } from '../../slices/profileSlice';
 import Team from '../../components/team';
 import { parseCookies } from '../../lib/cookie';
+import Error from 'next/error'
 
-export default function TeamPage({token, username, user, team}) {
+export default function TeamPage({errorCode,token, username, user, team}) {
+    if (errorCode) {
+        return <Error statusCode={errorCode} />
+    }
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
@@ -51,6 +55,8 @@ TeamPage.getInitialProps = async ({ req, res }) => {
     const user = JSON.parse(data)
     const token = user.access_token;
     let team;
+    let errCode = false;
+
     await axios.get(TEAM_API,{
         headers:{
             Authorization: `Bearer ${token}`
@@ -58,9 +64,15 @@ TeamPage.getInitialProps = async ({ req, res }) => {
     }).then(response=>{
         team = response.data.data
     }).catch(error=>{
-        console.log(error);
+        if (error.response) {
+            errCode = error.response.status;
+        }else{
+            errCode = 500;
+        }
     })
     return {
+        errorCode: errCode,
+
         token: user.access_token,
         username: user.user.username,
         user: user.user,

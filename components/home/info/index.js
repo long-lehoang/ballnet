@@ -25,7 +25,7 @@ export default function InfoHome(){
             }).then((response)=>{
                 setFriends(response.data.data);
             }).catch((error)=>{
-                console.log(error.response.data.message);
+                console.log(error);
             });
             axios.get(FOLLOWS_API+user.username+'/count',{
                 headers:{
@@ -34,7 +34,7 @@ export default function InfoHome(){
             }).then((response)=>{
                 setFollowers(response.data.data);
             }).catch((error)=>{
-                console.log(error.response.data.message);
+                console.log(error);
             });
         }
     },[user])

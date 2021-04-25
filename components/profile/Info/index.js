@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SPORT_API } from '../../../config/config';
 import loadStar from '../../../lib/star';
-import EditLocation from '../../commons/EditLocation';
-import EditOverview from '../../commons/EditOverview';
-import EditPInfo from '../../commons/EditPInfo';
+import EditLocation from './EditLocation';
+import EditOverview from './EditOverview';
+import EditPInfo from './EditPInfo';
 import styles from './styles.module.scss';
 
 export default function Info(props) {

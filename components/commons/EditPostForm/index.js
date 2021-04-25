@@ -104,11 +104,12 @@ export default function EditPostForm(props) {
                             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} width="40px" height="40px"></img>
                             <div className={styles.name}>
                                 <span>{user == null ? 'No Name' : user.name}</span>
-                                <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
-                                    <option value="Only me">Only me</option>
-                                    <option value="Friends">Friends</option>
-                                    <option value="Public">Public</option>
-                                </select>
+                                {permission !== 'Team' ?
+                                    <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
+                                        <option value="Only me">Only me</option>
+                                        <option value="Friends">Friends</option>
+                                        <option value="Public">Public</option>
+                                    </select> : ''}
                             </div>
                         </div>
                         <div className={styles.textInput}>

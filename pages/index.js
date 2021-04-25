@@ -7,6 +7,7 @@ import { setToken } from '../slices/tokenSlice';
 import { setUser } from '../slices/infoUserSlice';
 import axios from 'axios';
 import { POSTS_API, PROFILE_API } from '../config/config';
+import Error from 'next/error'
 
 
 function extractData(data, result = []) {
@@ -21,7 +22,11 @@ function extractData(data, result = []) {
     else result.push(data);
     return result;
 }
-export default function Home({ token, username, posts, user }) {
+export default function Home({errorCode, token, username, posts, user }) {
+    if (errorCode) {
+        return <Error statusCode={errorCode} />
+    }
+
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
@@ -65,6 +70,8 @@ Home.getInitialProps = async ({ req, res }) => {
     const user = JSON.parse(data)
     const token = user.access_token;
     var posts = [];
+    let errCode = false;
+
     await axios.get(POSTS_API, {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -77,10 +84,15 @@ Home.getInitialProps = async ({ req, res }) => {
             return time2 - time1;
         })
     }).catch((error) => {
-        console.log(error);
+        if (error.response) {
+            errCode = error.response.status;
+        }else{
+            errCode = 500;
+        }
     })
 
     return {
+        errorCode: errCode,
         token: user.access_token,
         username: user.user.username,
         posts: posts,
