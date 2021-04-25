@@ -52,19 +52,56 @@
             padding-top: 20px;
             .header{
                 padding-bottom: 30px;
-                .name{
-                    display: block;
-                    font: var(--name);
+                .first{
+                    display: flex;
+                    justify-content: space-between;                            
                     padding-bottom: 10px;
+                    div{
+                        display: flex;
+                        align-items: center;
+                        .name{
+                            font: var(--name);
+                            padding-right: 10px;
+                            text-align: center;
+                        }
+                        .star{
+                            text-align: center;
+                            color: var(--star);
+                        }
+                    }
+                    .btn{
+                        button{
+                            width: 90px;
+                            height: 30px;
+                            border: none;
+                            outline: none;
+                            border-radius: 5px;
+                            background-color: var(--button-color-1);
+                            color: var(--text-color-4);
+                            font: var(--content);
+                        }
+                        .btn_setting{
+                            background-color: var(--background-header);
+                        }
+                        .btn_add{
+                            background-color: var(--button-color-1);
+                        }
+                        .btn_cancel{
+                            background-color: var(--background-header);
+                        }
+                        .btn_unfr{
+                            background-color: var(--background-header);
+                        }
+                        .btn_deny{
+                            background-color: var(--background-header);
+                        }
+                    }
                 }
                 .info{
                     font: var(--sub-title);
                     color: var(--text-color-2);
                     display: flex;
                     justify-content: space-between;
-                    .star{
-                        color: var(--star);
-                    }
                 }
             }
             .menu{
@@ -94,15 +131,7 @@
             }
         }
         .right{
-            padding-top: 50px;
-            .btnSetting{
-                float: right;
-                border: none;
-                background-color: var(--background-header);
-                color: var(--text-color-4);
-                padding: 7px 20px;
-                border-radius: 4px;
-            }
+            
             .component{
                 padding-top: 20px;
                 clear: both;

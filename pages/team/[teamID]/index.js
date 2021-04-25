@@ -7,8 +7,12 @@ import axios from 'axios';
 import { setProfile } from '../../../slices/profileSlice';
 import { parseCookies } from '../../../lib/cookie';
 import TeamProfile from '../../../components/team/profile';
+import Error from 'next/error'
 
-export default function TeamProfilePage({token, username, user, team, permission}) {
+export default function TeamProfilePage({errorCode,token, username, user, team}) {
+    if (errorCode) {
+        return <Error statusCode={errorCode} />
+    }
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
@@ -35,7 +39,7 @@ export default function TeamProfilePage({token, username, user, team, permission
 
     return (
         <LayoutMain>
-            <TeamProfile team={team||[]} isMember={permission.isMember} isAdmin={permission.isAdmin} isCaptain={permission.isCaptain}></TeamProfile>
+            <TeamProfile team={team||[]} isMember={team.isMember} isAdmin={team.isAdmin} isCaptain={team.isCaptain}></TeamProfile>
         </LayoutMain>
     )
 }
@@ -50,7 +54,9 @@ TeamProfilePage.getInitialProps = async ({ query, req, res }) => {
     }
     const user = JSON.parse(data)
     const token = user.access_token;
-    let team,permission;
+    let team;
+    let errCode = false;
+
     await axios.get(TEAM_API + `${query.teamID}`,{
         headers:{
             Authorization: `Bearer ${token}`
@@ -58,22 +64,18 @@ TeamProfilePage.getInitialProps = async ({ query, req, res }) => {
     }).then(response=>{
         team = response.data.data
     }).catch(error=>{
-        console.log(error);
-    });
-    await axios.get(TEAM_API + `${query.teamID}/permission`,{
-        headers:{
-            Authorization: `Bearer ${token}`
+        if (error.response) {
+            errCode = error.response.status;
+        }else{
+            errCode = 500;
         }
-    }).then(response=>{
-        permission = response.data.data
-    }).catch(error=>{
-        console.log(error);
     });
     return {
+        errorCode: errCode,
+
         token: user.access_token,
         username: user.user.username,
         user: user.user,
-        team: team,
-        permission: permission
+        team: team
     }
 }

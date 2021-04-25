@@ -17,7 +17,7 @@ export default function Item({item}){
     const [waiting, setWaiting] = useState(item.isWaiting);
     const [idRequest, setIdRequest] = useState(item.idRequest||'');
     const dispatch = useDispatch();
-    console.log(item);
+
     function handleAdd(){
         let formData = new FormData();
         formData.append('username', item.username);
@@ -28,8 +28,10 @@ export default function Item({item}){
         }).then((response)=>{
             setWaiting(true);
             setIdRequest(response.data.data);
-            openMessageBox("Error happened when add friend");
 
+        }).catch(error=>{
+            console.log(error);
+            openMessageBox("Error happened when add friend");
         })
     }
     function handleUnfriend(){
@@ -105,7 +107,7 @@ export default function Item({item}){
                 request ? <button className={styles.btn_accept} onClick={handleAccept}>Accept</button>:
                 waiting ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
                 <button className={styles.btn_add} onClick={handleAdd}>Add Friend</button>}        
-                {request ?<button className={styles.btn_deny} onClick={handleDeny}>Deny</button>:
+                {(!friend)&&request ?<button className={styles.btn_deny} onClick={handleDeny}>Deny</button>:
                 <button className={styles.btn_message} onClick={handleMessage}><FontAwesomeIcon height={15} className={styles.icon} icon={faEnvelope} /></button>}
                 
             </div>

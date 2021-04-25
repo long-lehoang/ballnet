@@ -18,7 +18,7 @@ export default function Filter({friends, setFriend, result}){
         let group = event.target.value;
         let now = new Date();
         if(group === 'new'){
-            let fr = result.filter( element => {
+            let fr = friends.filter( element => {
                 return (now.getTime() - (new Date(element.created_at)).getTime()) < 2592000000;
             });
             setFriend(fr);

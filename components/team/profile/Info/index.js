@@ -20,7 +20,7 @@ export default function Info({team, permission}) {
     const [editLocation, toggleEditLocation] = useState(false);
     const [editAdmin, toggleEditAdmin] = useState(false);
     const created_at = new Date(team.created_at);
-    const establish = `Team created at ${created_at.getDate()}/${created_at.getMonth()}/${created_at.getFullYear()}`;
+    const establish = `Team created at ${created_at.getDate()}/${created_at.getMonth() + 1}/${created_at.getFullYear()}`;
     const token = useSelector(state=>state.token);
     useEffect(()=>{
         axios.get(TEAM_API+`${team.id}/admin`,{
@@ -80,7 +80,7 @@ export default function Info({team, permission}) {
                 <div className={styles.content}>{establish}</div>
             </div>
             <div className={styles.box}>
-                <EditAdmin show={editAdmin} setShow={toggleEditAdmin} value={admins} members={members} setValue={setAdmins}></EditAdmin>
+                <EditAdmin show={editAdmin} setShow={toggleEditAdmin} value={admins} members={members} id={team.id} setValue={setAdmins}></EditAdmin>
                 <div className={styles.title}>
                     <span>Administrator</span>
                     {permission ? <button onClick={() => { toggleEditAdmin(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
@@ -97,7 +97,7 @@ export default function Info({team, permission}) {
                                         <img src={src}></img>
                                         <div>
                                             <span className={styles.name}>{admin.name}</span>
-                                            <span className={styles.location}>{admin.address.split(', ')[1]}</span>
+                                            <span className={styles.location}>{admin.address != null ? admin.address.split(', ')[1] : 'No address'}</span>
                                         </div>
                                     </div>
                                     </Link>

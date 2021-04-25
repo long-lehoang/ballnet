@@ -34,7 +34,7 @@ export default function Notification(props) {
     }
 
     return (
-        <div>
+        <div className={!del?styles.wrapper:styles.none}>
             <Link href={props.link}>
             <div className={styles.container}>
                 <div className={styles.col}>
@@ -46,10 +46,10 @@ export default function Notification(props) {
                 </div>
             </div>        
             </Link>
-            {!del ? <div className={styles.btn}>
+            <div className={styles.btn}>
                 {props.linkAccept != null ? <button className={styles.acptBtn} onClick={handleAccept}>Accept</button> : ''}
                 {props.linkDeny != null ? <button className={styles.dnBtn} onClick={handleDeny}>Deny</button> : ''}
-            </div> : ''}
+            </div>
         </div>
     )
 }

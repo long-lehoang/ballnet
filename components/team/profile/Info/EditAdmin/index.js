@@ -1,45 +1,67 @@
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { AVATAR, HOST } from '../../../../../config/config';
+import { AVATAR, HOST, TEAM_API } from '../../../../../config/config';
+import { setMessage } from '../../../../../slices/messageSlice';
 import styles from './styles.module.scss';
 
 export default function EditAdmin(props) {
     const [admin, setAdmin] = useState(props.value)
-    const listIds = props.value.map(element=>element.id)
+    const listIds = props.value.map(element => element.id);
     const [ids, setIds] = useState(listIds);
-    console.log(listIds);
-    const listOption = props.members.filter(element=>!listIds.includes(element.id))
-    const optionSearch = listOption.map((member)=>{
-        const src = member.avatar === null ? AVATAR : HOST+member.avatar
+    const listOption = props.members.filter(element => !listIds.includes(element.id))
+    const optionSearch = listOption.map((member) => {
+        const src = member.avatar === null ? AVATAR : HOST + member.avatar
         return {
             value: member.id,
             label: <div className={styles.option}>
                 <img src={src}></img>
                 <span>{member.name}</span>
-                </div>
+            </div>
         }
     })
-    function handleSelect(value){
-        
-        let arrIdOption = value.map(val=>val.value);
+    useEffect(()=>{
+        setAdmin(props.value);
+        setIds(props.value.map(element => element.id))
+    },[props.value])
+    const token = useSelector(state=>state.token);
+    const dispatch = useDispatch();
+    function handleSelect(value) {
+        var a = ids;
+        let arrIdOption = value.map(val => val.value);
         console.log(arrIdOption);
         let arrId = ids.concat(arrIdOption);
-        console.log(arrId);
-        let admins = props.members.filter(member=>arrId.includes(member.id));
+        let admins = props.members.filter(member => arrId.includes(member.id));
         console.log(admins);
-        // setAdmin(admins);
+        setIds(arrId);
+        setAdmin(admins);
     }
 
     function handleSubmit() {
-        props.setValue(admin)
-        props.setShow(false)
+        var formData = new FormData()
+        formData.append('admins', ids);
+        axios.post(TEAM_API+`${props.id}/admin`, formData,{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            props.setValue(admin)
+            props.setShow(false)
+        }).catch(error=>{
+            openMessageBox("Can't update admin");
+        })
+    }
+
+    function openMessageBox(message, title = 'Error'){
+        const data = {title: title, message: message, show: true};
+        const action = setMessage(data);
+        dispatch(action);
     }
 
     return (
@@ -50,23 +72,33 @@ export default function EditAdmin(props) {
             <Modal.Body className={styles.body}>
                 <div className={styles.admin}>
                     {
-                        admin.map((admin, key)=>{
-                            const src = admin.avatar===null? AVATAR: HOST + admin.avatar
+                        admin.map((ad, key) => {
+                            const src = ad.avatar === null ? AVATAR : HOST + ad.avatar
                             return (
-                                <Link href={`/${admin.username}`}>
-                                <div className={styles.item} key={key}>
-                                    <img src={src}></img>
-                                    <div>
-                                        <span className={styles.name}>{admin.name}</span>
-                                        <span className={styles.location}>{admin.address.split(', ')[1]}</span>
-                                    </div>
+                                <div className={styles.group} key={key}>
+                                    <Link href={`/${ad.username}`}>
+                                        <div className={styles.item}>
+                                            <img src={src}></img>
+                                            <div>
+                                                <span className={styles.name}>{ad.name}</span>
+                                                <span className={styles.location}>{ad.address != null ? ad.address.split(', ')[1] : 'No address'}</span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                    <button onClick={()=>{
+                                        let result = admin.filter(admin=>admin.id!==ad.id);
+                                        let arrId = ids.filter(id=>id!==ad.id)
+                                        setAdmin(result);
+                                        setIds(arrId);
+                                    }}>
+                                        <FontAwesomeIcon height={15} icon={faTrash}></FontAwesomeIcon>
+                                    </button>
                                 </div>
-                                </Link>
                             )
                         })
                     }
                 </div>
-                
+
                 <Select
                     options={optionSearch}
                     isMulti
@@ -78,7 +110,7 @@ export default function EditAdmin(props) {
                 />
             </Modal.Body>
             <Modal.Footer>
-                
+
                 <Button variant="secondary" onClick={() => { props.setShow(false) }}>Close</Button>
                 <Button variant="primary" onClick={() => { handleSubmit() }}>Save changes</Button>
             </Modal.Footer>

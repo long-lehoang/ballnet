@@ -7,8 +7,12 @@ import { parseCookies } from '../../lib/cookie';
 import { setUser } from '../../slices/infoUserSlice';
 import { setProfile } from '../../slices/profileSlice';
 import { setToken } from '../../slices/tokenSlice';
+import Error from 'next/error'
 
-export default function Post({token, username, user, post, permisson}) {
+export default function Post({errorCode,token, username, user, post, permisson}) {
+    if (errorCode) {
+        return <Error statusCode={errorCode} />
+    }
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
@@ -51,6 +55,7 @@ Post.getInitialProps = async ({ query, req, res }) => {
     const user = JSON.parse(data)
     const token = user.access_token
     let post;
+    let errCode = false;
 
     await axios.get(POSTS_API + query.post_id, {
         headers: {
@@ -59,9 +64,15 @@ Post.getInitialProps = async ({ query, req, res }) => {
     }).then((response)=>{
         post = response.data.data;
     }).catch((error)=>{
-        console.log(error);
+        if (error.response) {
+            errCode = error.response.status;
+        }else{
+            errCode = 500;
+        }
     })
     return {
+        errorCode: errCode,
+
         token: user.access_token, 
         username: user.user.username, 
         user: user.user,

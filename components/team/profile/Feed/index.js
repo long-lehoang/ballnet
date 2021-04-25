@@ -45,7 +45,9 @@ export default function Feed({team}) {
 
     return (
         <div className={styles.container}>
-            <CreatePostForm></CreatePostForm>
+            <div className={styles.row}>
+                <CreatePostForm team={team.id}></CreatePostForm>
+            </div>
             {posts.map((element, key) => {
                 return (
                     <LazyLoad key={key} height={200} placeholder={<Loading />}>

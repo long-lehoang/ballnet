@@ -5,16 +5,18 @@ import InfoComponent from './InfoComponent';
 import Feed from './Feed';
 import Info from './Info';
 import Match from './Match';
-
+import Member from './Member';
+import MemberRequest from './MemberRequest';
 import { useState } from 'react';
 import loadStar from '../../../lib/star';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faIdCard, faMap, faNewspaper, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faIdCard, faMap, faNewspaper, faUser, faUserPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { HOST, PROFILE_API } from '../../../config/config';
-import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { HOST, PROFILE_API, TEAM_REQUEST_API } from '../../../config/config';
 import { TEAM_API } from '../../../config/config';
+import { setMessage } from '../../../slices/messageSlice';
+import { Router, useRouter } from 'next/dist/client/router';
 
 
 export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
@@ -24,6 +26,13 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
     const points = team.rating;
     const token = useSelector(state => state.token);
 
+    const [member, setMember] = useState(team.isMember);
+    const [waiting, setWaiting] = useState(team.isWaitingForApprove);
+    const [invited, setInvited] = useState(team.isInvitedBy);
+    const [idRequest, setIdRequest] = useState(team.idRequest||'');
+
+    const dispatch = useDispatch();
+    const router = useRouter();
     function loadComponent(option) {
         switch (option) {
             case 1:
@@ -31,9 +40,9 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
             case 2:
                 return (<Info team={team} permission={isCaptain}></Info>)
             case 3:
-                return (<Member permission={isCaptain}></Member>)
+                return (<Member team={team}></Member>)
             case 4:
-                return (<MemberRequest permission={isAdmin}></MemberRequest>)
+                return (<MemberRequest team={team}></MemberRequest>)
             case 5:
                 return (<Match></Match>)
             case 6:
@@ -56,9 +65,85 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
             setCover(url);
         }).catch((error) => {
             console.log(error);
+            openMessageBox('Có lỗi xảy ra trong quá trình thay đổi ảnh bìa.')
+
         });
     }
 
+    function handleLeave(){
+        axios.delete(TEAM_API + `${team.id}/leave`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setMember(false);
+            router.push('/');
+        }).catch(error=>{
+            console.log(error);
+            openMessageBox('Có lỗi xảy ra trong quá trình rời đội.')
+        })
+    }
+
+    function handleJoin(){
+        let formData = new FormData();
+        formData.append('team_id', team.id);
+        axios.post(TEAM_REQUEST_API, formData, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setWaiting(true);
+            setIdRequest(response.data.data);
+        }).catch(error=>{
+            console.log(error);
+            openMessageBox('Có lỗi xảy ra trong quá trình tham gia đội.')
+        });
+    }
+    function handleCancel(){
+        axios.post(TEAM_REQUEST_API + `${idRequest}/deny`,{} , {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setWaiting(false);
+        }).catch(error=>{
+            console.log(error);
+            openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
+        });
+    }
+
+    function handleAccept(){
+        axios.post(TEAM_REQUEST_API + `${idRequest}/approve`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setMember(true);
+            setInvited(false);
+        }).catch(error=>{
+            console.log(error);
+            openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
+        });
+        
+    }
+
+    function handleDeny(){
+        axios.post(TEAM_REQUEST_API + `${idRequest}/deny`,{} , {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setInvited(false);
+        }).catch(error=>{
+            console.log(error);
+            openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
+        });
+    }
+    function openMessageBox(message, title = 'Error'){
+        const data = {title: title, message: message, show: true};
+        const action = setMessage(data);
+        dispatch(action);
+    }
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -77,13 +162,20 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
                 </div>
                 <div className={styles.main}>
                     <div className={styles.header}>
-                        <span className={styles.name}>{name}</span>
-                        <div className={styles.info}>
-                            <span className={styles.status}></span>
+                        <div>
+                            <span className={styles.name}>{name}</span>
                             <div className={styles.star}>
                                 {loadStar(points, 15)}
                             </div>
                         </div>
+                        <div className={styles.btn}>
+                            {member ? <button className={styles.btn_leave} onClick={handleLeave}>Leave</button>:
+                            waiting ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
+                            invited ?<button className={styles.btn_accept} onClick={handleAccept}>Accept</button>:
+                            <button className={styles.btn_join} onClick={handleJoin}>Join</button>}
+                            {invited ? <button className={styles.btn_deny} onClick={handleDeny}>Deny</button> :''}
+                        </div>
+                
                     </div>
                     <div className={styles.menu}>
                         {isMember ? 
@@ -97,13 +189,13 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
                             <span>Info</span>
                         </button>
                         {isMember ?
-                        <button onClick={() => setOption(3)} className={option == 4 ? styles.active : ''}>
+                        <button onClick={() => setOption(3)} className={option == 3 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faUser} height={20}></FontAwesomeIcon>
                             <span>Members</span>
                         </button>:''}
-                        {isMember ?
+                        {isAdmin ?
                         <button onClick={() => setOption(4)} className={option == 4 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faUser} height={20}></FontAwesomeIcon>
+                            <FontAwesomeIcon className={styles.icon} icon={faUserPlus} height={20}></FontAwesomeIcon>
                             <span>Member Requests</span>
                         </button>:''}
                         {isMember ?
@@ -111,8 +203,8 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
                             <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
                             <span>Matchs</span>
                         </button>:''}
-                        {isMember ?
-                        <button onClick={() => setOption(6)} className={option == 5 ? styles.active : ''}>
+                        {isAdmin ?
+                        <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
                             <span>Match Invitation</span>
                         </button>:''}
@@ -120,8 +212,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
                     {loadComponent(option)}
                 </div>
                 <div className={styles.right}>
-                    {isMember ? <button className={styles.btnSetting}>Leave</button> : <button className={styles.btnSetting}>Join</button>}
-
+                    
                     <div className={styles.component}>
                         <MatchSuggest></MatchSuggest>
                     </div>

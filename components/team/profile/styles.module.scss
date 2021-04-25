@@ -52,18 +52,44 @@
             padding-top: 20px;
             .header{
                 padding-bottom: 30px;
-                .name{
-                    display: block;
-                    font: var(--name);
-                    padding-bottom: 10px;
-                }
-                .info{
-                    font: var(--sub-title);
-                    color: var(--text-color-2);
-                    display: flex;
-                    justify-content: space-between;
+                display: flex;
+                justify-content: space-between;
+                div{
+                    .name{
+                        display: block;
+                        font: var(--name);
+                        padding-right: 10px;
+                        text-align: center;
+                    }
                     .star{
+                        text-align: center;
                         color: var(--star);
+                    }
+                }
+                .btn{
+                    button{
+                        width: 90px;
+                        height: 30px;
+                        border: none;
+                        outline: none;
+                        border-radius: 5px;
+                        background-color: var(--button-color-1);
+                        color: var(--text-color-4);
+                    }
+                    .btn_join{
+                        background-color: var(--button-color-1);
+                    }
+                    .btn_cancel{
+                        background-color: var(--background-header);
+                    }
+                    .btn_leave{
+                        background-color: var(--background-header);
+                    }
+                    .btn_deny{
+                        background-color: var(--background-header);
+                    }
+                    .btn_approve{
+                        background-color: var(--button-color-1);
                     }
                 }
             }
@@ -71,6 +97,7 @@
                 padding-bottom: 20px;
                 // padding-left: 10px;
                 display: flex;
+                align-items: flex-start;
                 button{
                     color: var(--text-color-2);
                     width: 65px;
@@ -94,15 +121,7 @@
             }
         }
         .right{
-            padding-top: 50px;
-            .btnSetting{
-                float: right;
-                border: none;
-                background-color: var(--background-header);
-                color: var(--text-color-4);
-                padding: 7px 20px;
-                border-radius: 4px;
-            }
+            
             .component{
                 padding-top: 20px;
                 clear: both;

@@ -22,11 +22,10 @@
                 margin: 0;
             }
             .name{
-                padding-bottom: 10px;
                 color: var(--text-color-3);
                 font: var(--sub-title);
             }
-            .sub{
+            .match, .date{
                 color: var(--text-color-2);
                 font: var(--content);
             }
@@ -51,4 +50,13 @@
             background-color: var(--background-header);
         }
     }
+}
+
+.container:hover{
+    background-color: var(--background);
+    cursor: pointer;
+}
+
+.hidden{
+    display: none !important;
 }

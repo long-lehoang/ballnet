@@ -3,28 +3,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './styles.module.scss';
 
 function compare(a, b){
-    if (a.created_at < b.created_at){
+    if (a.requestTime < b.requestTime){
         return -1;
-    }else if (a.created_at > b.created_at){
+    }else if (a.requestTime > b.requestTime){
         return 1;
     }else{
         return 0;
     }
 }
 
-export default function Filter({friends, setFriend, result}){
+export default function Filter({requests, setRequest, result}){
 
     function handleGroup(event){
         let group = event.target.value;
         let now = new Date();
         if(group === 'new'){
-            let fr = result.filter( element => {
-                return (now.getTime() - (new Date(element.created_at)).getTime()) < 2592000000;
+            let fr = requests.filter( element => {
+                return (now.getTime() - (new Date(element.requestTime)).getTime()) < 2592000000;
             });
-            setFriend(fr);
+            setRequest(fr);
             return;
         }else{
-            setFriend(friends);
+            setRequest(requests);
             return;
         }
         
@@ -38,7 +38,7 @@ export default function Filter({friends, setFriend, result}){
         }else{
             fr.reverse(compare);
         }
-        setFriend(fr);
+        setRequest(fr);
     }
 
     function handleSearch(event){
@@ -46,15 +46,15 @@ export default function Filter({friends, setFriend, result}){
         let fr = friends.filter( element => {
             return element.name.toLowerCase().includes(search.trim());
         });
-        setFriend(fr);
+        setRequest(fr);
     }
 
     return(
         <div className={styles.container}>
             <div>
                 <select className={styles.group} onChange={handleGroup}>
-                    <option value="all">All Friends</option>
-                    <option value="new">New Friends</option>
+                    <option value="all">All Requests</option>
+                    <option value="new">New Requests</option>
                 </select>
                 <select className={styles.sort} onChange={handleSort}>
                     <option value="asc">A-Z</option>
@@ -63,7 +63,7 @@ export default function Filter({friends, setFriend, result}){
             </div>
             <div className={styles.find}>
                 <FontAwesomeIcon height={12} icon={faSearch}></FontAwesomeIcon>
-                <input onChange={handleSearch} placeholder="Find a friend"></input>
+                <input onChange={handleSearch} placeholder="Find a request"></input>
             </div>
         </div>
     )

@@ -3,24 +3,25 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import { useSelector } from 'react-redux';
-import { FRIENDS_API } from '../../../config/config';
-import Loading from '../../commons/Loading';
+import { TEAM_REQUEST_API } from '../../../../config/config';
+import Loading from '../../../commons/Loading';
 import Filter from './Filter';
 import Item from './Item';
 import styles from './styles.module.scss';
-export default function MemberRequest({username}){
-    const [friends, setFriend] = useState([]);
-    const [friendsC, setFriendC] = useState([]);
+export default function MemberRequest({team}){
+    const [requests, setRequest] = useState([]);
+    const [requestC, setRequestC] = useState([]);
     const token = useSelector(state => state.token);
+
     useEffect(()=>{
-        axios.get(FRIENDS_API+username,{
+        axios.get(TEAM_REQUEST_API+team.id,{
             headers:{
                 Authorization: `Bearer ${token}`
             }
         }).then(response=>{
             let data = response.data.data;
-            setFriend(data);
-            setFriendC(data);
+            setRequest(data);
+            setRequestC(data);
         }).catch(error => {
             console.log(error);
         });
@@ -28,12 +29,12 @@ export default function MemberRequest({username}){
 
     return(
         <div className={styles.container}>
-            <Filter friends={friendsC} setFriend={setFriend} result={friends}></Filter>
+            <Filter requests={requestC} setRequest={setRequest} result={requests}></Filter>
             <div className={styles.list}>
-            {friends.map((element,key) => {
+            {requests.map((element,key) => {
                 return(
                     <LazyLoad key={key} height={200} placeholder={<Loading/>}>                       
-                        <Item key={key} friend={element}></Item>
+                        <Item key={key} request={element}></Item>
                     </LazyLoad>
                 )
             })}

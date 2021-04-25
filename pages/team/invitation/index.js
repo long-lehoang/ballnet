@@ -7,8 +7,12 @@ import { PROFILE_API, TEAM_API, TEAM_REQUEST_API } from "../../../config/config"
 import axios from 'axios';
 import { parseCookies } from '../../../lib/cookie';
 import Invitation from '../../../components/team/invitation';
+import Error from 'next/error'
 
-export default function InvitationPage({token, username, user, team}) {
+export default function InvitationPage({errorCode,token, username, user, team}) {
+    if (errorCode) {
+        return <Error statusCode={errorCode} />
+    }
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
@@ -51,6 +55,8 @@ InvitationPage.getInitialProps = async ({ req, res }) => {
     const user = JSON.parse(data)
     const token = user.access_token;
     let team;
+    let errCode = false;
+
     await axios.get(TEAM_REQUEST_API,{
         headers:{
             Authorization: `Bearer ${token}`
@@ -58,9 +64,15 @@ InvitationPage.getInitialProps = async ({ req, res }) => {
     }).then(response=>{
         team = response.data.data
     }).catch(error=>{
-        console.log(error);
+        if (error.response) {
+            errCode = error.response.status;
+        }else{
+            errCode = 500;
+        }
     })
     return {
+        errorCode: error,
+
         token: user.access_token,
         username: user.user.username,
         user: user.user,
