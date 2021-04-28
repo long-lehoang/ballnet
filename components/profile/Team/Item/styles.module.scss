@@ -9,6 +9,7 @@
         height: 100px;
         width: 100px;
         border-radius: 50%;
+        cursor: pointer;
         margin-left: auto;
         margin-right: auto;
     }
@@ -67,15 +68,6 @@
             background-color: var(--background-header);
             color: var(--text-color-4);
         }
-    }
-    .link{
-        font: var(--sub-title);
-        color: var(--text-color-2);
-        text-align: center;
-        cursor: pointer;
-    }
-    .link:hover{
-        color: var(--background-header);
     }
 }
 .container:hover{

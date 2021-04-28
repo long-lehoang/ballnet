@@ -6,7 +6,9 @@
   align-items: center;
   position: relative;
   font: var(--content);
+  box-shadow: 0px 7px 7px rgba(17, 17, 17, 0.25);
   color: var(--text-color-4);
+
   .col {
     display: flex;
     justify-content: center;

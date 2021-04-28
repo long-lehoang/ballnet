@@ -28,8 +28,8 @@ export default function Friend({username}){
 
     return(
         <div className={styles.container}>
-            <Filter friends={friendsC} setFriend={setFriend} result={friends}></Filter>
             <div className={styles.list}>
+            <Filter friends={friendsC} setFriend={setFriend} result={friends}></Filter>
             {friends.map((element,key) => {
                 return(
                     <LazyLoad key={key} height={200} placeholder={<Loading/>}>                       

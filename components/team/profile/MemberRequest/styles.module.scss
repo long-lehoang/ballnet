@@ -4,7 +4,11 @@
     position: relative;
     .list{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 10px;
+        background-color: var(--background-component);
+        border-radius: 4px;
+        padding: 20px;
+        
     }
 }

@@ -13,6 +13,7 @@
     padding-bottom: 20px;
     .avatar {
       width: 100px;
+      cursor: pointer;
       height: 100px;
       border-radius: 50%;
       border: 1px solid var(--text-color-1);
@@ -28,12 +29,6 @@
     .friends {
       font: var(--title);
       color: var(--text-color-2);
-    }
-    .link {
-      padding-top: 10px;
-      cursor: pointer;
-      font: var(--sub-title);
-      color: var(--background-header);
     }
   }
 }

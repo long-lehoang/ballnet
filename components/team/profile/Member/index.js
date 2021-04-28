@@ -49,9 +49,9 @@ export default function Member({team}){
 
     return(
         <div className={styles.container}>
-            <Filter members={membersC} setMember={setMembers} result={members}></Filter>
             <InviteForm friends={invite}></InviteForm>
             <div className={styles.list}>
+            <Filter members={membersC} setMember={setMembers} result={members}></Filter>
             {members.map((element,key) => {
                 return(
                     <LazyLoad key={key} height={200} placeholder={<Loading/>}>                       

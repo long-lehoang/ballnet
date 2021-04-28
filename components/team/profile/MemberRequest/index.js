@@ -29,8 +29,8 @@ export default function MemberRequest({team}){
 
     return(
         <div className={styles.container}>
-            <Filter requests={requestC} setRequest={setRequest} result={requests}></Filter>
             <div className={styles.list}>
+            <Filter requests={requestC} setRequest={setRequest} result={requests}></Filter>
             {requests.map((element,key) => {
                 return(
                     <LazyLoad key={key} height={200} placeholder={<Loading/>}>                       

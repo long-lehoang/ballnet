@@ -5,6 +5,7 @@
     justify-content: space-between;
     padding-bottom: 20px;
     select{
+        background-color: transparent;
         border-radius: 6px;
     }
     .group{
@@ -16,10 +17,11 @@
         padding-right: 10px;
     }
     .find{
-        background-color: var(--background-component);
+        background-color: transparent;
         border-bottom: 1px solid var(--text-color-2);
         padding: 0px 5px;
         input{
+            background-color: transparent;
             padding-left: 10px;
             border:none;
             outline: none;

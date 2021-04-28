@@ -36,21 +36,20 @@ export default function Item({ member, team }) {
     }
     return (
         < div className={show ? styles.container : styles.hidden} >
-            <Link href={`/${member.username}`}>
-
-                <div className={styles.left} >
-                    <img src={avatar} ></img>
-                    <div className={styles.info}>
-                        <p className={styles.name}>{member.name}</p>
-                        <p className={styles.match}>{num_match}</p>
-                        <p className={styles.date}>{join_date}</p>
-                    </div>
+            <div className={styles.left} >
+                <Link href={`/${member.username}`}>
+                <img src={avatar} ></img>
+                </Link>
+                <div className={styles.info}>
+                    <p className={styles.name}>{member.name}</p>
+                    <p className={styles.match}>{num_match}</p>
+                    <p className={styles.date}>{join_date}</p>
                 </div>
-            </Link>
+            </div>
 
             <div className={styles.right}>
                 <p className={styles.star}>{loadStar(member.point, 12)}</p>
-                {(!member.isCaptain)&&(team.isCaptain||(team.isAdmin&&!member.isAdmin)) ? <button className={styles.btnUnfr} onClick={handleKick}>Kick</button> : ''}
+                {(!member.isCaptain)&&(team.isCaptain||(team.isAdmin&&!member.isAdmin)) ? <button className={styles.btnUnfr} onClick={handleKick}>Remove</button> : ''}
             </div>
         </div >
     )

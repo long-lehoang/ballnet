@@ -41,7 +41,9 @@ export default function InfoHome(){
     return(
         <div className={styles.container}>
             <div className={styles.row}>
+                <Link href={"/" + link_profile}>
                 <img src={profile.avatar == null ? AVATAR : HOST+profile.avatar} className={styles.avatar}></img>
+                </Link>
             </div>
             <div className={styles.row}>
                 <span className={styles.name}>{user == null ? 'No Name' : user.name}</span>
@@ -56,11 +58,6 @@ export default function InfoHome(){
             </div>
             <div className={styles.row}>
                 <span className={styles.friends}>Friends: {friends}</span>
-            </div>
-            <div className={styles.row}>
-                <Link href={"/" + link_profile}>
-                    <span className={styles.link}>View Profile</span>
-                </Link>
             </div>
         </div>
     );

@@ -45,15 +45,15 @@ export default function Item({request}){
 
     return(
         <div className={styles.container}>
-            <Link href={`/${request.username}`}>
             <div className={styles.left} >
+                <Link href={`/${request.username}`}>
                 <img src={avatar} ></img>
+                </Link>
                 <div className={styles.info}>
                     <p className={styles.name}>{request.name}</p>
                     <p className={styles.sub}>{request_date}</p>
                 </div>
             </div>
-            </Link>
             <div className={styles.right}>
                 <p className={styles.star}>{loadStar(request.points, 12)}</p>
                 <button className={show?styles.btnAdd:styles.none} onClick={handleAccept}>Accept</button>

@@ -69,7 +69,9 @@ export default function Item({item}){
 
     return (
         <div className={styles.container}>
+            <Link href={`/team/${item.id}`}>
             <img src={img} className={styles.img}></img>
+            </Link>
             <h3 className={styles.name}>{item.name}</h3>
             <div className={styles.stars}>
                 {loadStar(item.rating, 15)}
@@ -83,7 +85,6 @@ export default function Item({item}){
                         
                 <button className={styles.btn_message} onClick={handleMessage}><FontAwesomeIcon height={15} className={styles.icon} icon={faEnvelope} /></button>
             </div>
-            <Link href={`/team/${item.id}`}><span className={styles.link}>View Profile</span></Link>
         </div>
     )
 }
