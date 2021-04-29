@@ -5,11 +5,9 @@ export default function ComboAvatar({list = []}) {
     
     return (
         <div styles={styles.container}>
-            {list.map((element,key)=>{
+            {list.forEach((element,key)=>{
                 let img = element == null ? AVATAR : HOST + element;
-                return (
-                    <img className={styles.item} key={key} src={img}></img>
-                )
+                <img className={styles.item} key={key} src={img}></img>
             })}
         </div>
     )

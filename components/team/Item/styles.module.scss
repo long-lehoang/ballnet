@@ -16,6 +16,7 @@
     .name{
         font: var(--title);
         color: var(--text-color-3);
+        margin: 0px;
         text-align: center;
     }
     .stars{
@@ -26,6 +27,7 @@
     .location{
         text-align: center;
         color: var(--text-color-2);
+        margin: 0px;
     }
     .group_btn{
         display: flex;
