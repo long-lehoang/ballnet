@@ -8,6 +8,7 @@ import { AVATAR_TEAM, HOST, TEAM_API, TEAM_REQUEST_API } from '../../../../confi
 import loadStar from '../../../../lib/star';
 import styles from './styles.module.scss';
 import {setMessage} from '../../../../slices/messageSlice';
+import ComboAvatar from '../../../commons/ComboAvatar';
 
 export default function Item({item}){
     const img = item.avatar == null ? AVATAR_TEAM : HOST + item.avatar;
@@ -77,6 +78,9 @@ export default function Item({item}){
                 {loadStar(item.rating, 15)}
             </div>
             <p className={styles.location}>{item.sport}</p>
+            <div className={styles.members}>
+                <ComboAvatar list={item.avatarMembers}></ComboAvatar>
+            </div>
             <p className={styles.location}>{item.location}</p>
             <div className={styles.group_btn}>
                 {!leave ? <button className={styles.btn_leave} onClick={handleLeave}>Leave</button>:

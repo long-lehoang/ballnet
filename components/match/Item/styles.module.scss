@@ -1,0 +1,57 @@
+.container{
+    width: 100%;
+    background-color: var(--background);
+    padding: 10px 30px;
+    margin-top: 10px;
+    display: block;
+    .team {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-color-3);
+        .logo {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--text-color-2);
+        }
+    }
+    .time {
+        padding-top: 5px;
+        display: flex;
+        justify-content: center;
+        color: var(--background-header);
+    }
+    .location,
+    .type {
+        padding-top: 5px;
+        display: flex;
+        justify-content: center;
+        color: var(--text-color-2);
+    }
+    .btn{
+        padding-top: 10px;
+        display: flex;
+        justify-content: space-around;
+        .btnJoin{
+            border: none;
+            width: 50px;
+            height: 20px;
+            background-color: var(--button-color-1);
+            border-radius: 5px;
+            color: var(--text-color-4);
+        }
+        .btnShare{
+            border: none;
+            width: 50px;
+            height: 20px;
+            background-color: var(--background-header);
+            border-radius: 5px;
+            color: var(--text-color-4);
+        }
+    }
+}
+.container:hover{
+    background-color: var(--background);
+}

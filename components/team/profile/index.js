@@ -7,7 +7,7 @@ import Info from './Info';
 import Match from './Match';
 import Member from './Member';
 import MemberRequest from './MemberRequest';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import loadStar from '../../../lib/star';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faIdCard, faMap, faNewspaper, faUser, faUserPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +17,7 @@ import { HOST, PROFILE_API, TEAM_REQUEST_API } from '../../../config/config';
 import { TEAM_API } from '../../../config/config';
 import { setMessage } from '../../../slices/messageSlice';
 import { Router, useRouter } from 'next/dist/client/router';
+import ChangeCaptain from './ChangeCaptain';
 
 
 export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
@@ -25,7 +26,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
     const name = team.name;
     const points = team.rating;
     const token = useSelector(state => state.token);
-
+    const [changeCaptain, openChangeCaptain] = useState(false);
     const [member, setMember] = useState(team.isMember);
     const [waiting, setWaiting] = useState(team.isWaitingForApprove);
     const [invited, setInvited] = useState(team.isInvitedBy);
@@ -71,17 +72,21 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
     }
 
     function handleLeave(){
-        axios.delete(TEAM_API + `${team.id}/leave`, {
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            setMember(false);
-            router.push('/');
-        }).catch(error=>{
-            console.log(error);
-            openMessageBox('Có lỗi xảy ra trong quá trình rời đội.')
-        })
+        if(isCaptain){
+            openChangeCaptain(true);
+        }else{
+            axios.delete(TEAM_API + `${team.id}/leave`, {
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((response)=>{
+                setMember(false);
+                router.push('/');
+            }).catch(error=>{
+                console.log(error);
+                openMessageBox(error.response.data.message);
+            })
+        }
     }
 
     function handleJoin(){
@@ -169,6 +174,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
                             </div>
                         </div>
                         <div className={styles.btn}>
+                            <ChangeCaptain team={team} openMessageBox={openMessageBox} setMember={setMember} show={changeCaptain} setShow={openChangeCaptain}></ChangeCaptain>
                             {member ? <button className={styles.btn_leave} onClick={handleLeave}>Leave</button>:
                             waiting ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
                             invited ?<button className={styles.btn_accept} onClick={handleAccept}>Accept</button>:
@@ -218,6 +224,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
                     </div>
                 </div>
             </div>
+            
         </div>
     )
 }

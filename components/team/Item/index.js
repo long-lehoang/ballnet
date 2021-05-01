@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR_TEAM, HOST, TEAM_API, TEAM_REQUEST_API } from '../../../config/config';
 import loadStar from '../../../lib/star';
 import { setMessage } from '../../../slices/messageSlice';
+import ComboAvatar from '../../commons/ComboAvatar';
 import styles from './styles.module.scss';
 
 export default function Item({item}){
@@ -106,6 +107,9 @@ export default function Item({item}){
                 {loadStar(item.rating, 15)}
             </div>
             <p className={styles.location}>{item.sport}</p>
+            <div className={styles.members}>
+                <ComboAvatar list={item.avatarMembers}></ComboAvatar>
+            </div>
             <p className={styles.location}>{item.location}</p>
             <div className={styles.group_btn}>
                 {member ? <button className={styles.btn_leave} onClick={handleLeave}>Leave</button>:
