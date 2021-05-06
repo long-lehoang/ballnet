@@ -2,23 +2,23 @@ import styles from './styles.module.scss';
 import location from '../../../data/location.json';
 import { useState } from 'react';
 
-export default function Filter({people, setPeople, result}){
+export default function Filter({match, setMatch, result}){
     const [district, setDistrict] = useState(location[0].Districts);
-    const [resultWithCity, setResultCity] = useState(people);
+    const [resultWithCity, setResultCity] = useState(match);
 
     function handleSearch(event){
         let search = event.target.value;
-        let arr = [...people];
+        let arr = [...match];
         let pp = arr.filter( element => {
             return element.name.toLowerCase().includes(search.trim());
         });
-        setPeople(pp);
+        setMatch(pp);
     }
 
     function handleSelectCity(event){
         const idCity = event.target.value;
         if(idCity === 'all'){
-            setPeople(people);
+            setMatch(match);
             return;
         }
         //set options for select district
@@ -27,21 +27,21 @@ export default function Filter({people, setPeople, result}){
 
         //search
         let nameCity = obj.Name;
-        let arr = [...people];
+        let arr = [...match];
         let pp = arr.filter( element => {
             if (element.address == null) return false;
             let address = element.address.split(', ');
             let city = address[address.length - 1];
             return city == nameCity;
         });
-        setPeople(pp);
+        setMatch(pp);
         setResultCity(pp);
     }
 
     function handleSelectDistrict(event){
         const idDistrict = event.target.value;
         if(idDistrict === 'all'){
-            setPeople(resultWithCity);
+            setMatch(resultWithCity);
             return;
         }
         //set options for select district
@@ -56,7 +56,7 @@ export default function Filter({people, setPeople, result}){
             let district = address[address.length - 2];
             return district == nameDistrict;
         });
-        setPeople(pp);
+        setMatch(pp);
     }
 
     return (

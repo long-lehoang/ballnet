@@ -43,7 +43,9 @@ export const STADIUM_API = HOST + '/api/stadiums/';
 export const SPORT_API = HOST + '/api/sports/';
 
 //SPORT CATEGORY
-export const SPORT_CATEGORY_API = HOST + '/api/sport_category';
+export const SPORT_CATEGORY_API = HOST + '/api/sport_category/';
+//TYPE SPORT
+export const TYPE_SPORT_API = HOST + '/api/type_sport/';
 //NOTIFICATION
 export const NOTIFICATION = HOST + '/api/notifications/';
 /**

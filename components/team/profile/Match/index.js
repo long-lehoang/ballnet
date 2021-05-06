@@ -8,7 +8,7 @@ import Loading from "../../../commons/Loading";
 import Item from "./Item";
 import styles from './styles.module.scss';
 
-export default function Match(){
+export default function Match({team}){
     const token = useSelector(state=>state.token);
     const [list, setList] = useState([]);
 
@@ -22,11 +22,11 @@ export default function Match(){
         }).catch(error=>{
             console.log(error.response.data.message)
         })
-    });
+    }, [null]);
 
     return(
         <div className={styles.container}>
-            <CreateMatchForm></CreateMatchForm>
+            {team.isCaptain ? <CreateMatchForm team={team}></CreateMatchForm>: ''}
             <div className={styles.list}>
                 {list.map((element,key)=>{
                     return(

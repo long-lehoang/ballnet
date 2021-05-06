@@ -10,13 +10,16 @@ import EditOverview from './EditOverview';
 import styles from './styles.module.scss';
 import { AVATAR, HOST, TEAM_API } from '../../../../config/config';
 import Link from 'next/link';
+import EditSport from './EditSport';
 
 export default function Info({team, permission}) {
     const [overview, setOverview] = useState(team.overview || "No overview");
     const [location, setLocation] = useState(team.location);
+    const [sport, setSport] = useState(team.sport);
     const [admins, setAdmins] = useState([]);
     const [members, setMembers] = useState([]);
     const [editOverview, toggleEditOverview] = useState(false);
+    const [editSport, toggleEditSport] = useState(false);
     const [editLocation, toggleEditLocation] = useState(false);
     const [editAdmin, toggleEditAdmin] = useState(false);
     const created_at = new Date(team.created_at);
@@ -54,8 +57,10 @@ export default function Info({team, permission}) {
                 <div className={styles.content}>{overview}</div>
             </div>
             <div className={styles.box}>
+                <EditSport show={editSport} value={sport} setValue={setSport} setShow={toggleEditSport} id={team.id}></EditSport>
                 <div className={styles.title}>
                     <span>Sport</span>
+                    {permission ? <button onClick={() => { toggleEditSport(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
 
                 <div className={styles.content}>

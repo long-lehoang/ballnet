@@ -1,136 +1,122 @@
 .container {
-  width: 100%;
-  border-top: 20px solid var(--background-header);
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 30px;
-  background-color: var(--background-component);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    border-top: 20px solid var(--background-header);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px;
+    background-color: var(--background-component);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--text-color-2);
-  }
-  .btn {
-    width: 120px;
-    height: 35px;
-    background-color: var(--background-header);
-    border: none;
-    border-radius: 4px;
-    color: var(--text-color-4);
-    font: var(--content);
-  }
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid var(--text-color-2);
+    }
+    .btn {
+        width: 120px;
+        height: 35px;
+        background-color: var(--background-header);
+        border: none;
+        border-radius: 4px;
+        color: var(--text-color-4);
+        font: var(--content);
+    }
   
   
 }
 
 .modal_container{
-  .header{
-    background-color: var(--background-header);
-    color: var(--text-color-4);
-    font: var(--title);
-    
-    .title{
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        
-    }
-  }
-  .body{
-    .title{
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        .name{
-            padding-left: 10px;
-            display: block;
-            span{
-                display: block;
-            }
-            select{
-                outline: none;
-                border:none;
-                background: none;
-                color: var(--text-color-2);
-            }
-        }
-        .avatar{
-            border-radius: 50%;
-        }
-    }
-    .textInput{
-        padding:30px 20px;
-        textarea{
-            height: 100px;
-            border: none;
-            resize: none;
-            width: 100%;
-            outline: none;
-            font: var(--sub-title);
-            color: var(--text-color-2);
-        }
-        
-    }
-    .groupButton{
-        display: flex;
-        border: 1px solid var(--text-color-2);
-        border-radius: 5px;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        .left{
-            padding-left: 20px;
-            color: var(--text-color-2);
-            cursor: context-menu;
-        }
-        .right{
-            width: 130px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-right: 20px;
-            label{
-                cursor: pointer;
-            }
-            input{
-                display: none;
-            }
-            .iconImage,.iconTag,.iconLocation{
-                width: 20px;
-                height: 20px;
-            }
-            .iconImage{
-                color: var(--button-color-1);
-            }
-            .iconTag{
-                color: var(--button-color-2);
-            }
-            .iconLocation{
-                color: var(--background-header);
-            }
-        }
-    }
-    .btnSubmit{
-        width: 100%;
+    .header{
         background-color: var(--background-header);
-        border-radius: 5px;
-        border: none;
         color: var(--text-color-4);
-        height: 30px;
-        margin-top: 20px;
+        font: var(--title);
+        
+        .title{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            
+        }
     }
-  }
-}
-.option{
-    img{
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-    }
-    span{
-        padding-left: 10px;
+    .body{
+        display: block;
+        width: 100%;
+        position: relative;
+        .group3{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            padding-bottom: 10px;
+            .col{
+                width: 100%;
+                .title{
+                    padding-bottom: 5px;
+                }
+                select{
+                    padding: 5px;
+                    min-width: 100%;
+                }
+            }
+        }
+        .group2{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            padding-bottom: 10px;
+
+            .col{
+                width: 100%;
+                .title{
+                    padding-bottom: 5px;
+                }
+                select{
+                    min-width: 100%;
+                    padding: 5px;
+                }
+            }
+        }
+        .group{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            padding-bottom: 20px;
+
+            .col{
+                width: 100%;
+                .title{
+                    padding-bottom: 5px;
+                }
+                .input{
+                    width: 100%;
+                }
+            }
+        }
+        .submit{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            .btnSubmit{
+                height: 30px;
+                width: 150px;
+                border: none;
+                border-radius: 4px;
+                background-color: var(--background-header);
+                color: var(--text-color-4);
+
+            }
+            .btnDisable{
+                height: 30px;
+                width: 150px;
+                border: none;
+                border-radius: 4px;
+                background-color: var(--text-color-1);
+                color: var(--text-color-4);
+                cursor: not-allowed;
+            }
+        }
     }
 }

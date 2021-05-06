@@ -45,7 +45,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
             case 4:
                 return (<MemberRequest team={team}></MemberRequest>)
             case 5:
-                return (<Match></Match>)
+                return (<Match team={team}></Match>)
             case 6:
                 return (<MatchRequest></MatchRequest>)
             default:
@@ -209,7 +209,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
                             <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
                             <span>Matchs</span>
                         </button>:''}
-                        {isAdmin ?
+                        {isCaptain ?
                         <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
                             <span>Match Invitation</span>
