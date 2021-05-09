@@ -23,10 +23,10 @@
                 // white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                -webkit-line-clamp: 3; /* number of lines to show */
+                -webkit-line-clamp: 4; /* number of lines to show */
                 -webkit-box-orient: vertical;
                 color: var(--text-color-2);
-                font: var(--sub-title);
+                font: var(--content);
                 margin: 0;
             }
             .time{

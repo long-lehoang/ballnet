@@ -1,21 +1,9 @@
-import { faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import LazyLoad from 'react-lazyload';
-import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
-import { AVATAR, HOST, TEAM_API } from '../../../../../config/config';
-import { setMessage } from '../../../../../slices/messageSlice';
-import Loading from '../../../../commons/Loading';
 import Item from './Item';
 import styles from './styles.module.scss';
 
 export default function InviteForm({ friends }) {
-    const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const [list, setList] = useState(friends)
     function handleSearch(event){

@@ -33,8 +33,17 @@ export const TEAM_REQUEST_API = HOST + '/api/team_requests/';
 //MYTEAM
 export const MY_TEAM_API = HOST + '/api/myteam';
 
+//MYTEAM WITH CAPTAIN
+export const MY_TEAM_CAPTAIN_API = HOST + '/api/myteam_captain';
+
 //MATCH
 export const MATCH_API = HOST + '/api/matchs/';
+
+//MATCH INVITATION
+export const MATCH_INVITATION_API = HOST + '/api/match_invitations/';
+
+//MATCH JOINING
+export const MATCH_JOINING_API = HOST + '/api/match_joinings/'
 
 //STADIUM
 export const STADIUM_API = HOST + '/api/stadiums/';

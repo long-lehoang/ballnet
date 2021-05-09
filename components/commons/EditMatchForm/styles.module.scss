@@ -1,0 +1,94 @@
+.modal_container{
+    .header{
+        background-color: var(--background-header);
+        color: var(--text-color-4);
+        font: var(--title);
+        
+        .title{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            
+        }
+    }
+    .body{
+        display: block;
+        width: 100%;
+        position: relative;
+        .group3{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            padding-bottom: 10px;
+            .col{
+                width: 100%;
+                .title{
+                    padding-bottom: 5px;
+                }
+                select{
+                    padding: 5px;
+                    min-width: 100%;
+                }
+            }
+        }
+        .group2{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            padding-bottom: 10px;
+
+            .col{
+                width: 100%;
+                .title{
+                    padding-bottom: 5px;
+                }
+                select{
+                    min-width: 100%;
+                    padding: 5px;
+                }
+            }
+        }
+        .group{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            padding-bottom: 20px;
+
+            .col{
+                width: 100%;
+                .title{
+                    padding-bottom: 5px;
+                }
+                .input{
+                    width: 100%;
+                }
+            }
+        }
+        .submit{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            .btnSubmit{
+                height: 30px;
+                width: 150px;
+                border: none;
+                border-radius: 4px;
+                background-color: var(--background-header);
+                color: var(--text-color-4);
+
+            }
+            .btnDisable{
+                height: 30px;
+                width: 150px;
+                border: none;
+                border-radius: 4px;
+                background-color: var(--text-color-1);
+                color: var(--text-color-4);
+                cursor: not-allowed;
+            }
+        }
+    }
+}

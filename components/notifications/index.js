@@ -1,13 +1,34 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMessage } from '../../slices/messageSlice';
 import styles from './styles.module.scss';
 
 
 export default function Notification(props) {
     const token = useSelector(state => state.token);
     const [del, setDel] = useState(false);
+    const dispatch = useDispatch();
+
+    function openMessageBox(message, title = 'Error'){
+        const data = {title: title, message: message, show: true};
+        const action = setMessage(data);
+        dispatch(action);
+    }
+
+    function handleJoin(){
+        axios.post(props.linkJoin, props.dataJoin, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response) => {
+            setDel(true);
+        }).catch(error=>{
+            openMessageBox(error.response.data.message)
+        });
+    }
+
     function handleAccept() {
         axios.post(props.linkAccept, {}, {
             headers: {
@@ -16,21 +37,33 @@ export default function Notification(props) {
         }).then((response) => {
             setDel(true);
         }).catch(error=>{
-            console.log(error);
+            openMessageBox(error.response.data.message)
         });
-
     }
 
     function handleDeny() {
-        axios.post(props.linkDeny, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response) => {
-            setDel(true);
-        }).catch(error=>{
-            console.log(error);
-        });
+        if(props.delMethod == 'delete'){
+            axios.delete(props.linkDeny, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((response) => {
+                setDel(true);
+            }).catch(error=>{
+                openMessageBox(error.response.data.message)
+            });
+        }else{
+            axios.post(props.linkDeny, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((response) => {
+                setDel(true);
+            }).catch(error=>{
+                openMessageBox(error.response.data.message)
+            });
+        }
+        
     }
 
     return (
@@ -47,6 +80,7 @@ export default function Notification(props) {
             </div>        
             </Link>
             <div className={styles.btn}>
+                {props.linkJoin != null ? <button className={styles.acptBtn} onClick={handleJoin}>Join</button> : ''}
                 {props.linkAccept != null ? <button className={styles.acptBtn} onClick={handleAccept}>Accept</button> : ''}
                 {props.linkDeny != null ? <button className={styles.dnBtn} onClick={handleDeny}>Deny</button> : ''}
             </div>
