@@ -30,15 +30,27 @@ export default function Notification(props) {
     }
 
     function handleAccept() {
-        axios.post(props.linkAccept, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response) => {
-            setDel(true);
-        }).catch(error=>{
-            openMessageBox(error.response.data.message)
-        });
+        if(props.acceptMethod == 'put'){
+            axios.put(props.linkAccept, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((response) => {
+                setDel(true);
+            }).catch(error=>{
+                openMessageBox(error.response.data.message)
+            });
+        }else{
+            axios.post(props.linkAccept, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((response) => {
+                setDel(true);
+            }).catch(error=>{
+                openMessageBox(error.response.data.message)
+            });
+        }
     }
 
     function handleDeny() {

@@ -49,7 +49,7 @@ export default function SelectTeam({show, setShow, match}) {
                 <Modal.Title >Select Team</Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={"Search Friends"} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={"Search Teams"} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {
                         return (

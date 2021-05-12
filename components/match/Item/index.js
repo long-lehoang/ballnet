@@ -1,11 +1,16 @@
+import { faWindowMinimize } from '@fortawesome/free-regular-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AVATAR_TEAM, HOST, MATCH_JOINING_API } from '../../../config/config';
+import { AVATAR, AVATAR_TEAM, HOST, MATCH_API, MATCH_JOINING_API } from '../../../config/config';
 import { setMessage } from '../../../slices/messageSlice';
 import EditMatchForm from '../../commons/EditMatchForm';
-import SelectTeam from './SelectTeam';
+import InvitePeople from './InvitePeople';
+import InviteTeam from './InviteTeam';
+import SelectTeam from './SelectMyTeam';
 import styles from './styles.module.scss';
 
 export default function Item({item}){
@@ -26,12 +31,20 @@ export default function Item({item}){
     const [member2, setMember2] = useState(item.member2);
     const isInvite1 = item.wait1 == 2;
     const isInvite2 = item.wait2 == 2;
-    const isAdmin1 = true;
-    const isAdmin2 = true;
+    const isAdmin1 = useState(item.admin1);
+    const isAdmin2 = useState(item.admin2);
     const [selectTeam, setSelectTeam] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [showInviteTeam, setShowInviteTeam] = useState(false);
+    const [showInvitePeople1, setShowInvitePeople1] = useState(false);
+    const [showInvitePeople2, setShowInvitePeople2] = useState(false);
+
+    const [members1, setMembers1] = useState([]);
+    const [members2, setMembers2] = useState([]);
     const token = useSelector(state => state.token);
     const dispatch = useDispatch();
+
+    const [del, setDel] = useState(false);
 
     function openMessageBox(message, title = 'Error'){
         const data = {title: title, message: message, show: true};
@@ -171,43 +184,99 @@ export default function Item({item}){
 
     function handleBooking()
     {
-
+        //TODO
     }
 
     function handleTeamLeave()
     {
-
+        axios.put(MATCH_API,{},{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            setTeam2(null);
+        }).catch(error=>{
+            openMessageBox(error.response.data.message);
+        })
     }
 
     function handleInviteTeam()
     {
-
+        setShowInviteTeam(true);
     }
 
     function handleInvitePeople(option)
     {
-
+        option === 1 ? setShowInvitePeople1(true) : setShowInvitePeople2(true);
     }
 
     function handleDelete()
     {
-        
+        axios.delete(MATCH_API + item.id,{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            setDel(true);
+        }).catch(error=>{
+            openMessageBox(error.response.data.message);
+        })
     }
+
+    function handleDeleteMember(option, join_id)
+    {
+        axios.delete(MATCH_JOINING_API + join_id, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            if(option === 1){
+                setMembers1(members1.filter(element=>{return element.join_id !== join_id}))
+            }else{
+                setMembers2(members2.filter(element=>{return element.join_id !== join_id}))
+            }
+        }).catch(error=>{
+            openMessageBox(error.response.data.message)
+        })
+    }
+    useEffect(()=>{
+        axios.get(MATCH_API+`${item.id}/member/${item.team_1}`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            setMembers1(response.data.data);
+        }).catch(error=>{
+            openMessageBox(error.response.data.message)
+        })
+        axios.get(MATCH_API+`${item.id}/member/${item.team_2}`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            setMembers2(response.data.data);
+        }).catch(error=>{
+            openMessageBox(error.response.data.message)
+        })
+    },[null])
     return (
-        <div className={styles.container}>
+        <div className={!del ? styles.container : styles.none}>
             <SelectTeam show={selectTeam} setShow={setSelectTeam} match={item} />
             <EditMatchForm item={item} setShow={setShowEdit} show={showEdit} 
             setParentLocation={setLocation} setParentType={setType} 
             setParentStart={setTime} setParentTypeSport={setTypeSport} />
+            <InviteTeam show={showInviteTeam} setShow={setShowInviteTeam} match={item} />
+            <InvitePeople show={showInvitePeople1} setShow={setShowInvitePeople1} match={item} team_id={item.team_1}/>
+            <InvitePeople show={showInvitePeople2} setShow={setShowInvitePeople2} match={item} team_id={item.team_2}/>
             <div className={styles.edit}>
                 <button className={styles.btnShowPopup}>...</button>
                 <div className={styles.popup}>
                     {item.captain1 ? <button onClick={handleEdit}>Edit</button> : ''}
                     {item.captain2 ? <button onClick={handleTeamLeave}>Leave</button> : ''}
-                    {item.captain1 ? <button onClick={handleInviteTeam}>Invite Team</button> : ''}
-                    <button onClick={handleInvitePeople(1)}>Invite People &#40;{item.name1}&#41;</button>
-                    {item.team_2 !== null ? <button onClick={handleInvitePeople(2)}>Invite People &#40;{item.name2}&#41;</button> : ''}
-                    {item.captain1? <button onClick={handleEdit}>Delete</button> : ''}
+                    {item.captain1&&item.team_2==null ? <button onClick={handleInviteTeam}>Invite Team</button> : ''}
+                    <button onClick={()=>{handleInvitePeople(1)}}>Invite People &#40;{item.name1}&#41;</button>
+                    {item.team_2 !== null ? <button onClick={()=>{handleInvitePeople(2)}}>Invite People &#40;{item.name2}&#41;</button> : ''}
+                    {item.captain1? <button onClick={handleDelete}>Delete</button> : ''}
                     {item.captain1? <button onClick={handleBooking}>Book Stadium</button>: ''}
                 </div>
             </div>
@@ -215,9 +284,51 @@ export default function Item({item}){
                 <Link href={`/team/${item.team_1}`}>
                 <img src={avatar1} className={styles.logo}></img>
                 </Link>
-                <span className={styles.member}>{`${member1}/${type}`}</span>
+                <span className={styles.member}>{`${member1}/${type}`}
+                <div className={styles.popupMember}>
+                    {members1.map((element, key)=>{
+                        let src = element.avatar==null ? AVATAR : HOST + element.avatar;
+                        return(
+                            <div className={styles.item} key={key}>
+                                <Link href={`/${element.username}`}>
+                                <div>
+                                    <img src={src}></img>
+                                    <span>{element.name}</span>
+                                </div>
+                                </Link>
+                                <div>
+                                    {isAdmin2 ? <button onClick={()=>handleDeleteMember(1, element.join_id)}>
+                                        <FontAwesomeIcon icon={faTrash} height={12}></FontAwesomeIcon>
+                                    </button> : ''}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+                </span>
                 <span>:</span>
-                <span className={styles.member}>{`${member2}/${type}`}</span>
+                <span className={styles.member}>{`${member2}/${type}`}
+                <div className={styles.popupMember}>
+                    {members2.map((element, key)=>{
+                        let src = element.avatar==null ? AVATAR : HOST + element.avatar;
+                        return(
+                            <div className={styles.item} key={key}>
+                                <Link href={`/${element.username}`}>
+                                <div>
+                                    <img src={src}></img>
+                                    <span>{element.name}</span>
+                                </div>
+                                </Link>
+                                <div>
+                                    {isAdmin2 ? <button onClick={()=>handleDeleteMember(2, element.join_id)}>
+                                        <FontAwesomeIcon icon={faTrash} height={12}></FontAwesomeIcon>
+                                    </button> : ''}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+                </span>
                 {team2 == null ? <button onClick={handleTeamJoin} className={styles.btnTeamJoin}>+</button> :
                 <Link href={`/team/${item.team_2}`}>                
                 <img src={avatar2} className={styles.logo}></img>

@@ -32,7 +32,8 @@ export const TEAM_API = HOST + '/api/teams/';
 export const TEAM_REQUEST_API = HOST + '/api/team_requests/';
 //MYTEAM
 export const MY_TEAM_API = HOST + '/api/myteam';
-
+//TEAM WITH SPORT
+export const TEAM_SPORT = HOST + '/api/team_sport/';
 //MYTEAM WITH CAPTAIN
 export const MY_TEAM_CAPTAIN_API = HOST + '/api/myteam_captain';
 
