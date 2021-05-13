@@ -12,6 +12,8 @@ import InvitePeople from './InvitePeople';
 import InviteTeam from './InviteTeam';
 import SelectTeam from './SelectMyTeam';
 import styles from './styles.module.scss';
+import TeamRequest from './TeamRequest';
+import UserRequest from './UserRequest';
 
 export default function Item({item}){
     const [time, setTime] = useState(new Date(item.time.split(", ")[0]));
@@ -38,6 +40,9 @@ export default function Item({item}){
     const [showInviteTeam, setShowInviteTeam] = useState(false);
     const [showInvitePeople1, setShowInvitePeople1] = useState(false);
     const [showInvitePeople2, setShowInvitePeople2] = useState(false);
+    const [showTeamRequest, setShowTeamRequest] = useState(false);
+    const [showUserRequest1, setShowUserRequest1] = useState(false);
+    const [showUserRequest2, setShowUserRequest2] = useState(false);
 
     const [members1, setMembers1] = useState([]);
     const [members2, setMembers2] = useState([]);
@@ -239,6 +244,35 @@ export default function Item({item}){
             openMessageBox(error.response.data.message)
         })
     }
+
+    function handleRemoveTeam()
+    {
+        axios.delete(MATCH_API + `${item.id}/team`,{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            setTeam2(null);
+            setMembers2([]);
+            setMember2(0);
+        }).catch(error=>{
+            openMessageBox(error.response.data.message);
+        })
+    }
+
+    function handleManageUserRequest(option)
+    {
+        if(option === 1){
+            setShowUserRequest1(true);
+        }else{
+            setShowUserRequest2(true);
+        }
+    }
+
+    function handleManageTeamRequest()
+    {
+        setShowTeamRequest(true);
+    }
     useEffect(()=>{
         axios.get(MATCH_API+`${item.id}/member/${item.team_1}`, {
             headers:{
@@ -268,14 +302,22 @@ export default function Item({item}){
             <InviteTeam show={showInviteTeam} setShow={setShowInviteTeam} match={item} />
             <InvitePeople show={showInvitePeople1} setShow={setShowInvitePeople1} match={item} team_id={item.team_1}/>
             <InvitePeople show={showInvitePeople2} setShow={setShowInvitePeople2} match={item} team_id={item.team_2}/>
+            <TeamRequest show={showTeamRequest} setShow={setShowTeamRequest} match={item}/>
+            <UserRequest show={showUserRequest1} setShow={setShowUserRequest1} match={item} team_id={item.team_1}/>
+            <UserRequest show={showUserRequest2} setShow={setShowUserRequest2} match={item} team_id={item.team_2}/>
+            
             <div className={styles.edit}>
                 <button className={styles.btnShowPopup}>...</button>
                 <div className={styles.popup}>
                     {item.captain1 ? <button onClick={handleEdit}>Edit</button> : ''}
                     {item.captain2 ? <button onClick={handleTeamLeave}>Leave</button> : ''}
-                    {item.captain1&&item.team_2==null ? <button onClick={handleInviteTeam}>Invite Team</button> : ''}
+                    {item.isAdmin1 ? <button onClick={()=>handleManageUserRequest(1)}>User Request &#40;{item.name1}&#41;</button>:''}
+                    {item.isAdmin2 ? <button onClick={()=>handleManageUserRequest(2)}>User Request &#40;{item.name2}&#41;</button>:''}
+                    {item.captain1 ? <button onClick={()=>handleManageTeamRequest(2)}>Team Request</button>:''}
+                    {item.isAdmin1&&item.team_2==null ? <button onClick={handleInviteTeam}>Invite Team</button> : ''}
                     <button onClick={()=>{handleInvitePeople(1)}}>Invite People &#40;{item.name1}&#41;</button>
                     {item.team_2 !== null ? <button onClick={()=>{handleInvitePeople(2)}}>Invite People &#40;{item.name2}&#41;</button> : ''}
+                    {item.captain1 && item.team_2 !== null ? <button onClick={handleRemoveTeam}>Remove {item.name2}</button> : ''}
                     {item.captain1? <button onClick={handleDelete}>Delete</button> : ''}
                     {item.captain1? <button onClick={handleBooking}>Book Stadium</button>: ''}
                 </div>
