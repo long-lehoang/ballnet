@@ -43,7 +43,7 @@ export default function UserRequest({show, setShow, match, team_id}) {
     return (
         <Modal show={show} onHide={() => setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Invite Friend to Join Match</Modal.Title>
+                <Modal.Title >User Request To Join Match</Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <input className={styles.search} placeholder={"Search Friends"} onChange={handleSearch}></input>

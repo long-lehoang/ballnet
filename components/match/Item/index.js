@@ -194,7 +194,7 @@ export default function Item({item}){
 
     function handleTeamLeave()
     {
-        axios.put(MATCH_API,{},{
+        axios.put(MATCH_API+`${item.id}/leave`,{},{
             headers:{
                 Authorization: `Bearer ${token}`
             }
@@ -296,25 +296,25 @@ export default function Item({item}){
     return (
         <div className={!del ? styles.container : styles.none}>
             <SelectTeam show={selectTeam} setShow={setSelectTeam} match={item} />
-            <EditMatchForm item={item} setShow={setShowEdit} show={showEdit} 
+            {item.captain1 ?<EditMatchForm item={item} setShow={setShowEdit} show={showEdit} 
             setParentLocation={setLocation} setParentType={setType} 
-            setParentStart={setTime} setParentTypeSport={setTypeSport} />
-            <InviteTeam show={showInviteTeam} setShow={setShowInviteTeam} match={item} />
+            setParentStart={setTime} setParentTypeSport={setTypeSport} /> : ''}
+            {isAdmin1&&item.team_2==null ?<InviteTeam show={showInviteTeam} setShow={setShowInviteTeam} match={item} /> : ''}
             <InvitePeople show={showInvitePeople1} setShow={setShowInvitePeople1} match={item} team_id={item.team_1}/>
-            <InvitePeople show={showInvitePeople2} setShow={setShowInvitePeople2} match={item} team_id={item.team_2}/>
-            <TeamRequest show={showTeamRequest} setShow={setShowTeamRequest} match={item}/>
-            <UserRequest show={showUserRequest1} setShow={setShowUserRequest1} match={item} team_id={item.team_1}/>
-            <UserRequest show={showUserRequest2} setShow={setShowUserRequest2} match={item} team_id={item.team_2}/>
+            {item.team_2 !== null ?<InvitePeople show={showInvitePeople2} setShow={setShowInvitePeople2} match={item} team_id={item.team_2}/> : ''}
+            {item.captain1 ?<TeamRequest show={showTeamRequest} setShow={setShowTeamRequest} match={item}/> : ''}
+            {isAdmin1 ?<UserRequest show={showUserRequest1} setShow={setShowUserRequest1} match={item} team_id={item.team_1}/> : ''}
+            {isAdmin2 ?<UserRequest show={showUserRequest2} setShow={setShowUserRequest2} match={item} team_id={item.team_2}/> : ''}
             
             <div className={styles.edit}>
                 <button className={styles.btnShowPopup}>...</button>
                 <div className={styles.popup}>
                     {item.captain1 ? <button onClick={handleEdit}>Edit</button> : ''}
                     {item.captain2 ? <button onClick={handleTeamLeave}>Leave</button> : ''}
-                    {item.isAdmin1 ? <button onClick={()=>handleManageUserRequest(1)}>User Request &#40;{item.name1}&#41;</button>:''}
-                    {item.isAdmin2 ? <button onClick={()=>handleManageUserRequest(2)}>User Request &#40;{item.name2}&#41;</button>:''}
+                    {isAdmin1 ? <button onClick={()=>handleManageUserRequest(1)}>User Request &#40;{item.name1}&#41;</button>:''}
+                    {isAdmin2 ? <button onClick={()=>handleManageUserRequest(2)}>User Request &#40;{item.name2}&#41;</button>:''}
                     {item.captain1 ? <button onClick={()=>handleManageTeamRequest(2)}>Team Request</button>:''}
-                    {item.isAdmin1&&item.team_2==null ? <button onClick={handleInviteTeam}>Invite Team</button> : ''}
+                    {isAdmin1&&item.team_2==null ? <button onClick={handleInviteTeam}>Invite Team</button> : ''}
                     <button onClick={()=>{handleInvitePeople(1)}}>Invite People &#40;{item.name1}&#41;</button>
                     {item.team_2 !== null ? <button onClick={()=>{handleInvitePeople(2)}}>Invite People &#40;{item.name2}&#41;</button> : ''}
                     {item.captain1 && item.team_2 !== null ? <button onClick={handleRemoveTeam}>Remove {item.name2}</button> : ''}

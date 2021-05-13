@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import location from '../../../data/location.json';
 import axios from 'axios';
 
-export default function CreateTeamForm() {
+export default function CreateTeamForm({teams, setTeams}) {
     const [districts, setDistrict] = useState([]);
     const [sportCTGR, setSportCTGR] = useState([]);
     const [name, setName] = useState('');
@@ -80,6 +80,9 @@ export default function CreateTeamForm() {
             }).then(response=>{
                 resetForm();
                 setShow(false);
+                let arr = JSON.parse(JSON.stringify(teams));;
+                arr.unshift(response.data.data)
+                setTeams(arr);
             }).catch(error=>{
                 console.log(error);
             })

@@ -8,12 +8,12 @@ import styles from './styles.module.scss';
 
 export default function Item({item}) {
     const dispatch = useDispatch();
-    const img = avatar !== null ? HOST + avatar : AVATAR_TEAM;
+    const img = item.avatar !== null ? HOST + item.avatar : AVATAR_TEAM;
     const token = useSelector(state=>state.token);
     const [show, setShow] = useState(true);
 
     function handleAccept(){
-        axios.post(MATCH_INVITATION_API + `${item.id}/${item.request_id}/accept`, formData, {
+        axios.post(MATCH_INVITATION_API + `${item.id}/${item.request_id}/accept`, {}, {
             headers:{
                 Authorization: `Bearer ${token}`
             }
@@ -25,7 +25,7 @@ export default function Item({item}) {
     }
 
     function handleCancel(){
-        axios.post(MATCH_JOINING_API + `${item.id}/${item.request_id}/cancel`, formData, {
+        axios.post(MATCH_JOINING_API + `${item.id}/${item.request_id}/cancel`, {}, {
             headers:{
                 Authorization: `Bearer ${token}`
             }
@@ -46,7 +46,7 @@ export default function Item({item}) {
         <div className={show ? styles.item : styles.none}>
             <div>
                 <img src={img}></img>
-                <Link href={`/${username}`}><span>{name}</span></Link>
+                <Link href={`/team/${item.id}`}><span>{item.name}</span></Link>
             </div>
             {item.status == 'invited' ? <button onClick={handleCancel}>Cancel</button> : 
             <div>

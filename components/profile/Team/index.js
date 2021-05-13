@@ -8,11 +8,11 @@ import { MY_TEAM_API, POSTS_API, TEAM_API } from '../../../config/config';
 import { useSelector } from 'react-redux';
 import Item from './Item';
 
-export default function Team({permission}) {
+export default function Team({ permission }) {
     const token = useSelector(state => state.token)
     const [teams, setTeams] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(MY_TEAM_API, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -23,21 +23,21 @@ export default function Team({permission}) {
             console.log(error);
         })
 
-    },[null])
+    }, [null])
 
     return (
         <div className={styles.container}>
             {permission ? <div className={styles.row}>
-                <CreateTeamForm></CreateTeamForm>
+                <CreateTeamForm teams={teams} setTeams={setTeams}></CreateTeamForm>
             </div> : ''}
             <div className={styles.list}>
-            {teams.map((element, key) => {
-                return (
-                    <LazyLoad key={key} height={200} placeholder={<Loading />}>
-                        <Item key={key} item={element}></Item>
-                    </LazyLoad>
-                )
-            })}
+                {teams.map((element, key) => {
+                    return (
+                        <LazyLoad key={key} height={200} placeholder={<Loading />}>
+                            <Item key={key} item={element}></Item>
+                        </LazyLoad>
+                    )
+                })}
             </div>
         </div>
     )
