@@ -51,7 +51,7 @@ export default function TeamRequest({show, setShow, match}) {
                     {list.map((element, key) => {   
                         return (
                             // <LazyLoad key={key} height={10} placeholder={<Loading/>}>                        
-                            < Item key={key} item={element} ></Item>
+                            < Item key={key} item={element} setList={setList} setTeams={setTeams} request={teams} ></Item>
                             // </LazyLoad>
                         )
                     })}

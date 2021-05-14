@@ -3,11 +3,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { MATCH_JOINING_API, TEAM_SPORT } from '../../../../config/config';
+import { MATCH_API, MATCH_JOINING_API, TEAM_SPORT } from '../../../../config/config';
 import { setMessage } from '../../../../slices/messageSlice';
 import Item from './Item';
 import styles from './styles.module.scss';
-//TODO
+
 export default function UserRequest({show, setShow, match, team_id}) {
     const [list, setList] = useState([]);
     const [friends, setPeople] = useState([]);
@@ -23,7 +23,7 @@ export default function UserRequest({show, setShow, match, team_id}) {
     }
 
     useEffect(()=>{
-        axios.get(MATCH_JOINING_API +`friend_not_in_match/${match.id}`, {
+        axios.get(MATCH_API +`${match.id}/request/${team_id}`, {
             headers:{
                 Authorization: `Bearer ${token}`
             }
@@ -46,12 +46,12 @@ export default function UserRequest({show, setShow, match, team_id}) {
                 <Modal.Title >User Request To Join Match</Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={"Search Friends"} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={"Search Request"} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {   
                         return (
                             // <LazyLoad key={key} height={10} placeholder={<Loading/>}>                        
-                            < Item key={key} id={element.id} username={element.username} name={element.name} team_id={team_id} match_id={match.id} avatar={element.avatar} ></Item>
+                            < Item key={key} item={element} setList={setList} setPeople={setPeople} request={friends} ></Item>
                             // </LazyLoad>
                         )
                     })}

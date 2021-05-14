@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 import TeamRequest from './TeamRequest';
 import UserRequest from './UserRequest';
 
-export default function Item({item}){
+export default function Item({ item }) {
     const [time, setTime] = useState(new Date(item.time.split(", ")[0]));
     const [type, setType] = useState(item.type.split(" vs ")[0]);
     const [typeSport, setTypeSport] = useState(item.type);
@@ -33,8 +33,6 @@ export default function Item({item}){
     const [member2, setMember2] = useState(item.member2);
     const isInvite1 = item.wait1 == 2;
     const isInvite2 = item.wait2 == 2;
-    const isAdmin1 = useState(item.admin1);
-    const isAdmin2 = useState(item.admin2);
     const [selectTeam, setSelectTeam] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [showInviteTeam, setShowInviteTeam] = useState(false);
@@ -51,360 +49,344 @@ export default function Item({item}){
 
     const [del, setDel] = useState(false);
 
-    function openMessageBox(message, title = 'Error'){
-        const data = {title: title, message: message, show: true};
+    function openMessageBox(message, title = 'Error') {
+        const data = { title: title, message: message, show: true };
         const action = setMessage(data);
         dispatch(action);
     }
 
-    function handleJoin(option)
-    {
+    function handleJoin(option) {
         var formData = new FormData();
         formData.append('team_id', option == 1 ? item.team_1 : item.team_2);
         formData.append('match_id', item.id);
         axios.post(MATCH_JOINING_API, formData, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             console.log(response.data);
-            if(option == 1){
-                if(response.data.data.status == 'active'){
+            if (option == 1) {
+                if (response.data.data.status == 'active') {
                     setIsJoin1(true);
                     setIdRequest1(response.data.data.id);
-                    setMember1(member1+1);
-                }else{
+                    setMember1(member1 + 1);
+                } else {
                     setIsRequest1(true);
                     setIdRequest1(response.data.data.id);
                 }
-            }else{
-                if(response.data.data.status == 'active'){
+            } else {
+                if (response.data.data.status == 'active') {
                     setIsJoin2(true);
                     setIdRequest2(response.data.data.id);
-                    setMember2(member2+1);
-                }else{
+                    setMember2(member2 + 1);
+                } else {
                     setIsRequest2(true);
                     setIdRequest2(response.data.data.id);
                 }
             }
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
 
-    function handleTeamJoin()
-    {
+    function handleTeamJoin() {
         setSelectTeam(true);
     }
 
-    function handleLeave(option)
-    {
+    function handleLeave(option) {
         let id = option == 2 ? idRequest2 : idRequest1;
 
         axios.delete(MATCH_JOINING_API + id, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
-            if(option == 1){
+        }).then(response => {
+            if (option == 1) {
                 setIsJoin1(false);
                 setIdRequest1(null);
-                setMember1(member1-1);
-            }else{
+                setMember1(member1 - 1);
+            } else {
                 setIsJoin2(false);
                 setIdRequest2(null);
-                setMember2(member2-1);
+                setMember2(member2 - 1);
             }
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
 
-    function handleCancel(option)
-    {
+    function handleCancel(option) {
         let id = option == 2 ? idRequest2 : idRequest1;
 
         axios.delete(MATCH_JOINING_API + id, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
-            if(option == 1){
+        }).then(response => {
+            if (option == 1) {
                 setIsRequest1(false);
                 setIdRequest1(null);
-            }else{
+            } else {
                 setIsRequest2(false);
                 setIdRequest2(null);
             }
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
 
-    function handleDeny(option)
-    {
+    function handleDeny(option) {
         let id = option == 2 ? idRequest2 : idRequest1;
 
         axios.delete(MATCH_JOINING_API + id, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
-            if(option == 1){
+        }).then(response => {
+            if (option == 1) {
                 setIsRequest1(false);
                 setIdRequest1(null);
-            }else{
+            } else {
                 setIsRequest2(false);
                 setIdRequest2(null);
             }
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
 
-    function handleAccept(option)
-    {
+    function handleAccept(option) {
         var formData = new FormData();
         axios.put(MATCH_JOINING_API + option == 2 ? idRequest2 : idRequest1, formData, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
-            if(option == 1){
+        }).then(response => {
+            if (option == 1) {
                 setIsJoin1(true);
-                setMember1(member1+1);
-            }else{
+                setMember1(member1 + 1);
+            } else {
                 setIsJoin2(true);
-                setMember2(member2+1);
+                setMember2(member2 + 1);
             }
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
 
-    function handleEdit()
-    {
+    function handleEdit() {
         setShowEdit(true);
     }
 
-    function handleBooking()
-    {
+    function handleBooking() {
         //TODO
     }
 
-    function handleTeamLeave()
-    {
-        axios.put(MATCH_API+`${item.id}/leave`,{},{
-            headers:{
+    function handleTeamLeave() {
+        axios.put(MATCH_API + `${item.id}/leave`, {}, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setTeam2(null);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
 
-    function handleInviteTeam()
-    {
+    function handleInviteTeam() {
         setShowInviteTeam(true);
     }
 
-    function handleInvitePeople(option)
-    {
+    function handleInvitePeople(option) {
         option === 1 ? setShowInvitePeople1(true) : setShowInvitePeople2(true);
     }
 
-    function handleDelete()
-    {
-        axios.delete(MATCH_API + item.id,{
-            headers:{
+    function handleDelete() {
+        axios.delete(MATCH_API + item.id, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setDel(true);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
 
-    function handleDeleteMember(option, join_id)
-    {
+    function handleDeleteMember(option, join_id) {
         axios.delete(MATCH_JOINING_API + join_id, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
-            if(option === 1){
-                setMembers1(members1.filter(element=>{return element.join_id !== join_id}))
-            }else{
-                setMembers2(members2.filter(element=>{return element.join_id !== join_id}))
+        }).then(response => {
+            if (option === 1) {
+                setMembers1(members1.filter(element => { return element.join_id !== join_id }))
+            } else {
+                setMembers2(members2.filter(element => { return element.join_id !== join_id }))
             }
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message)
         })
     }
 
-    function handleRemoveTeam()
-    {
-        axios.delete(MATCH_API + `${item.id}/team`,{
-            headers:{
+    function handleRemoveTeam() {
+        axios.delete(MATCH_API + `${item.id}/team`, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setTeam2(null);
             setMembers2([]);
             setMember2(0);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
 
-    function handleManageUserRequest(option)
-    {
-        if(option === 1){
+    function handleManageUserRequest(option) {
+        if (option === 1) {
             setShowUserRequest1(true);
-        }else{
+        } else {
             setShowUserRequest2(true);
         }
     }
 
-    function handleManageTeamRequest()
-    {
+    function handleManageTeamRequest() {
         setShowTeamRequest(true);
     }
-    useEffect(()=>{
-        axios.get(MATCH_API+`${item.id}/member/${item.team_1}`, {
-            headers:{
+    useEffect(() => {
+        axios.get(MATCH_API + `${item.id}/member/${item.team_1}`, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setMembers1(response.data.data);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message)
         })
-        axios.get(MATCH_API+`${item.id}/member/${item.team_2}`, {
-            headers:{
+        axios.get(MATCH_API + `${item.id}/member/${item.team_2}`, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setMembers2(response.data.data);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message)
         })
-    },[null])
+    }, [null])
     return (
         <div className={!del ? styles.container : styles.none}>
             <SelectTeam show={selectTeam} setShow={setSelectTeam} match={item} />
-            {item.captain1 ?<EditMatchForm item={item} setShow={setShowEdit} show={showEdit} 
-            setParentLocation={setLocation} setParentType={setType} 
-            setParentStart={setTime} setParentTypeSport={setTypeSport} /> : ''}
-            {isAdmin1&&item.team_2==null ?<InviteTeam show={showInviteTeam} setShow={setShowInviteTeam} match={item} /> : ''}
-            <InvitePeople show={showInvitePeople1} setShow={setShowInvitePeople1} match={item} team_id={item.team_1}/>
-            {item.team_2 !== null ?<InvitePeople show={showInvitePeople2} setShow={setShowInvitePeople2} match={item} team_id={item.team_2}/> : ''}
-            {item.captain1 ?<TeamRequest show={showTeamRequest} setShow={setShowTeamRequest} match={item}/> : ''}
-            {isAdmin1 ?<UserRequest show={showUserRequest1} setShow={setShowUserRequest1} match={item} team_id={item.team_1}/> : ''}
-            {isAdmin2 ?<UserRequest show={showUserRequest2} setShow={setShowUserRequest2} match={item} team_id={item.team_2}/> : ''}
-            
+            {item.captain1 ? <EditMatchForm item={item} setShow={setShowEdit} show={showEdit}
+                setParentLocation={setLocation} setParentType={setType}
+                setParentStart={setTime} setParentTypeSport={setTypeSport} /> : ''}
+            {item.admin1 && item.team_2 == null ? <InviteTeam show={showInviteTeam} setShow={setShowInviteTeam} match={item} /> : ''}
+            <InvitePeople show={showInvitePeople1} setShow={setShowInvitePeople1} match={item} team_id={item.team_1} />
+            {item.team_2 !== null ? <InvitePeople show={showInvitePeople2} setShow={setShowInvitePeople2} match={item} team_id={item.team_2} /> : ''}
+            {item.captain1 ? <TeamRequest show={showTeamRequest} setShow={setShowTeamRequest} match={item} /> : ''}
+            {item.admin1 ? <UserRequest show={showUserRequest1} setShow={setShowUserRequest1} match={item} team_id={item.team_1} /> : ''}
+            {item.admin2 ? <UserRequest show={showUserRequest2} setShow={setShowUserRequest2} match={item} team_id={item.team_2} /> : ''}
+
             <div className={styles.edit}>
                 <button className={styles.btnShowPopup}>...</button>
                 <div className={styles.popup}>
                     {item.captain1 ? <button onClick={handleEdit}>Edit</button> : ''}
                     {item.captain2 ? <button onClick={handleTeamLeave}>Leave</button> : ''}
-                    {isAdmin1 ? <button onClick={()=>handleManageUserRequest(1)}>User Request &#40;{item.name1}&#41;</button>:''}
-                    {isAdmin2 ? <button onClick={()=>handleManageUserRequest(2)}>User Request &#40;{item.name2}&#41;</button>:''}
-                    {item.captain1 ? <button onClick={()=>handleManageTeamRequest(2)}>Team Request</button>:''}
-                    {isAdmin1&&item.team_2==null ? <button onClick={handleInviteTeam}>Invite Team</button> : ''}
-                    <button onClick={()=>{handleInvitePeople(1)}}>Invite People &#40;{item.name1}&#41;</button>
-                    {item.team_2 !== null ? <button onClick={()=>{handleInvitePeople(2)}}>Invite People &#40;{item.name2}&#41;</button> : ''}
+                    {item.admin1 ? <button onClick={() => handleManageUserRequest(1)}>User Request &#40;{item.name1}&#41;</button> : ''}
+                    {item.admin2 ? <button onClick={() => handleManageUserRequest(2)}>User Request &#40;{item.name2}&#41;</button> : ''}
+                    {item.captain1 ? <button onClick={() => handleManageTeamRequest(2)}>Team Request</button> : ''}
+                    {item.admin1 && item.team_2 == null ? <button onClick={handleInviteTeam}>Invite Team</button> : ''}
+                    <button onClick={() => { handleInvitePeople(1) }}>Invite People &#40;{item.name1}&#41;</button>
+                    {item.team_2 !== null ? <button onClick={() => { handleInvitePeople(2) }}>Invite People &#40;{item.name2}&#41;</button> : ''}
                     {item.captain1 && item.team_2 !== null ? <button onClick={handleRemoveTeam}>Remove {item.name2}</button> : ''}
-                    {item.captain1? <button onClick={handleDelete}>Delete</button> : ''}
-                    {item.captain1? <button onClick={handleBooking}>Book Stadium</button>: ''}
+                    {item.captain1 ? <button onClick={handleDelete}>Delete</button> : ''}
+                    {item.captain1 ? <button onClick={handleBooking}>Book Stadium</button> : ''}
                 </div>
             </div>
             <div className={styles.team}>
                 <Link href={`/team/${item.team_1}`}>
-                <img src={avatar1} className={styles.logo}></img>
+                    <img src={avatar1} className={styles.logo}></img>
                 </Link>
                 <span className={styles.member}>{`${member1}/${type}`}
-                <div className={styles.popupMember}>
-                    {members1.map((element, key)=>{
-                        let src = element.avatar==null ? AVATAR : HOST + element.avatar;
-                        return(
-                            <div className={styles.item} key={key}>
-                                <Link href={`/${element.username}`}>
-                                <div>
-                                    <img src={src}></img>
-                                    <span>{element.name}</span>
+                    <div className={styles.popupMember}>
+                        {members1.map((element, key) => {
+                            let src = element.avatar == null ? AVATAR : HOST + element.avatar;
+                            return (
+                                <div className={styles.item} key={key}>
+                                    <Link href={`/${element.username}`}>
+                                        <div>
+                                            <img src={src}></img>
+                                            <span>{element.name}</span>
+                                        </div>
+                                    </Link>
+                                    <div>
+                                        {item.admin2 ? <button onClick={() => handleDeleteMember(1, element.join_id)}>
+                                            <FontAwesomeIcon icon={faTrash} height={12}></FontAwesomeIcon>
+                                        </button> : ''}
+                                    </div>
                                 </div>
-                                </Link>
-                                <div>
-                                    {isAdmin2 ? <button onClick={()=>handleDeleteMember(1, element.join_id)}>
-                                        <FontAwesomeIcon icon={faTrash} height={12}></FontAwesomeIcon>
-                                    </button> : ''}
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
+                            )
+                        })}
+                    </div>
                 </span>
                 <span>:</span>
                 <span className={styles.member}>{`${member2}/${type}`}
-                <div className={styles.popupMember}>
-                    {members2.map((element, key)=>{
-                        let src = element.avatar==null ? AVATAR : HOST + element.avatar;
-                        return(
-                            <div className={styles.item} key={key}>
-                                <Link href={`/${element.username}`}>
-                                <div>
-                                    <img src={src}></img>
-                                    <span>{element.name}</span>
+                    <div className={styles.popupMember}>
+                        {members2.map((element, key) => {
+                            let src = element.avatar == null ? AVATAR : HOST + element.avatar;
+                            return (
+                                <div className={styles.item} key={key}>
+                                    <Link href={`/${element.username}`}>
+                                        <div>
+                                            <img src={src}></img>
+                                            <span>{element.name}</span>
+                                        </div>
+                                    </Link>
+                                    <div>
+                                        {item.admin2 ? <button onClick={() => handleDeleteMember(2, element.join_id)}>
+                                            <FontAwesomeIcon icon={faTrash} height={12}></FontAwesomeIcon>
+                                        </button> : ''}
+                                    </div>
                                 </div>
-                                </Link>
-                                <div>
-                                    {isAdmin2 ? <button onClick={()=>handleDeleteMember(2, element.join_id)}>
-                                        <FontAwesomeIcon icon={faTrash} height={12}></FontAwesomeIcon>
-                                    </button> : ''}
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
+                            )
+                        })}
+                    </div>
                 </span>
                 {team2 == null ? <button onClick={handleTeamJoin} className={styles.btnTeamJoin}>+</button> :
-                <Link href={`/team/${item.team_2}`}>                
-                <img src={avatar2} className={styles.logo}></img>
-                </Link>
+                    <Link href={`/team/${item.team_2}`}>
+                        <img src={avatar2} className={styles.logo}></img>
+                    </Link>
                 }
-                
+
             </div>
             <div className={styles.action}>
                 <div>
-                    {isJoin1 ? <button className={styles.btnLeave} onClick={()=>{handleLeave(1)}}>Leave</button> :
-                    isJoin2 ? <button disabled className={styles.btnJoin} onClick={()=>{handleJoin(2)}}>Join</button> :
-                    isRequest1 ? <button className={styles.btnCancel} onClick={()=>{handleCancel(1)}}>Cancel</button>:
-                    isInvite1 ? <button className={styles.btnAccept} onClick={()=>{handleAccept(1)}}>Accept</button>:
-                    <button className={styles.btnJoin} onClick={()=>{handleJoin(1)}}>Join</button>}
-                    
+                    {isJoin1 ? <button className={styles.btnLeave} onClick={() => { handleLeave(1) }}>Leave</button> :
+                        isJoin2 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }}>Join</button> :
+                            isRequest1 ? <button className={styles.btnCancel} onClick={() => { handleCancel(1) }}>Cancel</button> :
+                                isInvite1 ? <button className={styles.btnAccept} onClick={() => { handleAccept(1) }}>Accept</button> :
+                                    <button className={styles.btnJoin} onClick={() => { handleJoin(1) }}>Join</button>}
+
                     {isInvite1 ? <button className={styles.btnInvite} onClick={handleDeny}>Deny</button> :
-                    ''}
+                        ''}
                 </div>
-                {team2 == null ? 
-                <div>
-                    <button className={styles.btnJoin} onClick={()=>{handleJoin(2)}} disabled>Join</button>
-                </div> :
-                <div>
-                    {isJoin2 ? <button className={styles.btnLeave} onClick={()=>{handleLeave(2)}}>Leave</button> :
-                    isJoin1 ? <button disabled className={styles.btnJoin} onClick={()=>{handleJoin(2)}}>Join</button> :
-                    isRequest2 ? <button className={styles.btnCancel} onClick={()=>{handleCancel(2)}}>Cancel</button>:
-                    isInvite2 ? <button className={styles.btnAccept} onClick={()=>{handleAccept(2)}}>Accept</button>:
-                    <button className={styles.btnJoin} onClick={()=>{handleJoin(2)}}>Join</button>}
-                    
-                    {isInvite2 ? <button className={styles.btnInvite} onClick={handleDeny}>Deny</button> :
-                    ''}
-                </div>
+                {team2 == null ?
+                    <div>
+                        <button className={styles.btnJoin} onClick={() => { handleJoin(2) }} disabled>Join</button>
+                    </div> :
+                    <div>
+                        {isJoin2 ? <button className={styles.btnLeave} onClick={() => { handleLeave(2) }}>Leave</button> :
+                            isJoin1 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }}>Join</button> :
+                                isRequest2 ? <button className={styles.btnCancel} onClick={() => { handleCancel(2) }}>Cancel</button> :
+                                    isInvite2 ? <button className={styles.btnAccept} onClick={() => { handleAccept(2) }}>Accept</button> :
+                                        <button className={styles.btnJoin} onClick={() => { handleJoin(2) }}>Join</button>}
+
+                        {isInvite2 ? <button className={styles.btnInvite} onClick={handleDeny}>Deny</button> :
+                            ''}
+                    </div>
                 }
-            </div> 
+            </div>
             <div className={styles.type}>
                 <span>{item.sport} &#40;{typeSport}&#41;</span>
             </div>
@@ -417,7 +399,7 @@ export default function Item({item}){
             <div className={styles.stadium}>
                 <span>{item.stadium == null ? 'No Booking' : item.stadium}</span>
             </div>
-            
+
         </div>
     )
 }

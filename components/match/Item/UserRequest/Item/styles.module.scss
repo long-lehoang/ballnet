@@ -20,6 +20,14 @@
         outline: none;
         height: 30px;
         background-color: var(--button-color-1);
+        color: var(--text-color-4);
+    }
+    .btnAccept{
+        margin-right: 10px;
+        background-color: var(--button-color-1);
+    }
+    .btnDeny{
+        background-color: var(--background-header);
     }
     button:disabled{
         background-color: var(--text-color-1);

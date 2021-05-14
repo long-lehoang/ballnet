@@ -6,23 +6,38 @@ import { AVATAR_TEAM, HOST, MATCH_API, MATCH_INVITATION_API, MATCH_JOINING_API }
 import { setMessage } from '../../../../../slices/messageSlice';
 import styles from './styles.module.scss';
 
-export default function Item({id, username, avatar, name, match_id, team_id}) {
+export default function Item({item, setList, setPeople, request }) {
     const dispatch = useDispatch();
-    const img = avatar !== null ? HOST + avatar : AVATAR_TEAM;
+    const img = item.avatar !== null ? HOST + item.avatar : AVATAR_TEAM;
     const token = useSelector(state=>state.token);
-    const [show, setShow] = useState(true);
 
-    function handleInvite(){
-        let formData = new FormData();
-        formData.append('team_id', team_id);
-        formData.append('match_id', match_id);
-        formData.append('player_id', id)
-        axios.post(MATCH_JOINING_API, formData, {
+    function handleAccept(){
+        axios.put(MATCH_JOINING_API + item.request_id, {}, {
             headers:{
                 Authorization: `Bearer ${token}`
             }
         }).then(response=>{
-            setShow(false);
+            let fr = request.filter( element => {
+                return element.request_id !== item.request_id;
+            });
+            setList(fr);
+            setPeople(fr);
+        }).catch(error=>{
+            openMessageBox(error.response.data.message)
+        })
+    }
+
+    function handleCancel(){
+        axios.delete(MATCH_JOINING_API + item.request_id, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            let fr = request.filter( element => {
+                return element.request_id !== item.request_id;
+            });
+            setList(fr);
+            setPeople(fr);
         }).catch(error=>{
             openMessageBox(error.response.data.message)
         })
@@ -38,11 +53,12 @@ export default function Item({id, username, avatar, name, match_id, team_id}) {
         <div className={styles.item}>
             <div>
                 <img src={img}></img>
-                <Link href={`/${username}`}><span>{name}</span></Link>
+                <Link href={`/${item.username}`}><span>{item.name}</span></Link>
             </div>
-            {show ? <button onClick={handleInvite}>Invite</button> :
-            <button disabled >Invite</button>
-            }
+            <div>
+                <button className={styles.btnAccept} onClick={handleAccept}>Accept</button>
+                <button className={styles.btnDeny} onClick={handleCancel}>Deny</button>
+            </div>
             
         </div>
     )
