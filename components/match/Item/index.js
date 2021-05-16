@@ -289,6 +289,10 @@ export default function Item({ item }) {
             {item.admin2 ? <UserRequest show={showUserRequest2} setShow={setShowUserRequest2} match={item} team_id={item.team_2} /> : ''}
 
             <div className={styles.edit}>
+                <div className={styles.user}>
+                    <img src={item.avatar_user==null ? AVATAR : HOST + item.avatar_user}></img>
+                    <span>{item.name_user}</span>
+                </div>
                 <button className={styles.btnShowPopup}>...</button>
                 <div className={styles.popup}>
                     {item.captain1 ? <button onClick={handleEdit}>Edit</button> : ''}
@@ -304,10 +308,24 @@ export default function Item({ item }) {
                     {item.captain1 ? <button onClick={handleBooking}>Book Stadium</button> : ''}
                 </div>
             </div>
+            <hr></hr>
             <div className={styles.team}>
                 <Link href={`/team/${item.team_1}`}>
                     <img src={avatar1} className={styles.logo}></img>
                 </Link>
+                
+                {team2 == null ? <button onClick={handleTeamJoin} className={styles.btnTeamJoin}>+</button> :
+                    <Link href={`/team/${item.team_2}`}>
+                        <img src={avatar2} className={styles.logo}></img>
+                    </Link>
+                }
+
+            </div>
+            <div className={styles.name}>
+                <span>{item.name1}</span>
+                <span>{item.name2}</span>
+            </div>
+            <div className={styles.members}>
                 <span className={styles.member}>{`${member1}/${type}`}
                     <div className={styles.popupMember}>
                         {members1.map((element, key) => {
@@ -330,7 +348,6 @@ export default function Item({ item }) {
                         })}
                     </div>
                 </span>
-                <span>:</span>
                 <span className={styles.member}>{`${member2}/${type}`}
                     <div className={styles.popupMember}>
                         {members2.map((element, key) => {
@@ -353,13 +370,17 @@ export default function Item({ item }) {
                         })}
                     </div>
                 </span>
-                {team2 == null ? <button onClick={handleTeamJoin} className={styles.btnTeamJoin}>+</button> :
-                    <Link href={`/team/${item.team_2}`}>
-                        <img src={avatar2} className={styles.logo}></img>
-                    </Link>
-                }
-
             </div>
+            <div className={styles.type}>
+                <span>{item.sport} &#40;{typeSport}&#41;</span>
+            </div>
+            <div className={styles.time}>
+                <span>{time.toLocaleString()}</span>
+            </div>
+            <div className={styles.location}>
+                <span>{item.stadium == null ? '' : `${item.stadium}, `}{location}</span>
+            </div>
+            <hr></hr>
             <div className={styles.action}>
                 <div>
                     {isJoin1 ? <button className={styles.btnLeave} onClick={() => { handleLeave(1) }}>Leave</button> :
@@ -387,19 +408,6 @@ export default function Item({ item }) {
                     </div>
                 }
             </div>
-            <div className={styles.type}>
-                <span>{item.sport} &#40;{typeSport}&#41;</span>
-            </div>
-            <div className={styles.time}>
-                <span>{time.toLocaleString()}</span>
-            </div>
-            <div className={styles.location}>
-                <span>{location}</span>
-            </div>
-            <div className={styles.stadium}>
-                <span>{item.stadium == null ? 'No Booking' : item.stadium}</span>
-            </div>
-
         </div>
     )
 }

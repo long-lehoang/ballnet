@@ -7,8 +7,21 @@
     display: block;
     .edit{
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         position: relative;
+        .user{
+            display: flex;
+            align-items: center;
+            img{
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+            }
+            span{
+                padding-left: 10px;
+                color: var(--text-color-2);
+            }
+        }
         .btnShowPopup{
             font-size: 20px;
             border: none;
@@ -44,12 +57,12 @@
     .team {
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
         color: var(--text-color-3);
         .logo {
-            height: 30px;
-            width: 30px;
+            height: 40px;
+            width: 40px;
             cursor: pointer;
             border-radius: 50%;
             border: 1px solid var(--text-color-2);
@@ -66,6 +79,18 @@
             background-color: var(--background);
 
         }
+        
+    }
+    .name{
+        font: var(--sub-title);
+        color: var(--text-color-2);
+        display: flex;
+        justify-content: space-around;
+        padding-top: 10px;
+    }
+    .members{
+        display: flex;
+        justify-content: space-around;
         .member{
             position: relative;
             cursor: pointer;
@@ -140,8 +165,6 @@
     }
     .location,
     .type {
-        padding-top: 5px;
-        margin-bottom: 10px;
         display: flex;
         justify-content: center;
         color: steelblue;
@@ -149,16 +172,17 @@
             text-align: center;
         }
     }
-
-    .stadium{
-        padding-top: 5px;
-        display: flex;
-        justify-content: center;
+    .location{
         color: var(--text-color-2);
     }
 
     button:disabled{
         background-color: var(--text-color-1) !important;
+    }
+
+    hr{
+        margin: 0;
+        margin-bottom: 5px;
     }
 }
 
