@@ -1,6 +1,6 @@
-import { AVATAR, AVATAR_TEAM, MATCH_API } from '../../../config/config'
+import { AVATAR, AVATAR_TEAM, HOST, MATCH_API } from '../../../config/config'
 import styles from './styles.module.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap';
 import ReactStars from "react-rating-stars-component";
 import axios from 'axios';
@@ -12,14 +12,13 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
     const [members, setMembers] = useState([]);
     const [match, setMatch] = useState();
     const dispatch = useDispatch();
-    const token = useSelector(state=>state.token);
+    const token = useSelector(state => state.token);
 
-    function handleResult(event)
-    {
+    function handleResult(event) {
         var results = result.split(' - ');
-        if(event.target.name === 'result_1'){
+        if (event.target.name === 'result_1') {
             results[0] = event.target.value
-        }else{
+        } else {
             results[1] = event.target.value
         }
         results = results.join(' - ');
@@ -27,17 +26,28 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
         setResult(results);
     }
 
-    function handleRatingTeam(newRating)
-    {
+    function handleRatingTeam(newRating) {
         console.log(newRating);
         setRatingTeam(newRating);
     }
 
-    function handleRatingMember(newRating, user_id)
-    {
-        console.log(newRating);
-        let arr = members;
-        arr[user_id] = newRating;
+    function handleRatingMember(newRating, user_id, join_id) {
+        let arr = [...members];
+        let bool = false;
+        arr.forEach((element, key) => {
+            if (element.id === user_id) {
+                arr[key].rating = newRating
+                bool = true;
+            }
+        });
+
+        if (!bool) {
+            arr.push({
+                id: user_id,
+                rating: newRating,
+                join_id: join_id
+            });
+        }
         setMembers(arr);
     }
 
@@ -45,17 +55,19 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
         event.preventDefault()
         let formData = new FormData();
         formData.append('result', result);
+        formData.append('team_id', match.team_id);
+        formData.append('match_id', match_id);
         formData.append('rating_team', ratingTeam);
-        formData.append('members', members);
+        formData.append('members', JSON.stringify(members));
 
         axios.post(MATCH_API + `${match_id}/review/member`, formData, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setShow(false);
-            setDel(true);
-        }).catch(error=>{
+            // setDel(true);
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
     }
@@ -66,17 +78,22 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
         dispatch(action);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(MATCH_API + `${match_id}/review/member`, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setMatch(response.data.data);
-        }).catch(error=>{
+            let arr = []
+            response.data.data.members.forEach(element => {
+                arr.push({id: element.id, rating: 0, join_id: element.join_id});
+            });
+            setMembers(arr);
+        }).catch(error => {
             openMessageBox(error.response.data.message);
         })
-    })
+    }, [null])
 
     return (
         <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
@@ -84,6 +101,7 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
                 <Modal.Title className={styles.title}>Review Match</Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
+                {console.log(members)}
                 <form onSubmit={handleSubmit}>
                     <div className={styles.result}>
                         <h5>Result </h5>
@@ -95,8 +113,8 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
                         <h5>Review Opponent Team</h5>
                         <div className={styles.item}>
                             <div className={styles.name}>
-                                <img src={match.team_avatar == null ? AVATAR_TEAM : HOST + match.team_avatar}></img>
-                                <span className={styles.text}>{match.team_name}</span>
+                                <img src={match == undefined ? null : match.team_avatar == null ? AVATAR_TEAM : HOST + match.team_avatar}></img>
+                                <span className={styles.text}>{match == undefined ? '' : match.team_name}</span>
                             </div>
                             <ReactStars
                                 count={5}
@@ -109,7 +127,7 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
                     </div>
                     <div className={styles.member}>
                         <h5>Review Member</h5>
-                        {match !== undefined ? match.members.map((element,key)=>{
+                        {match !== undefined ? match.members.map((element, key) => {
                             let src = element.avatar == null ? AVATAR : HOST + element.avatar;
                             return (
                                 <div className={styles.item} key={key}>
@@ -121,7 +139,7 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
                                         count={5}
                                         size={15}
                                         activeColor="#ffd700"
-                                        onChange={(newRating)=>handleRatingMember(newRating, element.id)}
+                                        onChange={(newRating) => handleRatingMember(newRating, element.id, element.join_id)}
                                     />
                                 </div>
                             )

@@ -9,7 +9,7 @@ export default function Match({match})
     const [show, setShow] = useState(false);
     return(
         <div className={styles.container}>
-            <ReviewMatch show={show} setShow={setShow}></ReviewMatch>
+            <ReviewMatch show={show} setShow={setShow} match_id={3}></ReviewMatch>
             <h3>Matches</h3>
             <div className={styles.filter}>
                 <Filter match={match} setMatch={setList} result={list}/>
