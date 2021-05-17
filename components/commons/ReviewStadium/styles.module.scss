@@ -1,0 +1,51 @@
+.modal_container{
+    .header{
+        background-color: var(--background-header);
+        color: var(--text-color-4);
+        font: var(--title);
+        
+        .title{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            
+        }
+    }
+    .body{
+        img{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .item{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 20px;
+            .text{
+                padding-left: 20px;
+            }
+        }
+
+        textarea{
+            height: 100px;
+            border: 1px solid var(--text-color-2);
+            resize: none;
+            width: 100%;
+            outline: none;
+            font: var(--sub-title);
+            color: var(--text-color-2);
+        }
+        
+        .btnSubmit{
+            width: 100%;
+            background-color: var(--background-header);
+            border-radius: 5px;
+            border: none;
+            color: var(--text-color-4);
+            height: 30px;
+            margin-top: 20px;
+        }
+    }
+}

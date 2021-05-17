@@ -60,13 +60,13 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
         formData.append('rating_team', ratingTeam);
         formData.append('members', JSON.stringify(members));
 
-        axios.post(MATCH_API + `${match_id}/review/member`, formData, {
+        axios.post(MATCH_API + `${match_id}/review`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then(response => {
             setShow(false);
-            // setDel(true);
+            setDel(true);
         }).catch(error => {
             openMessageBox(error.response.data.message);
         })
@@ -79,7 +79,7 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
     }
 
     useEffect(() => {
-        axios.get(MATCH_API + `${match_id}/review/member`, {
+        axios.get(MATCH_API + `${match_id}/review`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -101,7 +101,6 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
                 <Modal.Title className={styles.title}>Review Match</Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                {console.log(members)}
                 <form onSubmit={handleSubmit}>
                     <div className={styles.result}>
                         <h5>Result </h5>

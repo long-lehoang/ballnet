@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessage } from '../../slices/messageSlice';
 import ReviewMatch from '../commons/ReviewMatch';
+import ReviewStadium from '../commons/ReviewStadium';
 import styles from './styles.module.scss';
 
 
@@ -83,20 +84,20 @@ export default function Notification(props) {
 
     function handleReviewMatch()
     {
-        
+        setShowReviewMatch(true);
     }
 
     function handleReviewStadium()
     {
-
+        setShowReviewStadium(true);
     }
 
     return (
         <div className={!del ? styles.wrapper : styles.none}>
             {props.match !== undefined ? <ReviewMatch setDel={setDel} show={showReviewMatch} setShow={setShowReviewMatch} match_id={props.match}></ReviewMatch> : ''}
-            {props.stadium !== undefined ? <ReviewMatch setDel={setDel} show={showReviewStadium} setShow={setShowReviewStadium} match_id={props.stadium}></ReviewMatch> : ''}
+            {props.booking !== undefined ? <ReviewStadium setDel={setDel} show={showReviewStadium} setShow={setShowReviewStadium} book_id={props.booking}></ReviewStadium> : ''}
             <Link href={props.link}>
-                <div className={styles.container} onClick={props.match !== undefined ? handleReviewMatch : props.stadium !== undefined ? handleReviewStadium : ''}>
+                <div className={styles.container} onClick={props.match !== undefined ? handleReviewMatch : props.booking !== undefined ? handleReviewStadium : ''}>
                     <div className={styles.col}>
                         <img src={props.avatar}></img>
                     </div>
