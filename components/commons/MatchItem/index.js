@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR, AVATAR_TEAM, HOST, MATCH_API, MATCH_JOINING_API } from '../../../config/config';
 import { setMessage } from '../../../slices/messageSlice';
-import EditMatchForm from '../../commons/EditMatchForm';
+import EditMatchForm from '../EditMatchForm';
 import InvitePeople from './InvitePeople';
 import InviteTeam from './InviteTeam';
 import SelectTeam from './SelectMyTeam';
@@ -156,8 +156,10 @@ export default function Item({ item }) {
     }
 
     function handleAccept(option) {
+        console.log("ok");
         var formData = new FormData();
-        axios.put(MATCH_JOINING_API + option == 2 ? idRequest2 : idRequest1, formData, {
+        let id = option == 2 ? idRequest2 : idRequest1
+        axios.put(MATCH_JOINING_API + id, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -389,7 +391,7 @@ export default function Item({ item }) {
                                 isInvite1 ? <button className={styles.btnAccept} onClick={() => { handleAccept(1) }}>Accept</button> :
                                     <button className={styles.btnJoin} onClick={() => { handleJoin(1) }}>Join</button>}
 
-                    {isInvite1 ? <button className={styles.btnInvite} onClick={handleDeny}>Deny</button> :
+                    {(!isJoin1&&!isJoin2)&&isInvite1 ? <button className={styles.btnCancel} onClick={handleDeny}>Deny</button> :
                         ''}
                 </div>
                 {team2 == null ?
@@ -403,7 +405,7 @@ export default function Item({ item }) {
                                     isInvite2 ? <button className={styles.btnAccept} onClick={() => { handleAccept(2) }}>Accept</button> :
                                         <button className={styles.btnJoin} onClick={() => { handleJoin(2) }}>Join</button>}
 
-                        {isInvite2 ? <button className={styles.btnInvite} onClick={handleDeny}>Deny</button> :
+                        {(!isJoin1&&!isJoin2)&&isInvite2 ? <button className={styles.btnCancel} onClick={handleDeny}>Deny</button> :
                             ''}
                     </div>
                 }

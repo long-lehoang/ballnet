@@ -1,13 +1,13 @@
-import LayoutMain from '../../components/layout/main'
 import { useDispatch, useSelector } from 'react-redux'
-import { setToken } from '../../slices/tokenSlice';
-import { setUser } from '../../slices/infoUserSlice';
-import { MATCH_API, PROFILE_API } from '../../config/config';
+import LayoutMain from '../../../components/layout/main'
+import { setToken } from '../../../slices/tokenSlice';
+import { setUser } from '../../../slices/infoUserSlice';
+import { MATCH_JOINING_API, PROFILE_API } from '../../../config/config';
 import axios from 'axios';
-import { setProfile } from '../../slices/profileSlice';
-import People from '../../components/people';
-import { parseCookies } from '../../lib/cookie';
+import { setProfile } from '../../../slices/profileSlice';
+import { parseCookies } from '../../../lib/cookie';
 import Error from 'next/error'
+import MatchInvitation from '../../../components/match_invitation';
 
 export default function MatchInvitationPage({errorCode,token, username, user, match}) {
     if (errorCode) {
@@ -39,7 +39,7 @@ export default function MatchInvitationPage({errorCode,token, username, user, ma
 
     return (
         <LayoutMain>
-            <People match={match||[]}></People>
+            <MatchInvitation match={match||[]}></MatchInvitation>
         </LayoutMain>
     )
 }
@@ -57,7 +57,7 @@ MatchInvitationPage.getInitialProps = async ({ req, res }) => {
     let match;
     let errCode = false;
 
-    await axios.get(MATCH_API + 'invitation',{
+    await axios.get(MATCH_JOINING_API + 'invitation',{
         headers:{
             Authorization: `Bearer ${token}`
         }

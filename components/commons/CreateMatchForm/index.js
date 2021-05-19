@@ -11,7 +11,7 @@ import { setMessage } from '../../../slices/messageSlice';
 import { useRouter } from 'next/router';
 
 
-export default function CreateMatchForm({team}) {
+export default function CreateMatchForm({team, matchs, setMatchs}) {
     const [show, setShow] = useState(false);
     const profile = useSelector(state=>state.profile);
     const [start, setStart] = useState(new Date());
@@ -69,7 +69,11 @@ export default function CreateMatchForm({team}) {
                 Authorization: `Bearer ${token}`
             }
         }).then(response=>{
+            console.log(response.data.data);
             setShow(false);
+            let arr = JSON.parse(JSON.stringify(matchs));
+            arr.unshift(response.data.data)
+            setMatchs(arr);
         }).catch(error=>{
             openMessageBox(error.response.data.message);
         })
@@ -97,7 +101,6 @@ export default function CreateMatchForm({team}) {
     }
 
     useEffect(()=>{
-        console.log(check);
         setCheck(validate());
     })
 
@@ -108,9 +111,8 @@ export default function CreateMatchForm({team}) {
             }
         }).then(response=>{
             setListType(response.data.data);
-            console.log(response.data.data);
         }).catch(error=>{
-            console.log(error.response.data.message)
+            openMessageBox(error.response.data.message);
         })
 
     },[null]);

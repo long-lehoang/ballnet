@@ -44,7 +44,7 @@ export const MATCH_API = HOST + '/api/matchs/';
 export const MATCH_INVITATION_API = HOST + '/api/match_invitations/';
 
 //MATCH JOINING
-export const MATCH_JOINING_API = HOST + '/api/match_joinings/'
+export const MATCH_JOINING_API = HOST + '/api/match_joinings/';
 
 //STADIUM
 export const STADIUM_API = HOST + '/api/stadiums/';

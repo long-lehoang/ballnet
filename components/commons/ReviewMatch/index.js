@@ -66,7 +66,7 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
             }
         }).then(response => {
             setShow(false);
-            setDel(true);
+            // setDel(true);
         }).catch(error => {
             openMessageBox(error.response.data.message);
         })

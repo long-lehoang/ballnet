@@ -1,5 +1,6 @@
 .container{
     width: 100%;
+    height: 100%;
     background-color: var(--background-component);
     padding: 10px 30px;
     margin-top: 10px;
@@ -132,29 +133,19 @@
     .action{
         display: flex;
         justify-content: space-around;
-        div{
-            display: flex;
-            justify-content: center;
-            button{
-                border: none;
-                border-radius: 4px;
-                margin: 10px 5px;
-                color: var(--text-color-4);            
-                width: 50px;
-                height: 20px;
-            }
-            .btnLeave{
-                background-color: var(--background-header);
-            }
-            .btnJoin{
-                background-color: var(--button-color-1);
-            }
-            .btnCancel{
-                background-color: var(--background-header);
-            }
-            .btnInvite{
-                background-color: var(--button-color-2);
-            }
+        button{
+            border: none;
+            border-radius: 4px;
+            margin: 10px 5px;
+            color: var(--text-color-4);            
+            width: 50px;
+            height: 20px;
+        }
+        .btnCancel{
+            background-color: var(--background-header);
+        }
+        .btnAccept{
+            background-color: var(--button-color-2);
         }
     }
     .time {

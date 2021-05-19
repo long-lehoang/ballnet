@@ -18,6 +18,7 @@ import { TEAM_API } from '../../../config/config';
 import { setMessage } from '../../../slices/messageSlice';
 import { Router, useRouter } from 'next/dist/client/router';
 import ChangeCaptain from './ChangeCaptain';
+import MatchInvitation from './MatchInvitation';
 
 
 export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
@@ -47,7 +48,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
             case 5:
                 return (<Match team={team}></Match>)
             case 6:
-                return (<MatchRequest></MatchRequest>)
+                return (<MatchInvitation team={team}></MatchInvitation>)
             default:
                 return (<Info team={team} permission={isCaptain}></Info>)
         }

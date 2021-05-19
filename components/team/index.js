@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import LazyLoad from 'react-lazyload';
+import Loading from '../commons/Loading';
 import Filter from './filter'
 import Item from './Item'
 import styles from './styles.module.scss'
@@ -17,7 +19,9 @@ export default function Team({team})
                 {
                     list.map((item, key)=>{
                         return(
-                            <Item item={item} key={key}/>
+                            <LazyLoad key={key} height={200} placeholder={<Loading/>}>
+                                <Item item={item} key={key}/>
+                            </LazyLoad>
                         )
                     })
                 }

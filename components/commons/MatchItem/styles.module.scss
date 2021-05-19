@@ -1,0 +1,193 @@
+.container{
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-component);
+    padding: 10px 30px;
+    margin-top: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: block;
+    .edit{
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        .user{
+            display: flex;
+            align-items: center;
+            img{
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+            }
+            span{
+                padding-left: 10px;
+                color: var(--text-color-2);
+            }
+        }
+        .btnShowPopup{
+            font-size: 20px;
+            border: none;
+            background-color: transparent;
+            padding-bottom: 10px;
+        }
+        .btnShowPopup:hover{
+            color: var(--background-header);
+        }
+        .popup{
+            position: absolute;
+            display: none;
+            right: -20px;
+            top: 0px;
+            z-index: 1;
+            background-color: var(--background);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            padding: 10px 10px;
+            button{
+                display: block;
+                border: none;
+                background-color: transparent;
+                outline: none;
+            }
+            button:hover{
+                color: var(--background-header);
+            }
+        }
+        .btnShowPopup:focus + .popup, .popup:hover{
+            display: block;
+        }
+    }
+    .team {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        color: var(--text-color-3);
+        .logo {
+            height: 40px;
+            width: 40px;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 1px solid var(--text-color-2);
+        }
+
+        .btnTeamJoin{
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            background-color: transparent;
+            padding: 4px 10px;
+        }
+        .btnTeamJoin:hover{
+            background-color: var(--background);
+
+        }
+        
+    }
+    .name{
+        font: var(--sub-title);
+        color: var(--text-color-2);
+        display: flex;
+        justify-content: space-around;
+        padding-top: 10px;
+    }
+    .members{
+        display: flex;
+        justify-content: space-around;
+        .member{
+            position: relative;
+            cursor: pointer;
+            .popupMember{
+                display: none;
+                position: absolute;
+                right: -50px;
+                top: 15px;
+                z-index: 2;
+                background-color: var(--background-component);
+                min-width: 200px;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                div{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 5px 10px;
+                    img{
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                    }
+                    span{
+                        padding-left: 10px;
+                        color: var(--text-color-2);
+                    }
+                    button{
+                        border: none;
+                        background-color: transparent;
+                        outline: none;
+                    }
+                }
+            }
+        }
+        .member:hover > .popupMember, .popupMember:hover{
+            display: block;
+        }
+    }
+    .action{
+        display: flex;
+        justify-content: space-around;
+        div{
+            display: flex;
+            justify-content: center;
+            button{
+                border: none;
+                border-radius: 4px;
+                margin: 10px 5px;
+                color: var(--text-color-4);            
+                width: 50px;
+                height: 20px;
+            }
+            .btnLeave{
+                background-color: var(--background-header);
+            }
+            .btnJoin,.btnAccept{
+                background-color: var(--button-color-1);
+            }
+            .btnCancel{
+                background-color: var(--background-header);
+            }
+            .btnInvite{
+                background-color: var(--button-color-2);
+            }
+            
+        }
+    }
+    .time {
+        padding-top: 5px;
+        display: flex;
+        justify-content: center;
+        color: var(--background-header);
+    }
+    .location,
+    .type {
+        display: flex;
+        justify-content: center;
+        color: steelblue;
+        span{
+            text-align: center;
+        }
+    }
+    .location{
+        color: var(--text-color-2);
+    }
+
+    button:disabled{
+        background-color: var(--text-color-1) !important;
+    }
+
+    hr{
+        margin: 0;
+        margin-bottom: 5px;
+    }
+}
+
+.none{
+    display: none;
+}

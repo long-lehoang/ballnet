@@ -1,0 +1,11 @@
+.container{
+    display: block;
+    width: 100%;
+    position: relative;
+    .list{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding-top: 20px;
+    }
+}

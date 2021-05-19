@@ -39,7 +39,7 @@ export default function Profile({permission, userN, profileN}) {
     function loadComponent(option) {
         switch (option) {
             case 1:
-                return (<Feed username={userN.username} permission={permission}></Feed>)
+                return (<Feed user_id={userN.id} permission={permission}></Feed>)
             case 2:
                 return (<Info username={userN.username} profile={profileN} user={userN} permission={permission}></Info>)
             case 3:
@@ -47,7 +47,7 @@ export default function Profile({permission, userN, profileN}) {
             case 4:
                 return (<Friend username={userN.username} permission={permission}></Friend>)
             case 5:
-                return (<Match></Match>)
+                return (<Match user_id={userN.id}></Match>)
             case 6:
                 return (<Stadium></Stadium>)
             default:

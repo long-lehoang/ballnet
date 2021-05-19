@@ -4,7 +4,7 @@ import Item from '../commons/MatchItem'
 import styles from './styles.module.scss'
 import LazyLoad from 'react-lazyload';
 import Loading from '../commons/Loading';
-export default function Match({match})
+export default function MatchInvitation({match})
 {
     const [list, setList] = useState(match||[]);
     return(
