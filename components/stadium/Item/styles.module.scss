@@ -3,15 +3,18 @@
     background-color: var(--background-component);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     position: relative;
-    width: 275px;
-    height: 320px;
+    width: 100%;
+    height: 100%;
+    img{
+        width: 100%;
+        height: 50%;
+        background-color: var(--text-color-1);
+    }
+    img:hover{
+        cursor: pointer;
+    }
     .info{
-
-        img{
-            width: 100%;
-            height: 50%;
-    
-        }
+        padding: 20px;
         .star{
             padding-left: 10px;
             color: var(--star);
@@ -25,7 +28,10 @@
             color: var(--text-color-2);
         }
         .location{
-            color: var(--text-color-2);
+            color: var(--text-color-1);
+        }
+        .phone{
+            color: var(--text-color-4);
         }
     }
 }

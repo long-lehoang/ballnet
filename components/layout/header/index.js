@@ -122,14 +122,14 @@ export default function Header() {
                         <FontAwesomeIcon icon={faFutbol}></FontAwesomeIcon>
                     </Link>
                 </div>
-                <div className={styles.search}>
+                {/* <div className={styles.search}>
                     <div className={styles.btnSearch}>
                         <input placeholder="Search..."></input>
                     </div>
                     <div className={styles.iconSearch}>
                         <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <div className={styles.col}>
@@ -187,7 +187,7 @@ export default function Header() {
                             <Link href="/people/friend_request"><div className={styles.link}>Friend Requests</div></Link>
                         </div>
                     </div>
-                    <Link href="/message">
+                    {/* <Link href="/message">
                         <div className={styles.btnNav}>
 
                             <div className={styles.iconNav}>
@@ -197,7 +197,7 @@ export default function Header() {
                                 Message
                             </div>
                         </div>
-                    </Link>
+                    </Link> */}
                     <div className={styles.group_notice}>
                         {newNotice > 0 ? <span className={styles.number}>{newNotice}</span> : ''}
                         <div className={styles.btnNav} onClick={handleReadNotice}>
