@@ -3,14 +3,120 @@
     position: relative;
     display: block;
     padding: 5% 10%;
+    .cover{
+        width: 100%;
+    }
+    label{
+        cursor: pointer;
+        position: absolute;
+        z-index: 1;
+        top: 50vh;
+        right: 7%;
+        border: none;
+        background-color: var(--background-header);
+        color: var(--text-color-4);
+        padding: 7px 20px;
+        border-radius: 4px;
+    }
+    .btnChange{
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+        top: 50vh;
+        right: 7%;
+        border: none;
+        background-color: var(--background-header);
+        color: var(--text-color-4);
+        padding: 7px 20px;
+        border-radius: 4px;
+    }
+    .img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        clip: rect(0px,100vw,60vh,0px);
+    }
     .info{
+        margin-top: 60vh;
         width: 100%;
         display: block;
+        button{
+            border: none;
+            background-color: transparent;
+            outline: none;
+        }
+        .group{
+            display: flex;
+            justify-content: space-between;
+            .btnRemove{
+                width: 90px;
+                height: 30px;
+                border: none;
+                outline: none;
+                border-radius: 5px;
+                background-color: var(--background-header);
+                color: var(--text-color-4);
+            }
+        }
+    }
+    .extension{
+        padding-top: 40px;
+        .btnAdd{
+            border: none;
+            background-color: transparent;
+            outline: none;
+        }
+        span{
+            padding-left: 20px;
+            .icon{
+                color: var(--star);
+                margin-right: 10px;
+            }
+        }
     }
     .map{
         height: 100vh;
         width: 100%;
         display: block;
         position: relative;
+        padding-top: 40px;
+
+    }
+    .review{
+        display: block;
+        position: relative;
+        padding-top: 50px;
+
+        .comment {
+            padding-top: 20px;
+            display: flex;
+            align-items: center;
+            .avatar {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+            }
+            .content {
+              padding-left: 10px;
+              display: block;
+              color: var(--text-color-2);
+              width: 100%;
+              overflow-wrap: anywhere;
+        
+              .group {
+                border-radius: 20px;
+                background-color: var(--background);
+                padding: 10px;
+                .star{
+                    padding-left: 20px;
+                    color: var(--star);
+                }
+                .name {
+                  color: var(--text-color-3);
+                }
+              }
+            }
+        }
     }
 }

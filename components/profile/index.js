@@ -49,7 +49,7 @@ export default function Profile({permission, userN, profileN}) {
             case 5:
                 return (<Match user_id={userN.id}></Match>)
             case 6:
-                return (<Stadium></Stadium>)
+                return (<Stadium user_id={userN.id}></Stadium>)
             default:
                 return (<Feed username={userN.username}></Feed>)
         }
@@ -204,7 +204,7 @@ export default function Profile({permission, userN, profileN}) {
                             <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
                             <span>Matchs</span>
                         </button> : ''}
-                        {permission ?
+                        {friend||permission ?
                         <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faMap} height={20}></FontAwesomeIcon>
                             <span>Stadiums</span>

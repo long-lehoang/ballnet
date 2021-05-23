@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import Loading from '../commons/Loading';
+import Item from '../commons/Stadium';
 import Filter from './filter'
-import Item from './Item'
 import styles from './styles.module.scss'
 export default function Stadium({stadium})
 {

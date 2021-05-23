@@ -32,6 +32,7 @@
     "react-data-table-component": "^6.11.7",
     "react-datetime-picker": "^3.2.1",
     "react-dom": "^17.0.2",
+    "react-geocode": "^0.2.3",
     "react-image-scroller": "^0.3.0",
     "react-lazyload": "^3.2.0",
     "react-multivalue-text-input": "^0.6.2",

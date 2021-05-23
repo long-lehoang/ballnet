@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AVATAR_TEAM } from '../../../config/config';
+import { AVATAR_TEAM, HOST } from '../../../config/config';
 import loadStar from '../../../lib/star';
 import styles from './styles.module.scss';
 
