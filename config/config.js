@@ -64,7 +64,7 @@ export const NOTIFICATION = HOST + '/api/notifications/';
 /**
  * API GOOGLE MAP
  */
-export const MAP_API_KEY = 'AIzaSyB3yrNGwbwOKrGo67vuMKkBnZCtYL3hE-A';
+export const MAP_API_KEY = 'pk.eyJ1IjoibG9uZ2JhbGUxOTk5IiwiYSI6ImNrcDJqYjM2dzFuYXcycW1jMGJmZDV6NjcifQ.K3xlruo7KPljATJC_jz8xg';
 
 /**
  * API LOCATION IN VIETNAM

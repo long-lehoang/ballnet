@@ -1,8 +1,6 @@
 import React, { Component, useState } from 'react';
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { AVATAR, AVATAR_TEAM, HOST, MAP_API_KEY, STADIUM_API } from '../../../config/config';
 import styles from './styles.module.scss';
-import Geocode from "react-geocode";
 import loadStar from '../../../lib/star';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faEdit, faHouseUser } from '@fortawesome/free-solid-svg-icons';
@@ -13,13 +11,9 @@ import { setMessage } from '../../../slices/messageSlice';
 import AddExtension from './AddExtension';
 import EditInfo from './EditInfo';
 import { useRouter } from 'next/dist/client/router';
+import ReactMapGL from 'react-map-gl';
 
-const mapStyles = {
-    width: '100%',
-    height: '90%'
-};
-
-export function StadiumProfile(props, onMarkerClick, onInfoWindowClose) {
+export default function StadiumProfile(props) {
     const user = useSelector(state => state.infoUser);
     const permission = user.id === props.stadium.user_id || user.username === 'admin'
     const [img, setImg] = useState(props.stadium.avatar == null ? AVATAR_TEAM : HOST + props.stadium.avatar);
@@ -36,18 +30,6 @@ export function StadiumProfile(props, onMarkerClick, onInfoWindowClose) {
     const [editInfo, toggleEditInfo] = useState(false);
     const router = useRouter();
 
-    Geocode.setApiKey(MAP_API_KEY);
-    // Get latitude & longitude from address.
-    Geocode.fromAddress(props.stadium.location).then(
-        (response) => {
-            const { lat, lng } = response.results[0].geometry.location;
-            setLat(lat);
-            setLng(lng);
-        },
-        (error) => {
-            console.error(error);
-        }
-    );
 
     function openMessageBox(message, title = 'Error') {
         const data = { title: title, message: message, show: true };
@@ -76,7 +58,7 @@ export function StadiumProfile(props, onMarkerClick, onInfoWindowClose) {
         setShowExtension(true);
     }
 
-    function handleRemove(){
+    function handleRemove() {
         axios.delete(STADIUM_API + props.stadium.id, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -87,7 +69,7 @@ export function StadiumProfile(props, onMarkerClick, onInfoWindowClose) {
             openMessageBox("Can't remove");
         });
     }
-    
+
     return (
 
         <div className={styles.container}>
@@ -144,26 +126,15 @@ export function StadiumProfile(props, onMarkerClick, onInfoWindowClose) {
             </div>
             <div className={styles.map}>
                 <h5>BẢN ĐỒ</h5>
-                <Map
-                    google={props.google}
-                    zoom={14}
-                    style={mapStyles}
-                    initialCenter={
-                        {
-                            lat: lat,
-                            lng: lng,
-                        }
-                    }>
-                    <Marker onClick={onMarkerClick}
-                        name={props.stadium.name} />
-
-                    <InfoWindow onClose={onInfoWindowClose}>
-                        <div>
-                            <h1>{props.stadium.name}</h1>
-                        </div>
-                    </InfoWindow>
-                </Map>
-
+                <ReactMapGL 
+                width="100%"
+                height="95%"
+                latitude={lat}
+                longitude={lng}
+                zoom="16"
+                mapStyle="mapbox://styles/mapbox/streets-v11"
+                mapboxApiAccessToken={MAP_API_KEY}>
+                </ReactMapGL>
             </div>
             <div className={styles.booking}>
 
@@ -198,7 +169,3 @@ export function StadiumProfile(props, onMarkerClick, onInfoWindowClose) {
     );
 
 }
-
-export default GoogleApiWrapper({
-    apiKey: (MAP_API_KEY),
-})(StadiumProfile);
