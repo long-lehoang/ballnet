@@ -52,6 +52,9 @@ export const STADIUM_API = HOST + '/api/stadiums/';
 //BOOKING
 export const BOOKING_API = HOST + '/api/booking/';
 
+//SUGGEST 
+export const SUGGEST_API = HOST + '/api/suggestion/';
+
 //SPORT
 export const SPORT_API = HOST + '/api/sports/';
 

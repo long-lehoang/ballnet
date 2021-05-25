@@ -1,9 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AVATAR, AVATAR_TEAM, HOST, MAP_API_KEY, STADIUM_API } from '../../../config/config';
 import styles from './styles.module.scss';
 import loadStar from '../../../lib/star';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faEdit, faHouseUser } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -11,14 +11,22 @@ import { setMessage } from '../../../slices/messageSlice';
 import AddExtension from './AddExtension';
 import EditInfo from './EditInfo';
 import { useRouter } from 'next/dist/client/router';
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { Marker } from 'react-map-gl';
+import LazyLoad from 'react-lazyload';
 
 export default function StadiumProfile(props) {
     const user = useSelector(state => state.infoUser);
     const permission = user.id === props.stadium.user_id || user.username === 'admin'
     const [img, setImg] = useState(props.stadium.avatar == null ? AVATAR_TEAM : HOST + props.stadium.avatar);
+
+    const [viewport, setViewport] = useState({
+        latitude: 10.805095,
+        longitude: 106.648346,
+        zoom: 16
+    });
     const [lat, setLat] = useState(10.805095);
     const [lng, setLng] = useState(106.648346);
+
     const token = useSelector(state => state.token);
     const [showExtension, setShowExtension] = useState(false);
     const [extensions, setExtension] = useState(props.stadium.extensions.map(ele => ele.extension));
@@ -69,6 +77,20 @@ export default function StadiumProfile(props) {
             openMessageBox("Can't remove");
         });
     }
+
+    useEffect(() => {
+        axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${props.stadium.location}.json?access_token=${MAP_API_KEY}`).then(response => {
+            let center = response.data.features[0].center;
+            setLng(center[0]);
+            setLat(center[1]);
+            let view = { ...viewport }
+            view.longitude = center[0];
+            view.latitude = center[1];
+            setViewport(view);
+        }).catch(error => {
+            console.log(error);
+        })
+    }, [null]);
 
     return (
 
@@ -126,14 +148,19 @@ export default function StadiumProfile(props) {
             </div>
             <div className={styles.map}>
                 <h5>BẢN ĐỒ</h5>
-                <ReactMapGL 
-                width="100%"
-                height="95%"
-                latitude={lat}
-                longitude={lng}
-                zoom="16"
-                mapStyle="mapbox://styles/mapbox/streets-v11"
-                mapboxApiAccessToken={MAP_API_KEY}>
+                <ReactMapGL
+                    {...viewport}
+                    width="100%"
+                    height="95%"
+                    onViewportChange={setViewport}
+                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                    mapboxApiAccessToken={MAP_API_KEY}>
+                    <Marker latitude={lat} longitude={lng} offsetLeft={-20} offsetTop={-10}>
+                        <div className={styles.marker}>
+                            <p>{props.stadium.name}</p>
+                            <span><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></span>
+                        </div>
+                    </Marker>
                 </ReactMapGL>
             </div>
             <div className={styles.booking}>
@@ -141,31 +168,22 @@ export default function StadiumProfile(props) {
             </div>
             <div className={styles.review}>
                 <h5>REVIEW</h5>
-                <div className={styles.comment}>
-                    <img src={AVATAR} className={styles.avatar}></img>
-                    <div className={styles.content}>
-                        <div className={styles.group}>
-                            <Link href={`/admin`}><a className={styles.name}>Lê Hoàng Long</a></Link>
-                            <span className={styles.star}>{loadStar(5, 15)}</span>
-                            <div className={styles.text}>akjs asdas dad assd assd a aa a a a a a aa a a a aa a a a a a a  a aa  a a a aaa a a a a a aa as asdas a a a a a  a a a a aa    kl kl kl k lk l k  i h hk  l kl jk kj kj jkj kj kj k dhakjdahkah adad asdas ad ad ad a da da dlkjl jl  hjk k   h hk k k hk hk jlk kjl h kh k hk kj</div>
-                        </div>
-                    </div>
-                </div>
-                {props.stadium.reviews.map(cmt => {
+                {props.stadium.reviews.map((element, key) => {
                     return (
-                        <LazyLoad className={styles.comment} key={cmt.id} placeholder="Loading...">
-                            <img src={cmt.avatar == null ? AVATAR : HOST + cmt.avatar} className={styles.avatar}></img>
+                        <LazyLoad className={styles.comment} key={key} placeholder="Loading...">
+                            <img src={element.avatar == null ? AVATAR : HOST + element.avatar} className={styles.avatar}></img>
                             <div className={styles.content}>
-                                <div className={styles.group}>
-                                    <Link href={`/${cmt.username}`}><a className={styles.name}>{cmt.name}</a></Link>
-                                    <div className={styles.text}>{cmt.comment}</div>
+                                <div className={styles.group} key={key}>
+                                    <Link href={`/admin`}><a className={styles.name}>{element.name}</a></Link>
+                                    <span className={styles.star}>{loadStar(element.rating, 15)}</span>
+                                    <div className={styles.text}>{element.feedback}</div>
                                 </div>
                             </div>
                         </LazyLoad>
                     )
                 })}
             </div>
-        </div>
+        </div >
     );
 
 }

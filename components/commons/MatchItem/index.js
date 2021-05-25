@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR, AVATAR_TEAM, HOST, MATCH_API, MATCH_JOINING_API } from '../../../config/config';
 import { setMessage } from '../../../slices/messageSlice';
 import EditMatchForm from '../EditMatchForm';
+import Booking from './Booking';
 import InvitePeople from './InvitePeople';
 import InviteTeam from './InviteTeam';
 import SelectTeam from './SelectMyTeam';
@@ -41,7 +42,7 @@ export default function Item({ item }) {
     const [showTeamRequest, setShowTeamRequest] = useState(false);
     const [showUserRequest1, setShowUserRequest1] = useState(false);
     const [showUserRequest2, setShowUserRequest2] = useState(false);
-
+    const [showBooking, setShowBooking] = useState(false);
     const [members1, setMembers1] = useState([]);
     const [members2, setMembers2] = useState([]);
     const token = useSelector(state => state.token);
@@ -181,7 +182,7 @@ export default function Item({ item }) {
     }
 
     function handleBooking() {
-        //TODO
+        setShowBooking(true);
     }
 
     function handleTeamLeave() {
@@ -289,7 +290,7 @@ export default function Item({ item }) {
             {item.captain1 ? <TeamRequest show={showTeamRequest} setShow={setShowTeamRequest} match={item} /> : ''}
             {item.admin1 ? <UserRequest show={showUserRequest1} setShow={setShowUserRequest1} match={item} team_id={item.team_1} /> : ''}
             {item.admin2 ? <UserRequest show={showUserRequest2} setShow={setShowUserRequest2} match={item} team_id={item.team_2} /> : ''}
-
+            {item.captain1 ? <Booking show={showBooking} setShow={setShowBooking} match={item}></Booking> : ''}
             <div className={styles.edit}>
                 <div className={styles.user}>
                     <img src={item.avatar_user==null ? AVATAR : HOST + item.avatar_user}></img>
