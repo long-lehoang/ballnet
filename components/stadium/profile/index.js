@@ -13,6 +13,7 @@ import EditInfo from './EditInfo';
 import { useRouter } from 'next/dist/client/router';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import LazyLoad from 'react-lazyload';
+import { FormattedMessage } from 'react-intl';
 
 export default function StadiumProfile(props) {
     const user = useSelector(state => state.infoUser);
