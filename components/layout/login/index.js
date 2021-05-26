@@ -8,7 +8,7 @@ export default function LayoutLogin({ children }) {
     return (
         <div className={styles.container}>
             <Head>
-                <title><FormattedMessage id="BallNet" /></title>
+                <title>BallNet</title>
                 <link rel="icon" href="/logo.png" />
             </Head>
 
