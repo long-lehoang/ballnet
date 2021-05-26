@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import Item from './Item';
 import styles from './styles.module.scss';
 
@@ -16,14 +17,14 @@ export default function InviteForm({ friends }) {
 
     return (
         <div>
-            <button className={styles.btn_show} onClick={() => setShow(true)}>Invite to Join Team</button>
+            <button className={styles.btn_show} onClick={() => setShow(true)}><FormattedMessage id="Invite to Join Team" /></button>
 
             <Modal show={show} onHide={() => setShow(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title >Invite to Join Team</Modal.Title>
+                    <Modal.Title ><FormattedMessage id="Invite to Join Team" /></Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
-                    <input className={styles.search} placeholder={"Search Friends"} onChange={handleSearch}></input>
+                    <input className={styles.search} placeholder={<FormattedMessage id="Search Friends" />} onChange={handleSearch}></input>
                     <div className={styles.list}>
                         {list.map((element, key) => {
                             return (

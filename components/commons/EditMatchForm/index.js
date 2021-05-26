@@ -10,6 +10,7 @@ import { formatDateTime } from '../../../lib/time';
 import { setMessage } from '../../../slices/messageSlice';
 import { useRouter } from 'next/router';
 import qs from 'qs';
+import { FormattedMessage } from 'react-intl';
 
 export default function EditMatchForm({item, show, setShow,setParentTypeSport, setParentStart, setParentType, setParentLocation}) {
     const [start, setStart] = useState(new Date(item.time.split(', ')[0]));
@@ -137,22 +138,22 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
             
         <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
             <Modal.Header className={styles.header} closeButton>
-                <Modal.Title className={styles.title}>Create Match</Modal.Title>
+                <Modal.Title className={styles.title}><FormattedMessage id="Edit Match" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <div className={styles.group3}>
                     <div className={styles.col}>
                         <div className={styles.title}>
-                            Private
+                            <FormattedMessage id="Private" />
                         </div>
                         <select value={permission} onChange={(event)=>{setPrivate(event.target.value)}} className={styles.input}>
-                            <option>Team</option>
-                            <option>Public</option>
+                            <option><FormattedMessage id="Team" /></option>
+                            <option><FormattedMessage id="Public" /></option>
                         </select>
                     </div>
                     <div className={styles.col}>
                         <div className={styles.title}>
-                            Sport
+                        <FormattedMessage id="Sport" />
                         </div>
                         <select value={item.sport} className={styles.input} disabled>
                             <option value={item.sport}>{item.sport}</option>
@@ -160,10 +161,10 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
                     </div>
                     <div className={styles.col}>
                         <div className={styles.title}>
-                            Type
+                        <FormattedMessage id="Type" />
                         </div>
                         <select value={type} onChange={handleSelectType} className={styles.input}>
-                            <option>Select Type</option>
+                            <option><FormattedMessage id="Select Type" /></option>
                             {listType.map((element, key)=>{
                                 return(
                                     <option key={key} value={element.type}>{element.type}</option>
@@ -176,10 +177,10 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
                 <div className={styles.group2}>
                     <div className={styles.col}>
                         <div className={styles.title}>
-                            City
+                        <FormattedMessage id="City" />
                         </div>
                         <select value={city} onChange={selectCity} className={styles.input}>
-                        <option>Select City</option>
+                        <option><FormattedMessage id="Select City" /></option>
                         {location.map( element => {
                             return (<option value={element.Name}>{element.Name}</option>)
                         })}
@@ -187,10 +188,10 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
                     </div>
                     <div className={styles.col}>
                         <div className={styles.title}>
-                            District
+                        <FormattedMessage id="District" />
                         </div>
                         <select value={district} onChange={selectDistrict} className={styles.input}>
-                        <option>Select District</option>
+                        <option><FormattedMessage id="Select District" /></option>
                         {districts.map( element => {
                             return (<option value={element.Name}>{element.Name}</option>)
                         })}
@@ -201,7 +202,7 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
                 <div className={styles.group}>
                     <div className={styles.col}>
                         <div className={styles.title}>
-                            Start
+                        <FormattedMessage id="Start" />
                         </div>
                         <div className={styles.input}>
                         <DateTimePicker
@@ -213,7 +214,7 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
                     </div>
                     <div className={styles.col}>
                         <div className={styles.title}>
-                            End
+                        <FormattedMessage id="End" />
                         </div>
                         <div className={styles.input}>
                         <DateTimePicker
@@ -225,8 +226,8 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
                     </div>
                 </div>
                 <div className={styles.submit}>
-                    {check ? <button className={styles.btnSubmit} onClick={handleSubmit}>Update</button>:
-                    <button className={styles.btnDisable}>Update</button>}
+                    {check ? <button className={styles.btnSubmit} onClick={handleSubmit}><FormattedMessage id="Update" /></button>:
+                    <button className={styles.btnDisable}><FormattedMessage id="Update" /></button>}
                 </div>
             </Modal.Body>
         </Modal>

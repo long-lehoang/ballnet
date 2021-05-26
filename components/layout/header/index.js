@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import {showNotice} from '../../../lib/notification'
+import { showNotice } from '../../../lib/notification'
 import styles from './styles.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol, faSearch, faHome, faUsers, faCalendarAlt, faMap, faUserPlus, faEnvelope, faBell, faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ import { LOGOUT_API, AVATAR, HOST, NOTIFICATION } from '../../../config/config'
 import { useRouter } from 'next/router';
 import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
+import { FormattedMessage } from 'react-intl';
 var numNotice = 0;
 
 export default function Header() {
@@ -40,7 +41,7 @@ export default function Header() {
             },
         },
     }
-    
+
 
     useEffect(() => {
         axios.get(NOTIFICATION, {
@@ -54,7 +55,7 @@ export default function Header() {
             let list = listNotice;
             data.forEach(element => {
                 if (element.read_at === null)
-                number = number + 1;
+                    number = number + 1;
                 let notice = showNotice(element);
                 list.push(notice);
             });
@@ -63,7 +64,7 @@ export default function Header() {
             addNotice(list);
         });
     }, [null]);
-    
+
     function handleReadNotice() {
         if (!notification) {
             axios.post(NOTIFICATION + 'read', {}, {
@@ -88,10 +89,10 @@ export default function Header() {
     useEffect(() => {
         if (user.id !== undefined && echo !== undefined) {
             echo.private(`App.Models.User.${user.id}`).notification((data) => {
-                const obj = { data: {...data} ,type : data.type, read_at: null, created_at: (new Date()).getTime() }
-                
+                const obj = { data: { ...data }, type: data.type, read_at: null, created_at: (new Date()).getTime() }
+
                 if (obj.read_at === null)
-                numNotice = numNotice + 1;            
+                    numNotice = numNotice + 1;
                 const notice = showNotice(obj);
                 let list = listNotice;
                 list.unshift(notice);
@@ -99,7 +100,7 @@ export default function Header() {
                 setNewNotice(numNotice);
             });
         }
-    },[listNotice]);
+    }, [listNotice]);
 
     const router = useRouter();
 
@@ -140,7 +141,7 @@ export default function Header() {
                                 <FontAwesomeIcon height={22} icon={faHome}></FontAwesomeIcon>
                             </div>
                             <div className={styles.textNav}>
-                                Home
+                                <FormattedMessage id="Home" />
                             </div>
                         </div>
                     </Link>
@@ -150,8 +151,8 @@ export default function Header() {
                             <FontAwesomeIcon height={22} icon={faUsers}></FontAwesomeIcon>
                         </div>
                         <div className={styles.textNav}>
-                            <Link href="/team"><div className={styles.link}>Team</div></Link>
-                            <Link href="/team/invitation"><div className={styles.link}>Team Invitations</div></Link>
+                            <Link href="/team"><div className={styles.link}><FormattedMessage id="Team" /></div></Link>
+                            <Link href="/team/invitation"><div className={styles.link}><FormattedMessage id="Team Invitation" /></div></Link>
                         </div>
                     </div>
 
@@ -161,8 +162,8 @@ export default function Header() {
                                 <FontAwesomeIcon height={22} icon={faCalendarAlt}></FontAwesomeIcon>
                             </div>
                             <div className={styles.textNav}>
-                            <Link href="/match"><div className={styles.link}>Match</div></Link>
-                            <Link href="/match/invitation"><div className={styles.link}>Match Invitation</div></Link>
+                                <Link href="/match"><div className={styles.link}><FormattedMessage id="Match" /></div></Link>
+                                <Link href="/match/invitation"><div className={styles.link}><FormattedMessage id="Match Invitation" /></div></Link>
                             </div>
                         </div>
                     </Link>
@@ -173,7 +174,7 @@ export default function Header() {
                                 <FontAwesomeIcon height={22} icon={faMap}></FontAwesomeIcon>
                             </div>
                             <div className={styles.textNav}>
-                                Stadium
+                                <FormattedMessage id="Stadium" />
                             </div>
                         </div>
                     </Link>
@@ -183,8 +184,8 @@ export default function Header() {
                             <FontAwesomeIcon height={22} icon={faUserPlus}></FontAwesomeIcon>
                         </div>
                         <div className={styles.textNav}>
-                            <Link href="/people"><div className={styles.link}>People</div></Link>
-                            <Link href="/people/friend_request"><div className={styles.link}>Friend Requests</div></Link>
+                            <Link href="/people"><div className={styles.link}><FormattedMessage id="People" /></div></Link>
+                            <Link href="/people/friend_request"><div className={styles.link}><FormattedMessage id="Friend Requests" /></div></Link>
                         </div>
                     </div>
                     {/* <Link href="/message">
@@ -205,10 +206,10 @@ export default function Header() {
                                 <FontAwesomeIcon height={22} icon={faBell}></FontAwesomeIcon>
                             </div>
                             <div className={styles.textNav}>
-                                Notification
+                                <FormattedMessage id="Notification" />
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <Link href={"/" + link_profile}>
@@ -223,20 +224,14 @@ export default function Header() {
                     <button><FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon></button>
                     <div className={styles.dropdown_setting}>
                         <Link href="/setting">
-                            <a>Account Setting</a>
-                        </Link>
-                        <Link href="/stadium/mystadium">
-                            <a>My Stadium</a>
-                        </Link>
-                        <Link href="/my_booking">
-                            <a>My Booking</a>
+                            <a><FormattedMessage id="Account Setting" /></a>
                         </Link>
                         <a onClick={handleLoggout}>Logout</a>
                     </div>
                 </div>
             </div>
             <div className={notification ? styles.notification : styles.hideNotification}>
-                {listNotice.length == 0 ? <h5 style={{padding: 10 ,color: "black"}}>No notifications</h5> : listNotice}
+                {listNotice.length == 0 ? <h5 style={{ padding: 10, color: "black" }}><FormattedMessage id="No notification" /></h5> : listNotice}
             </div>
         </div>
 

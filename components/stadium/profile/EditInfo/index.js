@@ -8,6 +8,7 @@ import { setMessage } from '../../../../slices/messageSlice';
 import styles from './styles.module.scss';
 import location from '../../../../data/location.json';
 import QueryString from 'qs';
+import { FormattedMessage } from 'react-intl';
 
 export default function EditInfo(props) {
     const token = useSelector(state => state.token);
@@ -79,14 +80,14 @@ export default function EditInfo(props) {
         dispatch(action);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(SPORT_CATEGORY_API, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setListSport(response.data.data);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error.response.data.message);
         })
     }, [null])
@@ -94,37 +95,37 @@ export default function EditInfo(props) {
     return (
         <Modal show={props.show} onHide={() => props.setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Stadium</Modal.Title>
+                <Modal.Title ><FormattedMessage id="Stadium" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                
-                <input className={styles.fullwidth} value={name} placeholder="Name" onChange={(event) => { setName(event.target.value) }}></input>
-                <input value={phone} placeholder="Phone" onChange={(event) => { setPhone(event.target.value) }}></input>
-                <select value={sport} onChange={(event)=>{setSport(event.target.value)}}>
-                    {listSport.map((element, key)=>{
+
+                <input className={styles.fullwidth} value={name} placeholder={<FormattedMessage id="Name" />} onChange={(event) => { setName(event.target.value) }}></input>
+                <input value={phone} placeholder={<FormattedMessage id="Phone Number" />} onChange={(event) => { setPhone(event.target.value) }}></input>
+                <select value={sport} onChange={(event) => { setSport(event.target.value) }}>
+                    {listSport.map((element, key) => {
                         return (
                             <option key={key} value={element.name}>{element.name}</option>
                         )
                     })}
                 </select>
                 <select value={nameCity} className={styles.select} onChange={handleSelectCity}>
-                    <option>Tỉnh/Thành Phố</option>
+                    <option><FormattedMessage id="Province/City" /></option>
                     {location.map(element => {
                         return (<option value={element.Name}>{element.Name}</option>)
                     })}
                 </select>
                 <select value={nameDistrict} className={styles.select} onChange={handleSelectDistrict}>
-                    <option>Quận/ Huyện</option>
+                    <option><FormattedMessage id="District" /></option>
                     {district.map(element => {
                         return (<option value={element.Name}>{element.Name}</option>)
                     })}
                 </select>
-                <input value={ward} placeholder="Ward" onChange={(event) => { setWard(event.target.value) }}></input>
-                <input value={street} placeholder="Street" onChange={(event) => { setStreet(event.target.value) }}></input>
+                <input value={ward} placeholder={<FormattedMessage id="Ward" />} onChange={(event) => { setWard(event.target.value) }}></input>
+                <input value={street} placeholder={<FormattedMessage id="Street" />} onChange={(event) => { setStreet(event.target.value) }}></input>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => { props.setShow(false) }}>Close</Button>
-                <Button variant="primary" onClick={() => { handleSubmit() }}>Save changes</Button>
+                <Button variant="secondary" onClick={() => { props.setShow(false) }}><FormattedMessage id="Close" /></Button>
+                <Button variant="primary" onClick={() => { handleSubmit() }}><FormattedMessage id="Save changes" /></Button>
             </Modal.Footer>
         </Modal>
     )

@@ -101,13 +101,13 @@ export default function Filter({match, setMatch, result}){
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectCity}>
-                <option value="all">Tỉnh/Thành Phố</option>
+                <option value="all"><FormattedMessage id="Province/City" /></option>
                 {location.map( element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectDistrict}>
-                <option value="all">Quận/Huyện</option>
+                <option value="all"><FormattedMessage id="District" /></option>
                 {district.map( element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}

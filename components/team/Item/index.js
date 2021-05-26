@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR_TEAM, HOST, TEAM_API, TEAM_REQUEST_API } from '../../../config/config';
 import loadStar from '../../../lib/star';
@@ -112,12 +113,12 @@ export default function Item({item}){
             </div>
             <p className={styles.location}>{item.location}</p>
             <div className={styles.group_btn}>
-                {member ? <button className={styles.btn_leave} onClick={handleLeave}>Leave</button>:
-                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
-                invited ?<button className={styles.btn_accept} onClick={handleAccept}>Accept</button>:
-                <button className={styles.btn_join} onClick={handleJoin}>Join</button>}
+                {member ? <button className={styles.btn_leave} onClick={handleLeave}><FormattedMessage id="Leave" /></button>:
+                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}><FormattedMessage id="Cancel" /></button>:
+                invited ?<button className={styles.btn_accept} onClick={handleAccept}><FormattedMessage id="Accept" /></button>:
+                <button className={styles.btn_join} onClick={handleJoin}><FormattedMessage id="Join" /></button>}
                 
-                {invited ? <button className={styles.btn_deny} onClick={handleDeny}>Deny</button> :
+                {invited ? <button className={styles.btn_deny} onClick={handleDeny}><FormattedMessage id="Deny" /></button> :
                 <button className={styles.btn_message} onClick={handleMessage}><FontAwesomeIcon height={15} className={styles.icon} icon={faEnvelope} /></button>}
                 
             </div>

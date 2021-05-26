@@ -9,6 +9,7 @@ import loadStar from '../../../../lib/star';
 import styles from './styles.module.scss';
 import {setMessage} from '../../../../slices/messageSlice';
 import ComboAvatar from '../../../commons/ComboAvatar';
+import { FormattedMessage } from 'react-intl';
 
 export default function Item({item}){
     const img = item.avatar == null ? AVATAR_TEAM : HOST + item.avatar;
@@ -83,9 +84,9 @@ export default function Item({item}){
             </div>
             <p className={styles.location}>{item.location}</p>
             <div className={styles.group_btn}>
-                {!leave ? <button className={styles.btn_leave} onClick={handleLeave}>Leave</button>:
-                join ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
-                <button className={styles.btn_join} onClick={handleJoin}>Join</button>}
+                {!leave ? <button className={styles.btn_leave} onClick={handleLeave}><FormattedMessage id="Leave" /></button>:
+                join ? <button className={styles.btn_cancel} onClick={handleCancel}><FormattedMessage id="Cancel" /></button>:
+                <button className={styles.btn_join} onClick={handleJoin}><FormattedMessage id="Join" /></button>}
                         
                 <button className={styles.btn_message} onClick={handleMessage}><FontAwesomeIcon height={15} className={styles.icon} icon={faEnvelope} /></button>
             </div>

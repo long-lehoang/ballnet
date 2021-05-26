@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faMapMarkedAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import Select from 'react-select';
 import axios from 'axios';
+import { FormattedMessage } from 'react-intl';
 
 export default function EditPostForm(props) {
     const [permission, setPermission] = useState(props.permission);
@@ -96,24 +97,24 @@ export default function EditPostForm(props) {
         <div>
             <Modal className={styles.modal_container} show={props.show} onHide={() => props.setShow(false)}>
                 <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}>Edit Post</Modal.Title>
+                    <Modal.Title className={styles.title}><FormattedMessage id="Edit Post" /></Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.title}>
                             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} width="40px" height="40px"></img>
                             <div className={styles.name}>
-                                <span>{user == null ? 'No Name' : user.name}</span>
+                                <span>{user.name}</span>
                                 {permission !== 'Team' ?
                                     <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
-                                        <option value="Only me">Only me</option>
-                                        <option value="Friends">Friends</option>
-                                        <option value="Public">Public</option>
+                                        <option value="Only me"><FormattedMessage id="Only me" /></option>
+                                        <option value="Friends"><FormattedMessage id="Friends" /></option>
+                                        <option value="Public"><FormattedMessage id="Public" /></option>
                                     </select> : ''}
                             </div>
                         </div>
                         <div className={styles.textInput}>
-                            <textarea value={content} placeholder="What’s on your mind ?" onChange={(e) => { setContent(e.target.value) }}></textarea>
+                            <textarea value={content} placeholder={<FormattedMessage id="What’s on your mind ?" />} onChange={(e) => { setContent(e.target.value) }}></textarea>
                         </div>
                         <div className={styles.groupPreview}>
                             {preview.map(element => {
@@ -123,7 +124,7 @@ export default function EditPostForm(props) {
                             })}
                         </div>
                         <div className={styles.groupButton}>
-                            <span className={styles.left}>Add to your post</span>
+                            <span className={styles.left}><FormattedMessage id="Add to your post" /></span>
                             <div className={styles.right}>
                                 <label for="image"><FontAwesomeIcon className={styles.iconImage} icon={faImage}></FontAwesomeIcon></label>
                                 <input id="image" type="file" multiple onChange={(event) => handleImage(event)} />
@@ -133,13 +134,13 @@ export default function EditPostForm(props) {
                                 <input id="location" type="button"></input>
                             </div>
                         </div>
-                        <button type="submit" className={styles.btnSubmit}>Edit</button>
+                        <button type="submit" className={styles.btnSubmit}><FormattedMessage id="Edit" /></button>
                     </form>
                 </Modal.Body>
             </Modal>
             <Modal className={styles.modal_container} show={showListFriends} onHide={() => setShowListFriends(false)}>
                 <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}>Tag Friends</Modal.Title>
+                    <Modal.Title className={styles.title}><FormattedMessage id="Tag Friends" /></Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
                     <Select

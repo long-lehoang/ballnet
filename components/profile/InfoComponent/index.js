@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR, FOLLOWS_API, FRIENDS_API, HOST, PROFILE_API, SPORT_API } from '../../../config/config';
 import styles from './styles.module.scss';
 import { setProfile } from '../../../slices/profileSlice';
+import { FormattedMessage } from 'react-intl';
 
 export default function InfoComponent(props) {
     const [avatar, setAvatar] = useState(props.profile.avatar !== null ? (HOST + props.profile.avatar) : AVATAR);
@@ -78,30 +79,30 @@ export default function InfoComponent(props) {
             </div>
             <div className={styles.friend_follow}>
                 <div>
-                    <span className={styles.label}>Followers</span>
+                    <span className={styles.label}><FormattedMessage id="Followers" /></span>
                     <span className={styles.number}>{follow}</span>
                 </div>
                 <div>
-                    <span className={styles.label}>Friends</span>
+                    <span className={styles.label}><FormattedMessage id="Friends" /></span>
                     <span className={styles.number}>{friend}</span>
                 </div>
             </div>
             <div className={styles.item}>
                 <FontAwesomeIcon height={20} icon={faDirections}></FontAwesomeIcon>
-                <span className={styles.text}>Location: {location}</span>
+                <span className={styles.text}><FormattedMessage id="Location" />: {location}</span>
             </div>
             <div className={styles.item}>
                 <FontAwesomeIcon height={20} icon={faDirections}></FontAwesomeIcon>
-                <span className={styles.text}>Match: {match}</span>
+                <span className={styles.text}><FormattedMessage id="Match" />: {match}</span>
 
             </div>
             <div className={styles.item}>
                 <FontAwesomeIcon height={20} icon={faDirections}></FontAwesomeIcon>
-                <span className={styles.text}>Main Sport: {sport}</span>
+                <span className={styles.text}><FormattedMessage id="Main Sport" />: {sport}</span>
             </div>
             <div className={styles.item}>
                 <FontAwesomeIcon height={20} icon={faDirections}></FontAwesomeIcon>
-                <span className={styles.text}>Phone: {phone}</span>
+                <span className={styles.text}><FormattedMessage id="Phone Number" />: {phone}</span>
             </div>
         </div>
     )

@@ -2,6 +2,7 @@ import { faTrademark } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR, FRIENDS_API, FRIEND_REQUESTS_API, HOST, TEAM_API } from '../../../../../config/config';
 import loadStar from '../../../../../lib/star';
@@ -28,7 +29,7 @@ export default function Item({ member, choice, setChoice }) {
 
             <div className={styles.right}>
                 <p className={styles.star}>{loadStar(member.point, 12)}</p>
-                <button className={member.id === choice ? styles.active :styles.btnAdd} onClick={()=>{setChoice(member.id)}}>Choose</button>
+                <button className={member.id === choice ? styles.active :styles.btnAdd} onClick={()=>{setChoice(member.id)}}><FormattedMessage id="Choose" /></button>
             </div>
         </div >
     )

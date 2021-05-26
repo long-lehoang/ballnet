@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import LazyLoad from 'react-lazyload';
 import Loading from '../commons/Loading';
 import Filter from './filter'
@@ -10,7 +11,7 @@ export default function Team({team})
 
     return(
         <div className={styles.container}>
-            <h3>Teams</h3>
+            <h3><FormattedMessage id="Teams" /></h3>
 
             <div className={styles.filter}>
                 <Filter team={team} setTeam={setList} result={list}/>

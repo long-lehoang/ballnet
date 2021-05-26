@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR_TEAM, BOOKING_API, HOST, MATCH_API, MATCH_INVITATION_API, MATCH_JOINING_API } from '../../../../../config/config';
 import loadStar from '../../../../../lib/star';
@@ -44,7 +45,7 @@ export default function Item({ id, avatar, name, match_id, location, rating, pho
                     <span className={styles.line}>{phone}</span>
                 </div>
             </div>
-            <button onClick={handleBooking}>Choose</button>
+            <button onClick={handleBooking}><FormattedMessage id="Choose" /></button>
 
         </div>
     )

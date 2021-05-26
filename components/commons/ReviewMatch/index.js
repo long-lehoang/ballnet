@@ -6,6 +6,7 @@ import ReactStars from "react-rating-stars-component";
 import axios from 'axios';
 import { setMessage } from '../../../slices/messageSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 export default function ReviewMatch({ show, setShow, match_id, setDel }) {
     const [result, setResult] = useState('0 - 0');
     const [ratingTeam, setRatingTeam] = useState(0);
@@ -98,18 +99,18 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
     return (
         <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
             <Modal.Header className={styles.header} closeButton>
-                <Modal.Title className={styles.title}>Review Match</Modal.Title>
+                <Modal.Title className={styles.title}><FormattedMessage id="Review Match" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.result}>
-                        <h5>Result </h5>
+                        <h5><FormattedMessage id="Result" /> </h5>
                         <input name="result_1" value={result.split(' - ')[0]} onChange={handleResult}></input>
                         <span>:</span>
                         <input name="result_2" value={result.split(' - ')[1]} onChange={handleResult}></input>
                     </div>
                     <div className={styles.team}>
-                        <h5>Review Opponent Team</h5>
+                        <h5><FormattedMessage id="Review Opponent Team" /></h5>
                         <div className={styles.item}>
                             <div className={styles.name}>
                                 <img src={match == undefined ? null : match.team_avatar == null ? AVATAR_TEAM : HOST + match.team_avatar}></img>
@@ -125,7 +126,7 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
                         </div>
                     </div>
                     <div className={styles.member}>
-                        <h5>Review Member</h5>
+                        <h5><FormattedMessage id="Review Member" /></h5>
                         {match !== undefined ? match.members.map((element, key) => {
                             let src = element.avatar == null ? AVATAR : HOST + element.avatar;
                             return (
@@ -144,7 +145,7 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
                             )
                         }) : ''}
                     </div>
-                    <button type="submit" className={styles.btnSubmit}>Submit</button>
+                    <button type="submit" className={styles.btnSubmit}><FormattedMessage id="Submit" /></button>
                 </form>
             </Modal.Body>
         </Modal>

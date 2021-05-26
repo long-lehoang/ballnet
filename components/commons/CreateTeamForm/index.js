@@ -5,6 +5,7 @@ import { Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import location from '../../../data/location.json';
 import axios from 'axios';
+import { FormattedMessage } from 'react-intl';
 
 export default function CreateTeamForm({teams, setTeams}) {
     const [districts, setDistrict] = useState([]);
@@ -109,38 +110,38 @@ export default function CreateTeamForm({teams, setTeams}) {
             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
             <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
                 <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}>Create Team</Modal.Title>
+                    <Modal.Title className={styles.title}><FormattedMessage id="Create Team" /></Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
                     <form onSubmit={handleSubmit}>
                         <input value={name} placeholder="Name" className={styles.row} onChange={handleName}></input>
                         <div className={styles.row}>
                             <select value={nameCity} className={styles.col} onChange={handleCity}>
-                                <option>Tỉnh/Thành Phố</option>
+                                <option><FormattedMessage id="Province/City" /></option>
                                 {location.map(element=>{
                                     return(<option value={element.Name}>{element.Name}</option>)
                                 })}
                             </select>
                             <select value={nameDistrict} className={styles.col} onChange={handleDistrict}>
-                                <option>Quận/Huyện</option>
+                                <option><FormattedMessage id="District" /></option>
                                 {districts.map(element=>{
                                     return(<option value={element.Name}>{element.Name}</option>)
                                 })}
                             </select>
                         </div>
                         <select value={sport} className={styles.row} onChange={handleSport}>
-                            <option>Sport</option>
+                            <option><FormattedMessage id="Sport" /></option>
                             {sportCTGR.map(element=>{
                                 return (<option value={element.name}>{element.name}</option>)
                             })}
                         </select>
                         <span>{error}</span>
-                        <button type="submit" className={styles.btnSubmit}>Create</button>
+                        <button type="submit" className={styles.btnSubmit}><FormattedMessage id="Create" /></button>
                     </form>
                 </Modal.Body>
             </Modal>
 
-            <button className={styles.btn} onClick={() => setShow(true)}>Create a Team</button>
+            <button className={styles.btn} onClick={() => setShow(true)}><FormattedMessage id="Create a Team" /></button>
         </div>
     )
 }

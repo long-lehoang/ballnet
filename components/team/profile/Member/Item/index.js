@@ -49,7 +49,7 @@ export default function Item({ member, team }) {
 
             <div className={styles.right}>
                 <p className={styles.star}>{loadStar(member.point, 12)}</p>
-                {(!member.isCaptain)&&(team.isCaptain||(team.isAdmin&&!member.isAdmin)) ? <button className={styles.btnUnfr} onClick={handleKick}>Remove</button> : ''}
+                {(!member.isCaptain)&&(team.isCaptain||(team.isAdmin&&!member.isAdmin)) ? <button className={styles.btnUnfr} onClick={handleKick}><FormattedMessage id="Remove" /></button> : ''}
             </div>
         </div >
     )

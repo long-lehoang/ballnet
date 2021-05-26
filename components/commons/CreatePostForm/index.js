@@ -8,8 +8,9 @@ import { faImage, faMapMarkedAlt, faUser } from "@fortawesome/free-solid-svg-ico
 import Select from 'react-select';
 import axios from 'axios';
 import tagging from '../../../lib/tags';
+import { FormattedMessage } from 'react-intl';
 
-export default function CreatePostForm({team = false}) {
+export default function CreatePostForm({ team = false }) {
     const [show, setShow] = useState(false);
     const [permission, setPermission] = useState('Public');
     const [content, setContent] = useState('');
@@ -59,10 +60,10 @@ export default function CreatePostForm({team = false}) {
         formData.append('content', content);
         formData.append('location', location);
         formData.append('tags', tags);
-        if(team){
+        if (team) {
             formData.append('team_id', team);
             formData.append('private', 'Team');
-        }else{
+        } else {
             formData.append('private', permission);
         }
         console.log(images);
@@ -79,7 +80,7 @@ export default function CreatePostForm({team = false}) {
         setShow(false);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(FRIENDS_API, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -87,44 +88,44 @@ export default function CreatePostForm({team = false}) {
         }).then((response) => {
             let options = [];
             response.data.data.forEach(element => {
-                const src = element.avatar === null ? AVATAR : HOST+element.avatar
+                const src = element.avatar === null ? AVATAR : HOST + element.avatar
                 options.push({
                     value: element.id,
                     label: <div className={styles.option}>
                         <img src={src}></img>
                         <span>{element.name}</span>
-                        </div>
+                    </div>
                 });
             });
             setOptionSearch(options);
         }).catch((error) => {
             console.log(error.message);
         });
-    },[null]);
+    }, [null]);
     return (
         <div className={styles.container}>
             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
             <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
                 <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}>Create Post</Modal.Title>
+                    <Modal.Title className={styles.title}><FormattedMessage id="Create Post" /></Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.title}>
                             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} width="40px" height="40px"></img>
                             <div className={styles.name}>
-                                <span>{user == null ? 'No Name' : user.name}</span>
-                                {team === false ? 
-                                <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
-                                <option value="Only me">Only me</option>
-                                <option value="Friends">Friends</option>
-                                <option value="Public">Public</option>
-                                </select>: ''}
-                                
+                                <span>{user.name}</span>
+                                {team === false ?
+                                    <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
+                                        <option value="Only me"><FormattedMessage id="Only me" /></option>
+                                        <option value="Friends"><FormattedMessage id="Friends" /></option>
+                                        <option value="Public"><FormattedMessage id="Public" /></option>
+                                    </select> : ''}
+
                             </div>
                         </div>
                         <div className={styles.textInput}>
-                            <textarea value={content} placeholder="What’s on your mind ?" onChange={(e) => { setContent(e.target.value) }}></textarea>
+                            <textarea value={content} placeholder={<FormattedMessage id="What’s on your mind ?" />} onChange={(e) => { setContent(e.target.value) }}></textarea>
                         </div>
                         <div className={styles.groupPreview}>
                             {preview.map(element => {
@@ -135,7 +136,7 @@ export default function CreatePostForm({team = false}) {
                             })}
                         </div>
                         <div className={styles.groupButton}>
-                            <span className={styles.left}>Add to your post</span>
+                            <span className={styles.left}><FormattedMessage id="Add to your post" /></span>
                             <div className={styles.right}>
                                 <label for="image"><FontAwesomeIcon className={styles.iconImage} icon={faImage}></FontAwesomeIcon></label>
                                 <input id="image" type="file" multiple onChange={(event) => handleImage(event)} />
@@ -145,13 +146,13 @@ export default function CreatePostForm({team = false}) {
                                 <input id="location" type="button"></input>
                             </div>
                         </div>
-                        <button type="submit" className={styles.btnSubmit}>Post</button>
+                        <button type="submit" className={styles.btnSubmit}><FormattedMessage id="Post" /></button>
                     </form>
                 </Modal.Body>
             </Modal>
             <Modal className={styles.modal_container} show={showListFriends} onHide={() => setShowListFriends(false)}>
                 <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}>Tag Friends</Modal.Title>
+                    <Modal.Title className={styles.title}><FormattedMessage id="Tag Friends" /></Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
                     <Select
@@ -165,7 +166,7 @@ export default function CreatePostForm({team = false}) {
                     />
                 </Modal.Body>
             </Modal>
-            <button className={styles.btn} onClick={() => setShow(true)}>Post a status</button>
+            <button className={styles.btn} onClick={() => setShow(true)}><FormattedMessage id="Post a status" /></button>
         </div>
     )
 }

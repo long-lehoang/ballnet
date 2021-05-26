@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { MATCH_API, MATCH_JOINING_API, TEAM_SPORT } from '../../../../config/config';
 import { setMessage } from '../../../../slices/messageSlice';
@@ -43,12 +44,12 @@ export default function UserRequest({show, setShow, match, team_id}) {
     return (
         <Modal show={show} onHide={() => setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >User Request To Join Match</Modal.Title>
+                <Modal.Title ><FormattedMessage id="User Request To Join Match" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={"Search Request"} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={<FormattedMessage id="Search Request" />} onChange={handleSearch}></input>
                 <div className={styles.list}>
-                    {list.map((element, key) => {   
+                    {list.map((element, key) => {
                         return (
                             // <LazyLoad key={key} height={10} placeholder={<Loading/>}>                        
                             < Item key={key} item={element} setList={setList} setPeople={setPeople} request={friends} ></Item>

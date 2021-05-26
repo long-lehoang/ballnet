@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessage } from '../../slices/messageSlice';
 import ReviewMatch from '../commons/ReviewMatch';
@@ -108,9 +109,9 @@ export default function Notification(props) {
                 </div>
             </Link>
             <div className={styles.btn}>
-                {props.linkJoin != null ? <button className={styles.acptBtn} onClick={handleJoin}>Join</button> : ''}
-                {props.linkAccept != null ? <button className={styles.acptBtn} onClick={handleAccept}>Accept</button> : ''}
-                {props.linkDeny != null ? <button className={styles.dnBtn} onClick={handleDeny}>Deny</button> : ''}
+                {props.linkJoin != null ? <button className={styles.acptBtn} onClick={handleJoin}><FormattedMessage id="Join" /></button> : ''}
+                {props.linkAccept != null ? <button className={styles.acptBtn} onClick={handleAccept}><FormattedMessage id="Accept" /></button> : ''}
+                {props.linkDeny != null ? <button className={styles.dnBtn} onClick={handleDeny}><FormattedMessage id="Deny" /></button> : ''}
             </div>
         </div>
     )

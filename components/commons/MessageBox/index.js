@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import {setMessage} from "../../../slices/messageSlice";
 
@@ -21,7 +22,7 @@ export default function MessageBox() {
             <Modal.Body>{message.message}</Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-                Close
+                <FormattedMessage id="Close" />
             </Button>
             </Modal.Footer>
         </Modal>

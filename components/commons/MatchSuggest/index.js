@@ -1,6 +1,24 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { SUGGEST_API } from '../../../config/config';
 import styles from './styles.module.scss';
-
+//TODO
 export default function MatchSuggest() {
+    const [list, setList] = useState([]);
+    const token = useSelector(state => state.token);
+    useEffect(() => {
+        axios.get(SUGGEST_API + 'match', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            setList(response.data.data)
+        }).catch(error => {
+            console.log(error);
+        })
+    }, [null])
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>

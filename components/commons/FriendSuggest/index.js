@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { AVATAR, FRIEND_REQUESTS_API, HOST, SUGGEST_API } from '../../../config/config';
 import styles from './styles.module.scss';
@@ -39,7 +40,7 @@ export default function FriendSuggest() {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <span>Friends &#40;suggestion&#41;</span>
+                <span><FormattedMessage id="Friend Suggestion" /></span>
             </div>
             <div className={styles.body}>
                 {list.map((element, key) => {

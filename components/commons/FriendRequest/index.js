@@ -1,13 +1,14 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { FormattedMessage } from 'react-intl';
 import styles from './styles.module.scss';
 
 export default function FriendRequest(){
     return(
         <div className={styles.container}>
             <div className={styles.header}>
-                <span>Friend Requests</span>
+                <span><FormattedMessage id="Friend Requests" /></span>
             </div>
             <div className={styles.body}>
                 <div className={styles.element}>

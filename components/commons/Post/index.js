@@ -10,6 +10,7 @@ import Link from 'next/link';
 import EditPostForm from '../EditPostForm';
 import tagging from '../../../lib/tags';
 import { useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 export default function Post(props) {
     const token = useSelector(state => state.token);
@@ -45,7 +46,7 @@ export default function Post(props) {
         });
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
         if (props.post.id !== undefined) {
             axios.get(POSTS_API + props.post.id, {
@@ -71,7 +72,7 @@ export default function Post(props) {
                 console.log(error.message);
             })
         }
-    },[edit])
+    }, [edit])
 
 
     function handleLike() {
@@ -138,7 +139,7 @@ export default function Post(props) {
             toggleShare(true);
             setCountShare(countShare + 1);
 
-            axios.post(POSTS_API + props.post.id + '/share',{}, {
+            axios.post(POSTS_API + props.post.id + '/share', {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -170,8 +171,8 @@ export default function Post(props) {
                 <div className={styles.col}>
                     <button className={styles.btn}><FontAwesomeIcon icon={faEllipsisV}></FontAwesomeIcon></button>
                     <div className={styles.popup}>
-                        <button onClick={() => { toggleEdit(!edit) }}>Edit</button>
-                        <button onClick={handleDelete}>Delete</button>
+                        <button onClick={() => { toggleEdit(!edit) }}><FormattedMessage id="Edit" /></button>
+                        <button onClick={handleDelete}><FormattedMessage id="Delete" /></button>
                     </div>
                 </div>
             </div>
@@ -189,20 +190,20 @@ export default function Post(props) {
                     <div className={like ? styles.activeLike : styles.like}>
                         <button onClick={handleLike}>
                             <FontAwesomeIcon icon={faHeart} className={styles.iconLike}></FontAwesomeIcon>
-                            <span className={styles.txtLike}>Like {countLike}</span>
+                            <span className={styles.txtLike}><FormattedMessage id="Like" /> {countLike}</span>
                         </button>
                     </div>
                     <div className={comment ? styles.activeComment : styles.comment}>
                         <button onClick={() => { toggleActiveComment(!activeComment) }}>
                             <FontAwesomeIcon icon={faComment} className={styles.iconComment}></FontAwesomeIcon>
-                            <span className={styles.txtComment}>Comment {countComment}</span>
+                            <span className={styles.txtComment}><FormattedMessage id="Comment" /> {countComment}</span>
                         </button>
                     </div>
                 </div>
                 <div className={styles.col}>
                     <button className={share ? styles.activeShare : styles.share} onClick={handleShare}>
                         <FontAwesomeIcon icon={faShare} className={styles.iconShare}></FontAwesomeIcon>
-                        <span className={styles.txtShare}>Share {countShare}</span>
+                        <span className={styles.txtShare}><FormattedMessage id="Share" /> {countShare}</span>
                     </button>
                 </div>
             </div>

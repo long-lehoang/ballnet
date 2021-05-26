@@ -2,6 +2,7 @@ import { faBirthdayCake, faEdit, faEnvelope, faPhone } from '@fortawesome/free-s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { SPORT_API } from '../../../config/config';
 import loadStar from '../../../lib/star';
@@ -40,14 +41,14 @@ export default function Info(props) {
             <div className={styles.box}>
                 <EditOverview show={editOverview} value={overview} setValue={setOverview} setShow={toggleEditOverview}></EditOverview>
                 <div className={styles.title}>
-                    <span>Overview</span>
+                    <span><FormattedMessage id="Overview" /></span>
                     {props.permission ? <button onClick={() => { toggleEditOverview(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>{overview}</div>
             </div>
             <div className={styles.box}>
                 <div className={styles.title}>
-                    <span>Sport</span>
+                    <span><FormattedMessage id="Sport" /></span>
                 </div>
                 <div className={styles.content}>
                     {sport.map((val, key) => {
@@ -64,7 +65,7 @@ export default function Info(props) {
             <div className={styles.box}>
                 <EditLocation show={editLocation} setShow={toggleEditLocation} value={location} setValue={setLocation}></EditLocation>
                 <div className={styles.title}>
-                    <span>Location</span>
+                    <span><FormattedMessage id="Location" /></span>
                     {props.permission ? <button onClick={() => { toggleEditLocation(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>{location}</div>
@@ -81,27 +82,27 @@ export default function Info(props) {
                     setShow={toggleEditPInfo}>
                 </EditPInfo>
                 <div className={styles.title}>
-                    <span>Personal Information</span>
+                    <span><FormattedMessage id="Personal Information" /></span>
                     {props.permission ? <button onClick={() => { toggleEditPInfo(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>
                     <div>
                         <FontAwesomeIcon className={styles.icon} icon={faEnvelope} height={15}></FontAwesomeIcon>
-                        <span>Email</span>
+                        <span><FormattedMessage id="Email" /></span>
                     </div>
                     <div>
                         {mail}
                     </div>
                     <div>
                         <FontAwesomeIcon className={styles.icon} icon={faPhone} height={15}></FontAwesomeIcon>
-                        <span>Phone</span>
+                        <span><FormattedMessage id="Phone Number" /></span>
                     </div>
                     <div>
                         {phone}
                     </div>
                     <div>
                         <FontAwesomeIcon className={styles.icon} icon={faBirthdayCake} height={15}></FontAwesomeIcon>
-                        <span>Birthday</span>
+                        <span><FormattedMessage id="Birthday" /></span>
                     </div>
                     <div>
                         {birthday}

@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { STADIUM_API } from '../../../../config/config';
 import { setMessage } from '../../../../slices/messageSlice';
@@ -44,10 +45,10 @@ export default function Booking({ show, setShow, match }) {
     return (
         <Modal show={show} onHide={() => setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Book Stadium</Modal.Title>
+                <Modal.Title ><FormattedMessage id="Book Stadium" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={"Search Stadium"} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={<FormattedMessage id="Search Stadium" />} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {
                         return (

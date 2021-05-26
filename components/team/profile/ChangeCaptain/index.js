@@ -65,10 +65,10 @@ export default function ChangeCaptain({ team, show, setShow, setMember, openMess
     return (
         <Modal show={show} onHide={() => setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Change Captain</Modal.Title>
+                <Modal.Title ><FormattedMessage id="Change Captain" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={"Search Friends"} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={<FormattedMessage id="Search Friends" />} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {members.map((element, key) => {
                         return (
@@ -78,8 +78,8 @@ export default function ChangeCaptain({ team, show, setShow, setMember, openMess
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => { props.setShow(false) }}>Close</Button>
-                <Button variant="primary" onClick={() => { handleSubmit() }}>Save changes</Button>
+                <Button variant="secondary" onClick={() => { props.setShow(false) }}><FormattedMessage id="Close" /></Button>
+                <Button variant="primary" onClick={() => { handleSubmit() }}><FormattedMessage id="Save changes" /></Button>
             </Modal.Footer>
         </Modal>
     )

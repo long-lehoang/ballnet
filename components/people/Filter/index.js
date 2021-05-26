@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import location from '../../../data/location.json';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export default function Filter({people, setPeople, result}){
     const [district, setDistrict] = useState(location[0].Districts);
@@ -63,16 +64,17 @@ export default function Filter({people, setPeople, result}){
         <div className={styles.container}>
             <input className={styles.search} onChange={handleSearch} placeholder="Enter to find"></input>
             <select className={styles.select}>
-                <option>Football</option>
+                {/* //TODO */}
+                <option><FormattedMessage id="Football" /></option>
             </select>
             <select className={styles.select} onChange={handleSelectCity}>
-                <option value="all">Tỉnh/Thành Phố</option>
+                <option value="all"><FormattedMessage id="Province/City" /></option>
                 {location.map( element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectDistrict}>
-                <option value="all">Quận/Huyện</option>
+                <option value="all"><FormattedMessage id="District" /></option>
                 {district.map( element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}

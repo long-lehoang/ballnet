@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { AVATAR, FOLLOWS_API, FRIENDS_API, HOST } from '../../../config/config';
 import styles from './styles.module.scss';
 import loadStar from '../../../lib/star';
+import { FormattedMessage } from 'react-intl';
 
 export default function InfoHome(){
     const token = useSelector(state => state.token);
@@ -46,7 +47,7 @@ export default function InfoHome(){
                 </Link>
             </div>
             <div className={styles.row}>
-                <span className={styles.name}>{user == null ? 'No Name' : user.name}</span>
+                <span className={styles.name}>{user.name}</span>
             </div>
             <div className={styles.row}>
                 <div className={styles.star}>
@@ -54,10 +55,10 @@ export default function InfoHome(){
                 </div>
             </div>
             <div className={styles.row}>
-                <span className={styles.followers}>Followers: {followers}</span>
+                <span className={styles.followers}><FormattedMessage id="Followers" />: {followers}</span>
             </div>
             <div className={styles.row}>
-                <span className={styles.friends}>Friends: {friends}</span>
+                <span className={styles.friends}><FormattedMessage id="Friends" />: {friends}</span>
             </div>
         </div>
     );

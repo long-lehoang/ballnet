@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import location from '../../../../../data/location.json';
 import { TEAM_API } from '../../../../../config/config';
+import { FormattedMessage } from 'react-intl';
 
 export default function EditLocation(props) {
     const [error, setError] = useState();
@@ -62,26 +63,26 @@ export default function EditLocation(props) {
     return (
         <Modal show={props.show} onHide={() => props.setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Location</Modal.Title>
+                <Modal.Title ><FormattedMessage id="Location" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <p>{error}</p>
                 <select value={nameCity} className={styles.select} onChange={handleSelectCity}>
-                    <option>Tỉnh/Thành Phố</option>
+                    <option><FormattedMessage id="Province/City" /></option>
                     {location.map(element => {
                         return (<option value={element.Name}>{element.Name}</option>)
                     })}
                 </select>
                 <select value={nameDistrict} className={styles.select} onChange={handleSelectDistrict}>
-                    <option>Quận/ Huyện</option>
+                    <option><FormattedMessage id="District" /></option>
                     {district.map(element => {
                         return (<option value={element.Name}>{element.Name}</option>)
                     })}
                 </select>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => { props.setShow(false) }}>Close</Button>
-                <Button variant="primary" onClick={() => { handleSubmit() }}>Save changes</Button>
+                <Button variant="secondary" onClick={() => { props.setShow(false) }}><FormattedMessage id="Close" /></Button>
+                <Button variant="primary" onClick={() => { handleSubmit() }}><FormattedMessage id="Save changes" /></Button>
             </Modal.Footer>
         </Modal>
     )

@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { TEAM_SPORT } from '../../../../config/config';
 import { setMessage } from '../../../../slices/messageSlice';
@@ -46,10 +47,10 @@ export default function InviteTeam({show, setShow, match}) {
     return (
         <Modal show={show} onHide={() => setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Invite Team to Join Match</Modal.Title>
+                <Modal.Title ><FormattedMessage id="Invite Team to Join Match" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={"Search Teams"} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={<FormattedMessage id="Search Teams" />} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {
                         return (

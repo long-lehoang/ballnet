@@ -11,6 +11,7 @@ import styles from './styles.module.scss';
 import { AVATAR, HOST, TEAM_API } from '../../../../config/config';
 import Link from 'next/link';
 import EditSport from './EditSport';
+import { FormattedMessage } from 'react-intl';
 
 export default function Info({team, permission}) {
     const [overview, setOverview] = useState(team.overview || "No overview");
@@ -51,7 +52,7 @@ export default function Info({team, permission}) {
             <div className={styles.box}>
                 <EditOverview show={editOverview} value={overview} setValue={setOverview} setShow={toggleEditOverview} id={team.id}></EditOverview>
                 <div className={styles.title}>
-                    <span>Overview</span>
+                    <span><FormattedMessage id="Overview" /></span>
                     {permission ? <button onClick={() => { toggleEditOverview(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>{overview}</div>
@@ -59,7 +60,7 @@ export default function Info({team, permission}) {
             <div className={styles.box}>
                 <EditSport show={editSport} value={sport} setValue={setSport} setShow={toggleEditSport} id={team.id}></EditSport>
                 <div className={styles.title}>
-                    <span>Sport</span>
+                    <span><FormattedMessage id="Sport" /></span>
                     {permission ? <button onClick={() => { toggleEditSport(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
 
@@ -73,21 +74,21 @@ export default function Info({team, permission}) {
             <div className={styles.box}>
                 <EditLocation show={editLocation} setShow={toggleEditLocation} id={team.id} value={location} setValue={setLocation}></EditLocation>
                 <div className={styles.title}>
-                    <span>Location</span>
+                    <span><FormattedMessage id="Location" /></span>
                     {permission ? <button onClick={() => { toggleEditLocation(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>{location}</div>
             </div>
             <div className={styles.box}>
                 <div className={styles.title}>
-                    <span>Establish</span>
+                    <span><FormattedMessage id="Establish" /></span>
                 </div>
                 <div className={styles.content}>{establish}</div>
             </div>
             <div className={styles.box}>
                 <EditAdmin show={editAdmin} setShow={toggleEditAdmin} value={admins} members={members} id={team.id} setValue={setAdmins}></EditAdmin>
                 <div className={styles.title}>
-                    <span>Administrator</span>
+                    <span><FormattedMessage id="Administrator" /></span>
                     {permission ? <button onClick={() => { toggleEditAdmin(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                 </div>
                 <div className={styles.content}>

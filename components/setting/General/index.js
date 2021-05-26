@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { PROFILE_API, USERNAME_API } from '../../../config/config';
 import { setUser } from '../../../slices/infoUserSlice';
@@ -119,13 +120,13 @@ export default function GeneralSetting() {
     }
     return (
         <div className={styles.container}>
-            <h3 className={styles.title}>General Setting</h3>
+            <h3 className={styles.title}><FormattedMessage id="General Setting" /></h3>
             <hr></hr>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.group}>
                     <div className={styles.header}>
                         <div>
-                            <span className={styles.label}>Name: </span>
+                            <span className={styles.label}><FormattedMessage id="Name" />: </span>
                             <span className={styles.txt}>{user == null ? '' : user.name}</span>
                             <button onClick={() => { toggleEditName(!editName) }}><FontAwesomeIcon className={styles.icon} icon={faEdit}></FontAwesomeIcon></button>
                         </div>
@@ -136,7 +137,7 @@ export default function GeneralSetting() {
                 <div className={styles.group}>
                     <div className={styles.header}>
                         <div>
-                            <span className={styles.label}>Username: </span>
+                            <span className={styles.label}><FormattedMessage id="Username" />: </span>
                             <span className={styles.txt}>{user == null ? '' : user.username}</span>
                             <button onClick={() => { toggleEditUsername(!editUsername) }}><FontAwesomeIcon className={styles.icon} icon={faEdit}></FontAwesomeIcon></button>
                         </div>
@@ -144,8 +145,8 @@ export default function GeneralSetting() {
                     </div>
                     {editUsername ? <input value={username} maxlength="30" onChange={handleInputUsername} className={styles.input}></input> : <div></div>}
                 </div>
-                <button type="submit">Save Setting</button>
-                <button>Cancel</button>
+                <button type="submit"><FormattedMessage id="Save Setting" /></button>
+                <button><FormattedMessage id="Cancel" /></button>
                 <span className={styles.result}>{result}</span>
 
             </form>

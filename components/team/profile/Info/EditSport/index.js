@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { PROFILE_API, SPORT_CATEGORY_API, TEAM_API } from '../../../../../config/config';
 import styles from './styles.module.scss';
@@ -43,7 +44,7 @@ export default function EditSport(props){
     return (
         <Modal show={props.show} onHide={()=>props.setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Sport</Modal.Title>
+                <Modal.Title ><FormattedMessage id="Sport" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <p>{error}</p>
@@ -56,8 +57,8 @@ export default function EditSport(props){
                 </select>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={()=>{props.setShow(false)}}>Close</Button>
-                <Button variant="primary" onClick={()=>{handleSubmit()}}>Save changes</Button>
+                <Button variant="secondary" onClick={()=>{props.setShow(false)}}><FormattedMessage id="Close" /></Button>
+                <Button variant="primary" onClick={()=>{handleSubmit()}}><FormattedMessage id="Save changes" /></Button>
             </Modal.Footer>
         </Modal>
     )

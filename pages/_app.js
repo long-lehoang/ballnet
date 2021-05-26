@@ -5,15 +5,28 @@ import store from '../store'
 import '../styles/DateTimePicker.css';
 import '../styles/Calendar.css';
 import '../styles/Clock.css';
+import { IntlProvider } from 'react-intl';
+import { useRouter } from "next/router"
+
+const languages = {
+    vi: require('../locale/vi.json'),
+    en: require('../locale/en.json')
+};
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <CookiesProvider>
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
-    </CookiesProvider>
-  )
+    const router = useRouter()
+    const { locale, defaultLocale } = router;
+    const messages = languages[locale];
+
+    return (
+        <CookiesProvider>
+            <Provider store={store}>
+                <IntlProvider messages={messages} locale={locale} defaultLocale={defaultLocale}>
+                    <Component {...pageProps} />
+                </IntlProvider>
+            </Provider>
+        </CookiesProvider>
+    )
 }
 
 export default MyApp

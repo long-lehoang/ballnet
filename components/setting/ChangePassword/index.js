@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { PASSWORD_API } from '../../../config/config';
 import { setToken } from '../../../slices/tokenSlice';
@@ -87,32 +88,32 @@ export default function ChangePassword() {
     }
     return (
         <div className={styles.container}>
-            <h3 className={styles.title}>Change Password</h3>
+            <h3 className={styles.title}><FormattedMessage id="Change Password" /></h3>
             <hr></hr>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.group}>
                     <div className={styles.header}>
-                        <span className={styles.label}>Old Password</span>
+                        <span className={styles.label}><FormattedMessage id="Old Password" /></span>
                         <span className={styles.errMsg}>{errMsgOld}</span>
                     </div>
-                    <input value={oldPassword} type="password" placeholder="Old Password" onChange={(event) => { setOldPassword(event.target.value) }}></input>
+                    <input value={oldPassword} type="password" placeholder={<FormattedMessage id="Old Password" />} onChange={(event) => { setOldPassword(event.target.value) }}></input>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.header}>
-                        <span className={styles.label}>New Password</span>
+                        <span className={styles.label}><FormattedMessage id="New Password" /></span>
                         <span className={styles.errMsg}>{errMsgNew}</span>
                     </div>
-                    <input value={newPassword} type="password" placeholder="New Password" onChange={(event) => { setNewPassword(event.target.value) }}></input>
+                    <input value={newPassword} type="password" placeholder={<FormattedMessage id="New Password" />} onChange={(event) => { setNewPassword(event.target.value) }}></input>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.header}>
-                        <span className={styles.label}>Repeat Password</span>
+                        <span className={styles.label}><FormattedMessage id="Repeat Password" /></span>
                         <span className={styles.errMsg}>{errMsgRepeat}</span>
                     </div>
-                    <input value={repeatPassword} type="password" placeholder="Repeat Password" onChange={(event) => { setRepeatPassword(event.target.value) }}></input>
+                    <input value={repeatPassword} type="password" placeholder={<FormattedMessage id="Repeat Password" />} onChange={(event) => { setRepeatPassword(event.target.value) }}></input>
                 </div>
-                <button type="submit">Save Setting</button>
-                <button>Cancel</button>
+                <button type="submit"><FormattedMessage id="Save Setting" /></button>
+                <button><FormattedMessage id="Cancel" /></button>
             </form>
         </div>
     )

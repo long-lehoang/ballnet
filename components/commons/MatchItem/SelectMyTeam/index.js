@@ -2,54 +2,55 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { MY_TEAM_CAPTAIN_API } from '../../../../config/config';
 import { setMessage } from '../../../../slices/messageSlice';
 import Item from './Item';
 import styles from './styles.module.scss';
 
-export default function SelectTeam({show, setShow, match}) {
+export default function SelectTeam({ show, setShow, match }) {
     const [list, setList] = useState([]);
     const [teams, setTeams] = useState([]);
-    const token = useSelector(state=>state.token)
+    const token = useSelector(state => state.token)
     const dispatch = useDispatch();
 
-    function handleSearch(event){
+    function handleSearch(event) {
         let search = event.target.value;
-        let fr = teams.filter( element => {
+        let fr = teams.filter(element => {
             return element.name.toLowerCase().includes(search.trim());
         });
         setList(fr);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(MY_TEAM_CAPTAIN_API, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
-            let teams = response.data.data.filter((team)=>{
+        }).then(response => {
+            let teams = response.data.data.filter((team) => {
                 return team.id !== match.team_1;
             });
             setList(teams);
             setTeams(teams);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message)
         })
-    },[null])
+    }, [null])
 
-    function openMessageBox(message, title = 'Error'){
-        const data = {title: title, message: message, show: true};
+    function openMessageBox(message, title = 'Error') {
+        const data = { title: title, message: message, show: true };
         const action = setMessage(data);
         dispatch(action);
     }
     return (
         <Modal show={show} onHide={() => setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Select Team</Modal.Title>
+                <Modal.Title ><FormattedMessage id="Select Team" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={"Search Teams"} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={<FormattedMessage id="Search Teams" />} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {
                         return (

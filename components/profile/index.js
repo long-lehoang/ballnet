@@ -19,6 +19,7 @@ import { FRIENDS_API, FRIEND_REQUESTS_API, HOST, PROFILE_API } from '../../confi
 import Link from 'next/link';
 import { setMessage } from '../../slices/messageSlice';
 import { useRouter } from 'next/router';
+import { FormattedMessage } from 'react-intl';
 
 
 
@@ -148,7 +149,7 @@ export default function Profile({permission, userN, profileN}) {
             <div className={styles.top}>
                 <img src={cover} key={cover} className={styles.cover}></img>
                 {permission ? <input type="file" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
-                {permission ? <label for="btn-change">Change</label> : ''}
+                {permission ? <label for="btn-change"><FormattedMessage id="Change" /></label> : ''}
             </div>
             <div className={styles.content}>
                 <div className={styles.left}>
@@ -169,12 +170,12 @@ export default function Profile({permission, userN, profileN}) {
                                 </span>
                             </div>
                             <div className={styles.btn}>
-                                {permission ? <Link href="/setting"><button className={styles.btn_setting}>Setting</button></Link>: 
-                                friend ? <button className={styles.btn_unfr} onClick={handleUnfriend}>Unfriend</button> : 
-                                request ? <button className={styles.btn_accept} onClick={handleAccept}>Accept</button>:
-                                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
-                                <button className={styles.btn_add} onClick={handleAdd}>Add Friend</button>}        
-                                {request ?<button className={styles.btn_deny} onClick={handleDeny}>Deny</button>:''}
+                                {permission ? <Link href="/setting"><button className={styles.btn_setting}><FormattedMessage id="Setting" /></button></Link>: 
+                                friend ? <button className={styles.btn_unfr} onClick={handleUnfriend}><FormattedMessage id="Unfriend" /></button> : 
+                                request ? <button className={styles.btn_accept} onClick={handleAccept}><FormattedMessage id="Accept" /></button>:
+                                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}><FormattedMessage id="Cancel" /></button>:
+                                <button className={styles.btn_add} onClick={handleAdd}><FormattedMessage id="Add Friend" /></button>}        
+                                {request ?<button className={styles.btn_deny} onClick={handleDeny}><FormattedMessage id="Deny" /></button>:''}
                             </div>
                         
                         </div>
@@ -185,29 +186,29 @@ export default function Profile({permission, userN, profileN}) {
                     <div className={styles.menu}>
                         <button onClick={() => setOption(1)} className={option == 1 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faNewspaper} height={20}></FontAwesomeIcon>
-                            <span>Feed</span>
+                            <span><FormattedMessage id="Feed" /></span>
                         </button>
                         <button onClick={() => setOption(2)} className={option == 2 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faIdCard} height={20}></FontAwesomeIcon>
-                            <span>Info</span>
+                            <span><FormattedMessage id="Info" /></span>
                         </button>
                         <button onClick={() => setOption(3)} className={option == 3 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faUsers} height={20}></FontAwesomeIcon>
-                            <span>Teams</span>
+                            <span><FormattedMessage id="Teams" /></span>
                         </button>
                         <button onClick={() => setOption(4)} className={option == 4 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faUser} height={20}></FontAwesomeIcon>
-                            <span>Friends</span>
+                            <span><FormattedMessage id="Friends" /></span>
                         </button>
                         {friend||permission ? 
                         <button onClick={() => setOption(5)} className={option == 5 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
-                            <span>Matchs</span>
+                            <span><FormattedMessage id="Matches" /></span>
                         </button> : ''}
                         {friend||permission ?
                         <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faMap} height={20}></FontAwesomeIcon>
-                            <span>Stadiums</span>
+                            <span><FormattedMessage id="Stadiums" /></span>
                         </button> : ''}
                     </div>
                     {loadComponent(option)}

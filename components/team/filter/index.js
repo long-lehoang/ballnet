@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { SPORT_CATEGORY_API } from '../../../config/config';
+import { FormattedMessage } from 'react-intl';
 
 export default function Filter({team, setTeam, result}){
     const [district, setDistrict] = useState(location[0].Districts);
@@ -95,19 +96,19 @@ export default function Filter({team, setTeam, result}){
         <div className={styles.container}>
             <input className={styles.search} onChange={handleSearch} placeholder="Enter to find"></input>
             <select className={styles.select} onChange={handleSport}>
-                <option value="all">Sport</option>
+                <option value="all"><FormattedMessage id="Sport" /></option>
                 {sport.map(element=>{
                     return (<option value={element.name}>{element.name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectCity}>
-                <option value="all">Tỉnh/Thành Phố</option>
+                <option value="all"><FormattedMessage id="Province/City" /></option>
                 {location.map( element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectDistrict}>
-                <option value="all">Quận/Huyện</option>
+                <option value="all"><FormattedMessage id="District" /></option>
                 {district.map( element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}

@@ -6,6 +6,7 @@ import ReactStars from "react-rating-stars-component";
 import axios from 'axios';
 import { setMessage } from '../../../slices/messageSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 export default function ReviewStadium({ show, setShow, book_id, setDel }) {
     const [feedback, setFeedback] = useState('');
     const [rating, setRating] = useState(0);
@@ -56,11 +57,11 @@ export default function ReviewStadium({ show, setShow, book_id, setDel }) {
     return (
         <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
             <Modal.Header className={styles.header} closeButton>
-                <Modal.Title className={styles.title}>Review Match</Modal.Title>
+                <Modal.Title className={styles.title}><FormattedMessage id="Review Stadium" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <form onSubmit={handleSubmit}>
-                    <h5>Review Stadium</h5>
+                    <h5><FormattedMessage id="Review Stadium" /></h5>
                     <div className={styles.item}>
                         <div className={styles.name}>
                             <img src={AVATAR_TEAM}></img>
@@ -74,7 +75,7 @@ export default function ReviewStadium({ show, setShow, book_id, setDel }) {
                         />
                     </div>
                     <textarea onChange={(event)=>setFeedback(event.target.value)}></textarea>
-                    <button type="submit" className={styles.btnSubmit}>Submit</button>
+                    <button type="submit" className={styles.btnSubmit}><FormattedMessage id="Submit" /></button>
                 </form>
             </Modal.Body>
         </Modal>

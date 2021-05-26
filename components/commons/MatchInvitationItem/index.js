@@ -178,8 +178,8 @@ export default function Item({ team, item }) {
             </div>
             <hr></hr>
             <div className={styles.action}>
-                <button className={styles.btnAccept} onClick={handleAccept}>Accept</button>
-                <button className={styles.btnCancel} onClick={handleDeny}>Deny</button>
+                <button className={styles.btnAccept} onClick={handleAccept}><FormattedMessage id="Accept" /></button>
+                <button className={styles.btnCancel} onClick={handleDeny}><FormattedMessage id="Deny" /></button>
             </div>
         </div>
     )

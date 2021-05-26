@@ -2,6 +2,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import LazyLoad from 'react-lazyload';
 import { useSelector } from 'react-redux';
 import { AVATAR, HOST, POSTS_API } from '../../../../config/config';
@@ -43,7 +44,7 @@ export default function Comment(props) {
                 setLoad(true);
             }}>
                 <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
-                <input placeholder="Type a comment" value={comment} onChange={(event) => { setComment(event.target.value) }}></input>
+                <input placeholder={<FormattedMessage id="Type a comment" />} value={comment} onChange={(event) => { setComment(event.target.value) }}></input>
             </form>
             {listComment.map(cmt => {
                 return (

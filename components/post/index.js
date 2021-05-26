@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
 import { AVATAR, HOST, POSTS_API } from "../../config/config";
 import tagging from "../../lib/tags";
@@ -139,8 +140,8 @@ export default function PostPage({postD, permission}) {
                     <div className={styles.col}>
                         <button className={styles.btn}><FontAwesomeIcon icon={faEllipsisV}></FontAwesomeIcon></button>
                         <div className={styles.popup}>
-                            <button onClick={() => { toggleEdit(!edit) }}>Edit</button>
-                            {permission ? <button onClick={handleDelete}>Delete</button> : ''}
+                            <button onClick={() => { toggleEdit(!edit) }}><FormattedMessage id="Edit" /></button>
+                            {permission ? <button onClick={handleDelete}><FormattedMessage id="Delete" /></button> : ''}
                         </div>
                     </div>
                 </div>
@@ -158,20 +159,20 @@ export default function PostPage({postD, permission}) {
                         <div className={like ? styles.activeLike : styles.like}>
                             <button onClick={handleLike}>
                                 <FontAwesomeIcon icon={faHeart} className={styles.iconLike}></FontAwesomeIcon>
-                                <span className={styles.txtLike}>Like {countLike}</span>
+                                <span className={styles.txtLike}><FormattedMessage id="Like" /> {countLike}</span>
                             </button>
                         </div>
                         <div className={comment ? styles.activeComment : styles.comment}>
                             <button onClick={() => { toggleActiveComment(!activeComment) }}>
                                 <FontAwesomeIcon icon={faComment} className={styles.iconComment}></FontAwesomeIcon>
-                                <span className={styles.txtComment}>Comment {countComment}</span>
+                                <span className={styles.txtComment}><FormattedMessage id="Comment" /> {countComment}</span>
                             </button>
                         </div>
                     </div>
                     <div className={styles.col}>
                         <button className={share ? styles.activeShare : styles.share} onClick={handleShare}>
                             <FontAwesomeIcon icon={faShare} className={styles.iconShare}></FontAwesomeIcon>
-                            <span className={styles.txtShare}>Share {countShare}</span>
+                            <span className={styles.txtShare}><FormattedMessage id="Share" /> {countShare}</span>
                         </button>
                     </div>
                 </div>

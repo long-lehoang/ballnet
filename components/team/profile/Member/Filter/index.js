@@ -1,5 +1,6 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FormattedMessage } from 'react-intl';
 import styles from './styles.module.scss';
 
 function compareTime(a, b){
@@ -64,18 +65,18 @@ export default function Filter({members, setMember, result}){
         <div className={styles.container}>
             <div>
                 <select className={styles.group} onChange={handleGroup}>
-                    <option value="all">All Members</option>
-                    <option value="new">New Members</option>
-                    <option value="10">Top 10</option>
+                    <option value="all"><FormattedMessage id="All Members" /></option>
+                    <option value="new"><FormattedMessage id="New Members" /></option>
+                    <option value="10"><FormattedMessage id="Top 10" /></option>
                 </select>
                 <select className={styles.sort} onChange={handleSort}>
-                    <option value="asc">A-Z</option>
-                    <option value="desc">Z-A</option>
+                    <option value="asc"><FormattedMessage id="A-Z" /></option>
+                    <option value="desc"><FormattedMessage id="Z-A" /></option>
                 </select>
             </div>
             <div className={styles.find}>
                 <FontAwesomeIcon height={12} icon={faSearch}></FontAwesomeIcon>
-                <input onChange={handleSearch} placeholder="Find a friend"></input>
+                <input onChange={handleSearch} placeholder={<FormattedMessage id="Find a friend" />}></input>
             </div>
         </div>
     )

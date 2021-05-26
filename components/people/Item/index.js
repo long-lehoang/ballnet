@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR, FRIENDS_API, FRIEND_REQUESTS_API, HOST } from '../../../config/config';
 import loadStar from '../../../lib/star';
@@ -105,11 +106,11 @@ export default function Item({item}){
             </div>
             <p className={styles.location}>{item.address}</p>
             <div className={styles.group_btn}>
-                {friend ? <button className={styles.btn_unfr} onClick={handleUnfriend}>Unfriend</button> : 
-                request ? <button className={styles.btn_accept} onClick={handleAccept}>Accept</button>:
-                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
-                <button className={styles.btn_add} onClick={handleAdd}>Add Friend</button>}        
-                {(!friend)&&request ?<button className={styles.btn_deny} onClick={handleDeny}>Deny</button>:
+                {friend ? <button className={styles.btn_unfr} onClick={handleUnfriend}><FormattedMessage id="Unfriend" /></button> : 
+                request ? <button className={styles.btn_accept} onClick={handleAccept}><FormattedMessage id="Accept" /></button>:
+                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}><FormattedMessage id="Cancel" /></button>:
+                <button className={styles.btn_add} onClick={handleAdd}><FormattedMessage id="Add Friend" /></button>}        
+                {(!friend)&&request ?<button className={styles.btn_deny} onClick={handleDeny}><FormattedMessage id="Deny" /></button>:
                 <button className={styles.btn_message} onClick={handleMessage}><FontAwesomeIcon height={15} className={styles.icon} icon={faEnvelope} /></button>}
                 
             </div>

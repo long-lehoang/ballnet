@@ -2,12 +2,13 @@ import styles from './styles.module.scss';
 import Head from 'next/head';
 import Header from '../header';
 import MessageBox from '../../commons/MessageBox';
+import { FormattedMessage } from 'react-intl';
 
 export default function LayoutMain({children}){
     return (
         <div className={styles.container}>
             <Head>
-                <title>BallNet</title>
+                <title><FormattedMessage id="BallNet" /></title>
                 <link rel="icon" href="/logo.png" />
             </Head>
 

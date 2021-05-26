@@ -2,12 +2,13 @@ import Head from "next/head";
 import styles from "./styles.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol } from '@fortawesome/free-solid-svg-icons';
+import { FormattedMessage } from "react-intl";
 
-export default function LayoutLogin({children}){
+export default function LayoutLogin({ children }) {
     return (
         <div className={styles.container}>
             <Head>
-                <title>BallNet</title>
+                <title><FormattedMessage id="BallNet" /></title>
                 <link rel="icon" href="/logo.png" />
             </Head>
 
@@ -18,14 +19,14 @@ export default function LayoutLogin({children}){
                             <FontAwesomeIcon icon={faFutbol}></FontAwesomeIcon>
                         </div>
                         <div className={styles.name}>
-                            BallNet
+                            <FormattedMessage id="BallNet" />
                         </div>
                     </div>
                     <div className={styles.sub_title}>
-                        BallNet gắn kết những người chơi thể thao lại với nhau, cùng nhau tạo nên một cộng đồng thể thao lành mạnh.
+                        <FormattedMessage id="Slogan" />
                     </div>
                     <div className={styles.image}>
-                        <img src="/banner.svg" alt=""/>
+                        <img src="/banner.svg" alt="" />
                     </div>
                 </div>
                 <div className={styles.form}>

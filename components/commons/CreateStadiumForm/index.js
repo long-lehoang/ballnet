@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 import location from '../../../data/location.json';
 import axios from "axios";
 import { AVATAR, HOST, SPORT_CATEGORY_API, STADIUM_API } from "../../../config/config";
+import { FormattedMessage } from "react-intl";
 
 export default function CreateStadiumForm({ stadiums, setStadiums }) {
     const [show, setShow] = useState(false);
@@ -20,7 +21,7 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
     const [district, setDistrict] = useState([]); // list option select district
     const [ward, setWard] = useState('');
     const [street, setStreet] = useState('');
-    const profile = useSelector(state=>state.profile);
+    const profile = useSelector(state => state.profile);
 
     function handleSelectCity(event) {
         let search = event.target.value;
@@ -45,28 +46,27 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
 
     }
 
-    function validate()
-    {        
-        if(name == ''){
+    function validate() {
+        if (name == '') {
             return false;
         }
-        if(phone == ''){
+        if (phone == '') {
             return false;
         }
-        if(sport == ''){
+        if (sport == '') {
             return false;
         }
-        if(nameCity == ''){
+        if (nameCity == '') {
             return false;
         }
-        
-        if(nameDistrict == ''){
+
+        if (nameDistrict == '') {
             return false;
         }
-        if(ward == ''){
+        if (ward == '') {
             return false;
         }
-        if(street == ''){
+        if (street == '') {
             return false;
         }
         return true;
@@ -99,7 +99,7 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
         const action = setMessage(data);
         dispatch(action);
     }
-    useEffect(()=>{
+    useEffect(() => {
         setCheck(validate());
     })
 
@@ -120,12 +120,12 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
             <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
                 <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}>Create Stadium</Modal.Title>
+                    <Modal.Title className={styles.title}><FormattedMessage id="Create Stadium" /></Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
 
-                    <input className={styles.fullwidth} value={name} placeholder="Name" onChange={(event) => { setName(event.target.value) }}></input>
-                    <input value={phone} placeholder="Phone" onChange={(event) => { setPhone(event.target.value) }}></input>
+                    <input className={styles.fullwidth} value={name} placeholder={<FormattedMessage id="Name" />} onChange={(event) => { setName(event.target.value) }}></input>
+                    <input value={phone} placeholder={<FormattedMessage id="Phone Number" />} onChange={(event) => { setPhone(event.target.value) }}></input>
                     <select value={sport} onChange={(event) => { setSport(event.target.value) }}>
                         {listSport.map((element, key) => {
                             return (
@@ -134,26 +134,26 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
                         })}
                     </select>
                     <select value={nameCity} className={styles.select} onChange={handleSelectCity}>
-                        <option>Tỉnh/Thành Phố</option>
+                        <option><FormattedMessage id="Province/City" /></option>
                         {location.map(element => {
                             return (<option value={element.Name}>{element.Name}</option>)
                         })}
                     </select>
                     <select value={nameDistrict} className={styles.select} onChange={handleSelectDistrict}>
-                        <option>Quận/ Huyện</option>
+                        <option><FormattedMessage id="District" /></option>
                         {district.map(element => {
                             return (<option value={element.Name}>{element.Name}</option>)
                         })}
                     </select>
-                    <input value={ward} placeholder="Ward" onChange={(event) => { setWard(event.target.value) }}></input>
-                    <input value={street} placeholder="Street" onChange={(event) => { setStreet(event.target.value) }}></input>
+                    <input value={ward} placeholder={<FormattedMessage id="Ward" />} onChange={(event) => { setWard(event.target.value) }}></input>
+                    <input value={street} placeholder={<FormattedMessage id="Street" />} onChange={(event) => { setStreet(event.target.value) }}></input>
                     <div className={styles.submit}>
-                        {check ? <button className={styles.btnSubmit} onClick={handleSubmit}>Create</button>:
-                        <button className={styles.btnDisable}>Create</button>}
+                        {check ? <button className={styles.btnSubmit} onClick={handleSubmit}><FormattedMessage id="Create" /></button> :
+                            <button className={styles.btnDisable}><FormattedMessage id="Create" /></button>}
                     </div>
                 </Modal.Body>
             </Modal>
-            <button className={styles.btn} onClick={() => setShow(true)}>Create Stadium</button>
+            <button className={styles.btn} onClick={() => setShow(true)}><FormattedMessage id="Create Stadium" /></button>
         </div>
     )
 }

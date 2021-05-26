@@ -2,6 +2,7 @@ import { faCamera, faDirections } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { AVATAR_TEAM, HOST, TEAM_API } from '../../../../config/config';
 import styles from './styles.module.scss';
@@ -35,21 +36,21 @@ export default function InfoComponent({team, permission}) {
             </div>
             <div className={styles.friend_follow}>
                 <div>
-                    <span className={styles.label}>Members: {team.member}</span>
+                    <span className={styles.label}><FormattedMessage id="Members" />: {team.member}</span>
                 </div>
             </div>
             <div className={styles.item}>
                 <FontAwesomeIcon height={20} icon={faDirections}></FontAwesomeIcon>
-                <span className={styles.text}>Location: {team.location}</span>
+                <span className={styles.text}><FormattedMessage id="Location" />: {team.location}</span>
             </div>
             <div className={styles.item}>
                 <FontAwesomeIcon height={20} icon={faDirections}></FontAwesomeIcon>
-                <span className={styles.text}>Match: {team.num_match}</span>
+                <span className={styles.text}><FormattedMessage id="Match" />: {team.num_match}</span>
 
             </div>
             <div className={styles.item}>
                 <FontAwesomeIcon height={20} icon={faDirections}></FontAwesomeIcon>
-                <span className={styles.text}>Sport: {team.sport}</span>
+                <span className={styles.text}><FormattedMessage id="Sport" />: {team.sport}</span>
             </div>
         </div>
     )

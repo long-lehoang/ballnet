@@ -2,6 +2,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR, HOST, TEAM_REQUEST_API } from '../../../../../../config/config';
 import { setMessage } from '../../../../../../slices/messageSlice';
@@ -44,7 +45,7 @@ export default function Item({id, avatar, name, username}) {
                 <img src={img}></img>
                 <Link href={`/${username}`}><span>{name}</span></Link>
             </div>
-            <button onClick={handleInvite}>Invite</button>
+            <button onClick={handleInvite}><FormattedMessage id="Invite" /></button>
         </div>
     )
 }

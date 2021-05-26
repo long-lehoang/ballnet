@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR_TEAM, HOST, MATCH_API, MATCH_INVITATION_API, MATCH_JOINING_API } from '../../../../../config/config';
 import { setMessage } from '../../../../../slices/messageSlice';
@@ -56,8 +57,8 @@ export default function Item({item, setList, setPeople, request }) {
                 <Link href={`/${item.username}`}><span>{item.name}</span></Link>
             </div>
             <div>
-                <button className={styles.btnAccept} onClick={handleAccept}>Accept</button>
-                <button className={styles.btnDeny} onClick={handleCancel}>Deny</button>
+                <button className={styles.btnAccept} onClick={handleAccept}><FormattedMessage id="Accept" /></button>
+                <button className={styles.btnDeny} onClick={handleCancel}><FormattedMessage id="Deny" /></button>
             </div>
             
         </div>

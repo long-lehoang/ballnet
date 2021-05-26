@@ -19,9 +19,10 @@ import { setMessage } from '../../../slices/messageSlice';
 import { Router, useRouter } from 'next/dist/client/router';
 import ChangeCaptain from './ChangeCaptain';
 import MatchInvitation from './MatchInvitation';
+import { FormattedMessage } from 'react-intl';
 
 
-export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
+export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
     const [option, setOption] = useState(2);
     const [cover, setCover] = useState(team.cover !== null ? HOST + team.cover : '');
     const name = team.name;
@@ -31,7 +32,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
     const [member, setMember] = useState(team.isMember);
     const [waiting, setWaiting] = useState(team.isWaitingForApprove);
     const [invited, setInvited] = useState(team.isInvitedBy);
-    const [idRequest, setIdRequest] = useState(team.idRequest||'');
+    const [idRequest, setIdRequest] = useState(team.idRequest || '');
 
     const dispatch = useDispatch();
     const router = useRouter();
@@ -72,81 +73,81 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
         });
     }
 
-    function handleLeave(){
-        if(isCaptain){
+    function handleLeave() {
+        if (isCaptain) {
             openChangeCaptain(true);
-        }else{
+        } else {
             axios.delete(TEAM_API + `${team.id}/leave`, {
-                headers:{
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
-            }).then((response)=>{
+            }).then((response) => {
                 setMember(false);
                 router.push('/');
-            }).catch(error=>{
+            }).catch(error => {
                 console.log(error);
                 openMessageBox(error.response.data.message);
             })
         }
     }
 
-    function handleJoin(){
+    function handleJoin() {
         let formData = new FormData();
         formData.append('team_id', team.id);
         axios.post(TEAM_REQUEST_API, formData, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setWaiting(true);
             setIdRequest(response.data.data);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình tham gia đội.')
         });
     }
-    function handleCancel(){
-        axios.post(TEAM_REQUEST_API + `${idRequest}/deny`,{} , {
-            headers:{
+    function handleCancel() {
+        axios.post(TEAM_REQUEST_API + `${idRequest}/deny`, {}, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setWaiting(false);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
         });
     }
 
-    function handleAccept(){
+    function handleAccept() {
         axios.post(TEAM_REQUEST_API + `${idRequest}/approve`, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setMember(true);
             setInvited(false);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
         });
-        
+
     }
 
-    function handleDeny(){
-        axios.post(TEAM_REQUEST_API + `${idRequest}/deny`,{} , {
-            headers:{
+    function handleDeny() {
+        axios.post(TEAM_REQUEST_API + `${idRequest}/deny`, {}, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setInvited(false);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
         });
     }
-    function openMessageBox(message, title = 'Error'){
-        const data = {title: title, message: message, show: true};
+    function openMessageBox(message, title = 'Error') {
+        const data = { title: title, message: message, show: true };
         const action = setMessage(data);
         dispatch(action);
     }
@@ -155,7 +156,7 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
             <div className={styles.top}>
                 <img src={cover} key={cover} className={styles.cover}></img>
                 {isCaptain ? <input type="file" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
-                {isCaptain ? <label for="btn-change">Change</label> : ''}
+                {isCaptain ? <label for="btn-change"><FormattedMessage id="Change" /></label> : ''}
             </div>
             <div className={styles.content}>
                 <div className={styles.left}>
@@ -176,56 +177,56 @@ export default function TeamProfile({isMember, isAdmin, isCaptain, team}) {
                         </div>
                         <div className={styles.btn}>
                             <ChangeCaptain team={team} openMessageBox={openMessageBox} setMember={setMember} show={changeCaptain} setShow={openChangeCaptain}></ChangeCaptain>
-                            {member ? <button className={styles.btn_leave} onClick={handleLeave}>Leave</button>:
-                            waiting ? <button className={styles.btn_cancel} onClick={handleCancel}>Cancel</button>:
-                            invited ?<button className={styles.btn_accept} onClick={handleAccept}>Accept</button>:
-                            <button className={styles.btn_join} onClick={handleJoin}>Join</button>}
-                            {invited ? <button className={styles.btn_deny} onClick={handleDeny}>Deny</button> :''}
+                            {member ? <button className={styles.btn_leave} onClick={handleLeave}><FormattedMessage id="Leave" /></button> :
+                                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}><FormattedMessage id="Cancel" /></button> :
+                                    invited ? <button className={styles.btn_accept} onClick={handleAccept}><FormattedMessage id="Accept" /></button> :
+                                        <button className={styles.btn_join} onClick={handleJoin}><FormattedMessage id="Join" /></button>}
+                            {invited ? <button className={styles.btn_deny} onClick={handleDeny}><FormattedMessage id="Deny" /></button> : ''}
                         </div>
-                
+
                     </div>
                     <div className={styles.menu}>
-                        {isMember ? 
-                        <button onClick={() => setOption(1)} className={option == 1 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faNewspaper} height={20}></FontAwesomeIcon>
-                            <span>Feed</span>
-                        </button> : ''}
-                        
+                        {isMember ?
+                            <button onClick={() => setOption(1)} className={option == 1 ? styles.active : ''}>
+                                <FontAwesomeIcon className={styles.icon} icon={faNewspaper} height={20}></FontAwesomeIcon>
+                                <span><FormattedMessage id="Feed" /></span>
+                            </button> : ''}
+
                         <button onClick={() => setOption(2)} className={option == 2 ? styles.active : ''}>
                             <FontAwesomeIcon className={styles.icon} icon={faIdCard} height={20}></FontAwesomeIcon>
-                            <span>Info</span>
+                            <span><FormattedMessage id="Info" /></span>
                         </button>
                         {isMember ?
-                        <button onClick={() => setOption(3)} className={option == 3 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faUser} height={20}></FontAwesomeIcon>
-                            <span>Members</span>
-                        </button>:''}
+                            <button onClick={() => setOption(3)} className={option == 3 ? styles.active : ''}>
+                                <FontAwesomeIcon className={styles.icon} icon={faUser} height={20}></FontAwesomeIcon>
+                                <span><FormattedMessage id="Members" /></span>
+                            </button> : ''}
                         {isAdmin ?
-                        <button onClick={() => setOption(4)} className={option == 4 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faUserPlus} height={20}></FontAwesomeIcon>
-                            <span>Member Requests</span>
-                        </button>:''}
+                            <button onClick={() => setOption(4)} className={option == 4 ? styles.active : ''}>
+                                <FontAwesomeIcon className={styles.icon} icon={faUserPlus} height={20}></FontAwesomeIcon>
+                                <span><FormattedMessage id="Member Requests" /></span>
+                            </button> : ''}
                         {isMember ?
-                        <button onClick={() => setOption(5)} className={option == 5 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
-                            <span>Matchs</span>
-                        </button>:''}
+                            <button onClick={() => setOption(5)} className={option == 5 ? styles.active : ''}>
+                                <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
+                                <span><FormattedMessage id="Matches" /></span>
+                            </button> : ''}
                         {isCaptain ?
-                        <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
-                            <span>Match Invitation</span>
-                        </button>:''}
+                            <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
+                                <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
+                                <span><FormattedMessage id="Match Invitation" /></span>
+                            </button> : ''}
                     </div>
                     {loadComponent(option)}
                 </div>
                 <div className={styles.right}>
-                    
+
                     <div className={styles.component}>
                         <MatchSuggest></MatchSuggest>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     )
 }

@@ -110,14 +110,14 @@ export default function StadiumProfile(props) {
             />
             <img className={styles.img} src={img}></img>
             {permission ? <input type="file" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
-            {permission ? <label for="btn-change">Change</label> : ''}
+            {permission ? <label for="btn-change"><FormattedMessage id="Change" /></label> : ''}
             <div className={styles.info}>
                 <div className={styles.group}>
                     <h1>
                         {name}
                         {permission ? <button onClick={() => { toggleEditInfo(true) }}><FontAwesomeIcon height={15} icon={faEdit}></FontAwesomeIcon></button> : ''}
                     </h1>
-                    {permission ? <button className={styles.btnRemove} onClick={handleRemove}>Remove</button> : ''}
+                    {permission ? <button className={styles.btnRemove} onClick={handleRemove}><FormattedMessage id="Remove" /></button> : ''}
                 </div>
                 <p>{loadStar(props.stadium.rating, 15)}</p>
                 <h5>{sport}</h5>
@@ -132,7 +132,7 @@ export default function StadiumProfile(props) {
                 <hr></hr>
             </div>
             <div className={styles.extension}>
-                <h5>TIỆN ÍCH
+                <h5><FormattedMessage id="EXTENSIONS" />
                 {permission ? <button className={styles.btnAdd} onClick={handleExtension}>+</button> : ''}
                 </h5>
                 {extensions.map((element, key) => {
@@ -147,7 +147,7 @@ export default function StadiumProfile(props) {
 
             </div>
             <div className={styles.map}>
-                <h5>BẢN ĐỒ</h5>
+                <h5><FormattedMessage id="MAP" /></h5>
                 <ReactMapGL
                     {...viewport}
                     width="100%"
@@ -167,7 +167,7 @@ export default function StadiumProfile(props) {
 
             </div>
             <div className={styles.review}>
-                <h5>REVIEW</h5>
+                <h5><FormattedMessage id="REVIEWS" /></h5>
                 {props.stadium.reviews.map((element, key) => {
                     return (
                         <LazyLoad className={styles.comment} key={key} placeholder="Loading...">

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import Filter from '../Filter'
 import Item from '../Item'
 import styles from './styles.module.scss'
@@ -8,7 +9,7 @@ export default function FriendRequest({friendRequest})
 
     return(
         <div className={styles.container}>
-            <h3>Friend Requests</h3>
+            <h3><FormattedMessage id="Friend Requests" /></h3>
             <div className={styles.filter}>
                 <Filter people={friendRequest} setPeople={setList} result={list}/>
             </div>

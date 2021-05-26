@@ -7,6 +7,7 @@ import axios from 'axios';
 import { setUser } from '../../../../slices/infoUserSlice';
 import { useCookies } from 'react-cookie';
 import { PROFILE_API } from '../../../../config/config';
+import { FormattedMessage } from 'react-intl';
 
 export default function EditPInfo(props){
 
@@ -85,19 +86,19 @@ export default function EditPInfo(props){
     return (
         <Modal show={props.show} onHide={()=>props.setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title >Personal Information</Modal.Title>
+                <Modal.Title ><FormattedMessage id="Personal Information" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <p>{errEmail}</p>
-                <input type="email" placeholder="Email" value={email} onChange={(event)=>{setEmail(event.target.value)}}></input>
+                <input type="email" placeholder={<FormattedMessage id="Email" />} value={email} onChange={(event)=>{setEmail(event.target.value)}}></input>
                 <p>{errPhone}</p>
-                <input type="text" placeholder="Phone" value={phone} onChange={(event)=>{setPhone(event.target.value)}}></input>
+                <input type="text" placeholder={<FormattedMessage id="Phone Number" />} value={phone} onChange={(event)=>{setPhone(event.target.value)}}></input>
                 <p>{errBirthday}</p>
                 <input type="date" placeholder="dd/mm/yyyy" value={birthday} onChange={(event)=>{setBirthday(event.target.value)}}></input>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={()=>{props.setShow(false)}}>Close</Button>
-                <Button variant="primary" onClick={()=>{handleSubmit()}}>Save changes</Button>
+                <Button variant="secondary" onClick={()=>{props.setShow(false)}}><FormattedMessage id="Close" /></Button>
+                <Button variant="primary" onClick={()=>{handleSubmit()}}><FormattedMessage id="Save changes" /></Button>
             </Modal.Footer>
         </Modal>
     )
