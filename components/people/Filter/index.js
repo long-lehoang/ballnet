@@ -1,11 +1,16 @@
 import styles from './styles.module.scss';
 import location from '../../../data/location.json';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { SPORT_CATEGORY_API } from '../../../config/config';
 
 export default function Filter({people, setPeople, result}){
     const [district, setDistrict] = useState(location[0].Districts);
     const [resultWithCity, setResultCity] = useState(people);
+    const [sport, setSport] = useState([]);
+    const token = useSelector(state => state.token);
 
     function handleSearch(event){
         let search = event.target.value;
@@ -60,12 +65,27 @@ export default function Filter({people, setPeople, result}){
         setPeople(pp);
     }
 
+    useEffect(() => {
+        axios.get(SPORT_CATEGORY_API, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            setSport(response.data.data);
+        }).catch(error => {
+            console.log(error.response.data.message);
+        })
+
+    }, [null]);
+
     return (
         <div className={styles.container}>
             <input className={styles.search} onChange={handleSearch} placeholder="Nhập để tìm kiếm"></input>
-            <select className={styles.select}>
-                {/* //TODO */}
-                <option>Football</option>
+            <select className={styles.select} onChange={handleSport}>
+                <option value="all">Môn thể thao</option>
+                {sport.map(element => {
+                    return (<option value={element.name}>{element.name}</option>)
+                })}
             </select>
             <select className={styles.select} onChange={handleSelectCity}>
                 <option value="all">Tỉnh/Thành phố</option>

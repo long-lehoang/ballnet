@@ -8,6 +8,7 @@ import { TEAM_API } from '../../../../config/config';
 import Item from './Item';
 import styles from './styles.module.scss';
 import { useRouter } from 'next/router';
+import { FormattedMessage } from 'react-intl';
 export default function ChangeCaptain({ team, show, setShow, setMember, openMessageBox }) {
     const [members, setMembers] = useState([]);
     const [choice, setChoice] = useState();
