@@ -47,7 +47,7 @@ export default function UserRequest({show, setShow, match, team_id}) {
                 <Modal.Title ><FormattedMessage id="User Request To Join Match" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={<FormattedMessage id="Search Request" />} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={"Tìm yêu cầu"} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {
                         return (

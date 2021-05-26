@@ -4,7 +4,7 @@ import Header from '../header';
 import MessageBox from '../../commons/MessageBox';
 import { FormattedMessage } from 'react-intl';
 
-export default function LayoutMain({children}){
+export default function LayoutMain({ children }) {
     return (
         <div className={styles.container}>
             <Head>

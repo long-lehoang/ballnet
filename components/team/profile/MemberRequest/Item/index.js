@@ -7,7 +7,7 @@ import { AVATAR, HOST, TEAM_REQUEST_API } from '../../../../../config/config';
 import loadStar from '../../../../../lib/star';
 import { setMessage } from '../../../../../slices/messageSlice';
 import styles from './styles.module.scss';
-export default function Item({request}){
+export default function Item({ request }) {
     const avatar = request.avatar === null ? AVATAR : HOST + request.avatar;
     const date = new Date(request.requestTime);
     const request_date = `Joined: ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
@@ -15,25 +15,25 @@ export default function Item({request}){
     const [show, setShow] = useState(true);
     const dispatch = useDispatch();
 
-    function handleAccept(){
-        axios.post(TEAM_REQUEST_API + `${request.requestId}/approve`,{}, {
-            headers:{
+    function handleAccept() {
+        axios.post(TEAM_REQUEST_API + `${request.requestId}/approve`, {}, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setShow(false);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox("Can't approve the request");
         })
     }
-    function handleDeny(){
-        axios.post(TEAM_REQUEST_API + `${request.requestId}/deny`,{}, {
-            headers:{
+    function handleDeny() {
+        axios.post(TEAM_REQUEST_API + `${request.requestId}/deny`, {}, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setShow(false);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox("Can't approve the request");
         })
     }
@@ -44,11 +44,11 @@ export default function Item({request}){
         dispatch(action);
     }
 
-    return(
+    return (
         <div className={styles.container}>
             <div className={styles.left} >
                 <Link href={`/${request.username}`}>
-                <img src={avatar} ></img>
+                    <img src={avatar} ></img>
                 </Link>
                 <div className={styles.info}>
                     <p className={styles.name}>{request.name}</p>
@@ -57,8 +57,8 @@ export default function Item({request}){
             </div>
             <div className={styles.right}>
                 <p className={styles.star}>{loadStar(request.points, 12)}</p>
-                <button className={show?styles.btnAdd:styles.none} onClick={handleAccept}><FormattedMessage id="Accept" /></button>
-                <button className={show?styles.btnUnfr:styles.none} onClick={handleDeny}><FormattedMessage id="Deny" /></button>
+                <button className={show ? styles.btnAdd : styles.none} onClick={handleAccept}><FormattedMessage id="Accept" /></button>
+                <button className={show ? styles.btnUnfr : styles.none} onClick={handleDeny}><FormattedMessage id="Deny" /></button>
             </div>
         </div>
     )

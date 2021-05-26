@@ -36,7 +36,7 @@ export default function StadiumSuggest() {
                             <Link href={`/stadium/${element.id}`}>
                                 <div className={styles.element}>
                                     <div className={styles.avatar}>
-                                        <img src={element.avatar == null ? AVATAR_TEAM : HOST + element.avatar }></img>
+                                        <img src={element.avatar == null ? AVATAR_TEAM : HOST + element.avatar}></img>
                                     </div>
                                     <div className={styles.description}>
                                         <div className={styles.name}>

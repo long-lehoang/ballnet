@@ -54,31 +54,31 @@ export default function SignupForm(props) {
                                     name="name"
                                     component={InputField}
 
-                                    placeholder={<FormattedMessage id="Enter FullName" />}
+                                    placeholder={"Nhập tên đầy đủ"}
                                 />
                                 <FastField
                                     name="email"
                                     component={InputField}
                                     type="email"
-                                    placeholder={<FormattedMessage id="Enter Email" />}
+                                    placeholder={"Nhập Email"}
                                 />
                                 <FastField
                                     name="username"
                                     component={InputField}
 
-                                    placeholder={<FormattedMessage id="Enter Username" />}
+                                    placeholder={"Nhập tên đăng nhập"}
                                 />
                                 <FastField
                                     name="password"
                                     component={InputField}
                                     type="password"
-                                    placeholder={<FormattedMessage id="Enter Password" />}
+                                    placeholder={"Nhập mật khẩu"}
                                 />
                                 <FastField
                                     name="c_password"
                                     component={InputField}
                                     type="password"
-                                    placeholder={<FormattedMessage id="Repeat Password" />}
+                                    placeholder={"Nhập lại mật khẩu"}
                                 />
                                 <FormGroup as={Row}>
                                     <Col sm={6}>

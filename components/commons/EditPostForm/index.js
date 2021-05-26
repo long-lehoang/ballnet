@@ -107,14 +107,14 @@ export default function EditPostForm(props) {
                                 <span>{user.name}</span>
                                 {permission !== 'Team' ?
                                     <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
-                                        <option value="Only me"><FormattedMessage id="Only me" /></option>
-                                        <option value="Friends"><FormattedMessage id="Friends" /></option>
-                                        <option value="Public"><FormattedMessage id="Public" /></option>
+                                        <option value="Only me">Chỉ mình tôi</option>
+                                        <option value="Friends">Bạn bè</option>
+                                        <option value="Public">Công khai</option>
                                     </select> : ''}
                             </div>
                         </div>
                         <div className={styles.textInput}>
-                            <textarea value={content} placeholder={<FormattedMessage id="What’s on your mind ?" />} onChange={(e) => { setContent(e.target.value) }}></textarea>
+                            <textarea value={content} placeholder="Bạn đang nghĩ gì?" onChange={(e) => { setContent(e.target.value) }}></textarea>
                         </div>
                         <div className={styles.groupPreview}>
                             {preview.map(element => {

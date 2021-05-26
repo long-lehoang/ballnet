@@ -38,7 +38,7 @@ export default function Item({ member, team }) {
         < div className={show ? styles.container : styles.hidden} >
             <div className={styles.left} >
                 <Link href={`/${member.username}`}>
-                <img src={avatar} ></img>
+                    <img src={avatar} ></img>
                 </Link>
                 <div className={styles.info}>
                     <p className={styles.name}>{member.name}</p>
@@ -49,7 +49,7 @@ export default function Item({ member, team }) {
 
             <div className={styles.right}>
                 <p className={styles.star}>{loadStar(member.point, 12)}</p>
-                {(!member.isCaptain)&&(team.isCaptain||(team.isAdmin&&!member.isAdmin)) ? <button className={styles.btnUnfr} onClick={handleKick}><FormattedMessage id="Remove" /></button> : ''}
+                {(!member.isCaptain) && (team.isCaptain || (team.isAdmin && !member.isAdmin)) ? <button className={styles.btnUnfr} onClick={handleKick}><FormattedMessage id="Remove" /></button> : ''}
             </div>
         </div >
     )

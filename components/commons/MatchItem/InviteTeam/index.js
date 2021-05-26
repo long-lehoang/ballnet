@@ -50,7 +50,7 @@ export default function InviteTeam({show, setShow, match}) {
                 <Modal.Title ><FormattedMessage id="Invite Team to Join Match" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={<FormattedMessage id="Search Teams" />} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={"Tìm đội"} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {
                         return (

@@ -52,7 +52,7 @@
         justify-content: space-evenly;
         padding-bottom: 10px;
         .acptBtn{
-            width: 60px;
+            min-width: 60px;
             height: 25px;
             border: none;
             background-color: var(--button-color-1);
@@ -61,7 +61,7 @@
             border-radius: 5px;
         }
         .dnBtn{
-            width: 60px;
+            min-width: 60px;
             height: 25px;
             border: none;
             background-color: var(--background-header);

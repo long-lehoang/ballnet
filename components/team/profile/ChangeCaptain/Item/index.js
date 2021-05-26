@@ -18,7 +18,7 @@ export default function Item({ member, choice, setChoice }) {
         < div className={styles.container} >
             <div className={styles.left} >
                 <Link href={`/${member.username}`}>
-                <img src={avatar} ></img>
+                    <img src={avatar} ></img>
                 </Link>
                 <div className={styles.info}>
                     <p className={styles.name}>{member.name}</p>
@@ -29,7 +29,7 @@ export default function Item({ member, choice, setChoice }) {
 
             <div className={styles.right}>
                 <p className={styles.star}>{loadStar(member.point, 12)}</p>
-                <button className={member.id === choice ? styles.active :styles.btnAdd} onClick={()=>{setChoice(member.id)}}><FormattedMessage id="Choose" /></button>
+                <button className={member.id === choice ? styles.active : styles.btnAdd} onClick={() => { setChoice(member.id) }}><FormattedMessage id="Choose" /></button>
             </div>
         </div >
     )

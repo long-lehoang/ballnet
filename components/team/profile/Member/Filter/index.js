@@ -76,7 +76,7 @@ export default function Filter({members, setMember, result}){
             </div>
             <div className={styles.find}>
                 <FontAwesomeIcon height={12} icon={faSearch}></FontAwesomeIcon>
-                <input onChange={handleSearch} placeholder={<FormattedMessage id="Find a friend" />}></input>
+                <input onChange={handleSearch} placeholder={"Tìm bạn bè"}></input>
             </div>
         </div>
     )

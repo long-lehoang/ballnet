@@ -96,21 +96,21 @@ export default function ChangePassword() {
                         <span className={styles.label}><FormattedMessage id="Old Password" /></span>
                         <span className={styles.errMsg}>{errMsgOld}</span>
                     </div>
-                    <input value={oldPassword} type="password" placeholder={<FormattedMessage id="Old Password" />} onChange={(event) => { setOldPassword(event.target.value) }}></input>
+                    <input value={oldPassword} type="password" placeholder={"Mật khẩu cũ"} onChange={(event) => { setOldPassword(event.target.value) }}></input>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.header}>
                         <span className={styles.label}><FormattedMessage id="New Password" /></span>
                         <span className={styles.errMsg}>{errMsgNew}</span>
                     </div>
-                    <input value={newPassword} type="password" placeholder={<FormattedMessage id="New Password" />} onChange={(event) => { setNewPassword(event.target.value) }}></input>
+                    <input value={newPassword} type="password" placeholder={"Mật khẩu mới"} onChange={(event) => { setNewPassword(event.target.value) }}></input>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.header}>
                         <span className={styles.label}><FormattedMessage id="Repeat Password" /></span>
                         <span className={styles.errMsg}>{errMsgRepeat}</span>
                     </div>
-                    <input value={repeatPassword} type="password" placeholder={<FormattedMessage id="Repeat Password" />} onChange={(event) => { setRepeatPassword(event.target.value) }}></input>
+                    <input value={repeatPassword} type="password" placeholder={"Nhập lại mật khẩu"} onChange={(event) => { setRepeatPassword(event.target.value) }}></input>
                 </div>
                 <button type="submit"><FormattedMessage id="Save Setting" /></button>
                 <button><FormattedMessage id="Cancel" /></button>

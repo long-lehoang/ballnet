@@ -99,8 +99,8 @@ export default function EditInfo(props) {
             </Modal.Header>
             <Modal.Body className={styles.body}>
 
-                <input className={styles.fullwidth} value={name} placeholder={<FormattedMessage id="Name" />} onChange={(event) => { setName(event.target.value) }}></input>
-                <input value={phone} placeholder={<FormattedMessage id="Phone Number" />} onChange={(event) => { setPhone(event.target.value) }}></input>
+                <input className={styles.fullwidth} value={name} placeholder={"Tên"} onChange={(event) => { setName(event.target.value) }}></input>
+                <input value={phone} placeholder={"Số điện thoại"} onChange={(event) => { setPhone(event.target.value) }}></input>
                 <select value={sport} onChange={(event) => { setSport(event.target.value) }}>
                     {listSport.map((element, key) => {
                         return (
@@ -109,19 +109,19 @@ export default function EditInfo(props) {
                     })}
                 </select>
                 <select value={nameCity} className={styles.select} onChange={handleSelectCity}>
-                    <option><FormattedMessage id="Province/City" /></option>
+                    <option>Tỉnh/Thành phố</option>
                     {location.map(element => {
                         return (<option value={element.Name}>{element.Name}</option>)
                     })}
                 </select>
                 <select value={nameDistrict} className={styles.select} onChange={handleSelectDistrict}>
-                    <option><FormattedMessage id="District" /></option>
+                    <option>Quận/Huyện</option>
                     {district.map(element => {
                         return (<option value={element.Name}>{element.Name}</option>)
                     })}
                 </select>
-                <input value={ward} placeholder={<FormattedMessage id="Ward" />} onChange={(event) => { setWard(event.target.value) }}></input>
-                <input value={street} placeholder={<FormattedMessage id="Street" />} onChange={(event) => { setStreet(event.target.value) }}></input>
+                <input value={ward} placeholder="Phường/Xã" onChange={(event) => { setWard(event.target.value) }}></input>
+                <input value={street} placeholder="Số nhà" onChange={(event) => { setStreet(event.target.value) }}></input>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => { props.setShow(false) }}><FormattedMessage id="Close" /></Button>

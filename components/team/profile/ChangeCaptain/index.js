@@ -68,7 +68,7 @@ export default function ChangeCaptain({ team, show, setShow, setMember, openMess
                 <Modal.Title ><FormattedMessage id="Change Captain" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={<FormattedMessage id="Search Friends" />} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={"Tìm bạn bè"} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {members.map((element, key) => {
                         return (

@@ -7,39 +7,39 @@ import { AVATAR_TEAM, HOST, MATCH_API, MATCH_INVITATION_API, MATCH_JOINING_API }
 import { setMessage } from '../../../../../slices/messageSlice';
 import styles from './styles.module.scss';
 
-export default function Item({item, setList, setPeople, request }) {
+export default function Item({ item, setList, setPeople, request }) {
     const dispatch = useDispatch();
     const img = item.avatar !== null ? HOST + item.avatar : AVATAR_TEAM;
-    const token = useSelector(state=>state.token);
+    const token = useSelector(state => state.token);
 
-    function handleAccept(){
+    function handleAccept() {
         axios.put(MATCH_JOINING_API + item.request_id, {}, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
-            let fr = request.filter( element => {
+        }).then(response => {
+            let fr = request.filter(element => {
                 return element.request_id !== item.request_id;
             });
             setList(fr);
             setPeople(fr);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message)
         })
     }
 
-    function handleCancel(){
+    function handleCancel() {
         axios.delete(MATCH_JOINING_API + item.request_id, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
-            let fr = request.filter( element => {
+        }).then(response => {
+            let fr = request.filter(element => {
                 return element.request_id !== item.request_id;
             });
             setList(fr);
             setPeople(fr);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message)
         })
     }
@@ -60,7 +60,7 @@ export default function Item({item, setList, setPeople, request }) {
                 <button className={styles.btnAccept} onClick={handleAccept}><FormattedMessage id="Accept" /></button>
                 <button className={styles.btnDeny} onClick={handleCancel}><FormattedMessage id="Deny" /></button>
             </div>
-            
+
         </div>
     )
 }

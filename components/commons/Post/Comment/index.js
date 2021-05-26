@@ -44,7 +44,7 @@ export default function Comment(props) {
                 setLoad(true);
             }}>
                 <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
-                <input placeholder={<FormattedMessage id="Type a comment" />} value={comment} onChange={(event) => { setComment(event.target.value) }}></input>
+                <input placeholder={"Nhập bình luận"} value={comment} onChange={(event) => { setComment(event.target.value) }}></input>
             </form>
             {listComment.map(cmt => {
                 return (

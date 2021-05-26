@@ -68,14 +68,14 @@ export default function DeadactiveAccount() {
                         <span className={styles.label}><FormattedMessage id="Password" /></span>
                         <span className={styles.errMsg}>{errMsgPassword}</span>
                     </div>
-                    <input type="password" placeholder={<FormattedMessage id="Password" />} onChange={(event) => { setPassword(event.target.value) }}></input>
+                    <input type="password" placeholder={"Mật khẩu"} onChange={(event) => { setPassword(event.target.value) }}></input>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.header}>
                         <span className={styles.label}><FormattedMessage id="Email" /></span>
                         <span className={styles.errMsg}>{errMsgMail}</span>
                     </div>
-                    <input type="email" placeholder={<FormattedMessage id="Email" />} onChange={(event) => { setMail(event.target.value) }}></input>
+                    <input type="email" placeholder={"Email"} onChange={(event) => { setMail(event.target.value) }}></input>
                 </div>
                 <button type="submit"><FormattedMessage id="Delete" /></button>
                 <button><FormattedMessage id="Cancel" /></button>

@@ -129,8 +129,8 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
                                 <FormattedMessage id="Private" />
                             </div>
                             <select value={permission} onChange={(event) => { setPrivate(event.target.value) }} className={styles.input}>
-                                <option><FormattedMessage id="Team" /></option>
-                                <option><FormattedMessage id="Public" /></option>
+                                <option>Đội</option>
+                                <option>Công khai</option>
                             </select>
                         </div>
                         <div className={styles.col}>
@@ -146,7 +146,7 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
                             <FormattedMessage id="Type" />
                             </div>
                             <select value={type} onChange={(event) => { setType(event.target.value) }} className={styles.input}>
-                                <option><FormattedMessage id="Select Type" /></option>
+                                <option>Chọn loại</option>
                                 {listType.map((element, key) => {
                                     return (
                                         <option key={key} value={element.type}>{element.type}</option>
@@ -162,7 +162,7 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
                             <FormattedMessage id="City" />
                             </div>
                             <select value={city} onChange={selectCity} className={styles.input}>
-                                <option><FormattedMessage id="Select City" /></option>
+                                <option>Chọn thành phố</option>
                                 {location.map(element => {
                                     return (<option value={element.Name}>{element.Name}</option>)
                                 })}
@@ -173,7 +173,7 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
                             <FormattedMessage id="District" />
                             </div>
                             <select value={district} onChange={selectDistrict} className={styles.input}>
-                                <option><FormattedMessage id="Select District" /></option>
+                                <option>Chọn quận/huyện</option>
                                 {districts.map(element => {
                                     return (<option value={element.Name}>{element.Name}</option>)
                                 })}

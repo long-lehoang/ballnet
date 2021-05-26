@@ -9,7 +9,6 @@ export default function Signup(){
     const router = useRouter();
     const [error, setError] = useState('');
     const handleSubmit = (values) => {
-        console.log('Form submit: ', SIGNUP_API);
 
         axios.post(SIGNUP_API,values)
         .then((response) => { 

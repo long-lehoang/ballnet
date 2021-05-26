@@ -13,7 +13,7 @@ import Link from 'next/link';
 import EditSport from './EditSport';
 import { FormattedMessage } from 'react-intl';
 
-export default function Info({team, permission}) {
+export default function Info({ team, permission }) {
     const [overview, setOverview] = useState(team.overview || "No overview");
     const [location, setLocation] = useState(team.location);
     const [sport, setSport] = useState(team.sport);
@@ -25,27 +25,27 @@ export default function Info({team, permission}) {
     const [editAdmin, toggleEditAdmin] = useState(false);
     const created_at = new Date(team.created_at);
     const establish = `Team created at ${created_at.getDate()}/${created_at.getMonth() + 1}/${created_at.getFullYear()}`;
-    const token = useSelector(state=>state.token);
-    useEffect(()=>{
-        axios.get(TEAM_API+`${team.id}/admin`,{
-            headers:{
+    const token = useSelector(state => state.token);
+    useEffect(() => {
+        axios.get(TEAM_API + `${team.id}/admin`, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setAdmins(response.data.data);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
         });
-        axios.get(TEAM_API+`${team.id}/member`,{
-            headers:{
+        axios.get(TEAM_API + `${team.id}/member`, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setMembers(response.data.data);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
         });
-    },[null])
+    }, [null])
 
     return (
         <div className={styles.container}>
@@ -94,18 +94,18 @@ export default function Info({team, permission}) {
                 <div className={styles.content}>
                     <div className={styles.admin}>
                         {
-                            admins.map((admin, key)=>{
-                                const src = admin.avatar===null? AVATAR: HOST + admin.avatar
+                            admins.map((admin, key) => {
+                                const src = admin.avatar === null ? AVATAR : HOST + admin.avatar
 
                                 return (
                                     <Link href={`/${admin.username}`}>
-                                    <div className={styles.item} key={key}>
-                                        <img src={src}></img>
-                                        <div>
-                                            <span className={styles.name}>{admin.name}</span>
-                                            <span className={styles.location}>{admin.address != null ? admin.address.split(', ')[1] : 'No address'}</span>
+                                        <div className={styles.item} key={key}>
+                                            <img src={src}></img>
+                                            <div>
+                                                <span className={styles.name}>{admin.name}</span>
+                                                <span className={styles.location}>{admin.address != null ? admin.address.split(', ')[1] : 'No address'}</span>
+                                            </div>
                                         </div>
-                                    </div>
                                     </Link>
                                 )
                             })

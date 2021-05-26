@@ -62,19 +62,19 @@ export default function Filter({people, setPeople, result}){
 
     return (
         <div className={styles.container}>
-            <input className={styles.search} onChange={handleSearch} placeholder="Enter to find"></input>
+            <input className={styles.search} onChange={handleSearch} placeholder="Nhập để tìm kiếm"></input>
             <select className={styles.select}>
                 {/* //TODO */}
-                <option><FormattedMessage id="Football" /></option>
+                <option>Football</option>
             </select>
             <select className={styles.select} onChange={handleSelectCity}>
-                <option value="all"><FormattedMessage id="Province/City" /></option>
+                <option value="all">Tỉnh/Thành phố</option>
                 {location.map( element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectDistrict}>
-                <option value="all"><FormattedMessage id="District" /></option>
+                <option value="all">Quận/Huyện</option>
                 {district.map( element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}

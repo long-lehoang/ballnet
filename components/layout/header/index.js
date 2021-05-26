@@ -226,7 +226,7 @@ export default function Header() {
                         <Link href="/setting">
                             <a><FormattedMessage id="Account Setting" /></a>
                         </Link>
-                        <a onClick={handleLoggout}>Logout</a>
+                        <a onClick={handleLoggout}><FormattedMessage id="Logout" /></a>
                     </div>
                 </div>
             </div>

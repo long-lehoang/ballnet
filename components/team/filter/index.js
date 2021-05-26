@@ -6,24 +6,24 @@ import axios from 'axios';
 import { SPORT_CATEGORY_API } from '../../../config/config';
 import { FormattedMessage } from 'react-intl';
 
-export default function Filter({team, setTeam, result}){
+export default function Filter({ team, setTeam, result }) {
     const [district, setDistrict] = useState(location[0].Districts);
     const [resultWithCity, setResultCity] = useState(team);
     const [sport, setSport] = useState([]);
-    const token = useSelector(state=>state.token);
+    const token = useSelector(state => state.token);
 
-    function handleSearch(event){
+    function handleSearch(event) {
         let search = event.target.value;
         let arr = [...team];
-        let pp = arr.filter( element => {
+        let pp = arr.filter(element => {
             return element.name.toLowerCase().includes(search.trim());
         });
         setTeam(pp);
     }
 
-    function handleSelectCity(event){
+    function handleSelectCity(event) {
         const idCity = event.target.value;
-        if(idCity === 'all'){
+        if (idCity === 'all') {
             setTeam(team);
             return;
         }
@@ -34,7 +34,7 @@ export default function Filter({team, setTeam, result}){
         //search
         let nameCity = obj.Name;
         let arr = [...team];
-        let pp = arr.filter( element => {
+        let pp = arr.filter(element => {
             if (element.location == null) return false;
             let location = element.location.split(', ');
             let city = location[location.length - 1];
@@ -44,9 +44,9 @@ export default function Filter({team, setTeam, result}){
         setResultCity(pp);
     }
 
-    function handleSelectDistrict(event){
+    function handleSelectDistrict(event) {
         const idDistrict = event.target.value;
-        if(idDistrict === 'all'){
+        if (idDistrict === 'all') {
             setTeam(resultWithCity);
             return;
         }
@@ -56,7 +56,7 @@ export default function Filter({team, setTeam, result}){
         //search
         let nameDistrict = obj.Name;
         let arr = [...resultWithCity];
-        let pp = arr.filter( element => {
+        let pp = arr.filter(element => {
             if (element.location == null) return false;
             let location = element.location.split(', ');
             let district = location[location.length - 2];
@@ -65,51 +65,50 @@ export default function Filter({team, setTeam, result}){
         setTeam(pp);
     }
 
-    function handleSport(event)
-    {
+    function handleSport(event) {
         const sport = event.target.value;
-        if(sport == 'all'){
+        if (sport == 'all') {
             setTeam(team);
             return;
         }
         let arr = [...team];
-        let pp = arr.filter( element => {
+        let pp = arr.filter(element => {
             return element.sport == sport;
         });
         setTeam(pp);
     }
 
-    useEffect(()=>{
-        axios.get(SPORT_CATEGORY_API,{
-            headers:{
+    useEffect(() => {
+        axios.get(SPORT_CATEGORY_API, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setSport(response.data.data);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error.response.data.message);
         })
 
-    },[null]);
+    }, [null]);
 
     return (
         <div className={styles.container}>
-            <input className={styles.search} onChange={handleSearch} placeholder="Enter to find"></input>
+            <input className={styles.search} onChange={handleSearch} placeholder="Nhập để tìm kiếm"></input>
             <select className={styles.select} onChange={handleSport}>
-                <option value="all"><FormattedMessage id="Sport" /></option>
-                {sport.map(element=>{
+                <option value="all">Môn thể thao</option>
+                {sport.map(element => {
                     return (<option value={element.name}>{element.name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectCity}>
-                <option value="all"><FormattedMessage id="Province/City" /></option>
-                {location.map( element => {
+                <option value="all">Tỉnh/Thành phố</option>
+                {location.map(element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectDistrict}>
-                <option value="all"><FormattedMessage id="District" /></option>
-                {district.map( element => {
+                <option value="all">Quận/Huyện</option>
+                {district.map(element => {
                     return (<option value={element.Id}>{element.Name}</option>)
                 })}
             </select>

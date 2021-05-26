@@ -7,11 +7,11 @@ import location from '../../../data/location.json';
 import axios from 'axios';
 import { FormattedMessage } from 'react-intl';
 
-export default function CreateTeamForm({teams, setTeams}) {
+export default function CreateTeamForm({ teams, setTeams }) {
     const [districts, setDistrict] = useState([]);
     const [sportCTGR, setSportCTGR] = useState([]);
     const [name, setName] = useState('');
-    const [nameDistrict, setNameDistrict] = useState(''); 
+    const [nameDistrict, setNameDistrict] = useState('');
     const [nameCity, setNameCity] = useState('');
     const [sport, setSport] = useState('');
 
@@ -20,44 +20,44 @@ export default function CreateTeamForm({teams, setTeams}) {
     const profile = useSelector(state => state.profile);
     const token = useSelector(state => state.token);
 
-    function handleName(event){
+    function handleName(event) {
         let value = event.target.value;
         setName(value);
     }
 
-    function handleCity(event){
+    function handleCity(event) {
         let value = event.target.value;
         setNameCity(value);
 
-        let obj = location.find(element=>element.Name === value);
+        let obj = location.find(element => element.Name === value);
         setDistrict(obj.Districts);
     }
 
-    function handleDistrict(event){
+    function handleDistrict(event) {
         let value = event.target.value;
         setNameDistrict(value);
     }
 
-    function handleSport(event){
+    function handleSport(event) {
         let value = event.target.value;
         setSport(value);
     }
 
-    function validate(){
-        if(name === ''){
+    function validate() {
+        if (name === '') {
             return 'Name is required';
-        }else if(nameCity === ''){
+        } else if (nameCity === '') {
             return 'City is required';
-        }else if(nameDistrict === ''){
+        } else if (nameDistrict === '') {
             return 'District is required';
-        }else if(sport === ''){
+        } else if (sport === '') {
             return 'Sport is required';
-        }else{
+        } else {
             return true;
         }
     }
 
-    function resetForm(){
+    function resetForm() {
         setName('');
         setNameCity('');
         setNameDistrict('');
@@ -66,44 +66,44 @@ export default function CreateTeamForm({teams, setTeams}) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        
+
         let validation = validate();
-        if(validation === true){
+        if (validation === true) {
             setError('');
             var formData = new FormData();
             formData.append('name', name);
             formData.append('location', `${nameDistrict}, ${nameCity}`);
             formData.append('sport', sport);
             axios.post(TEAM_API, formData, {
-                headers:{
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
-            }).then(response=>{
+            }).then(response => {
                 resetForm();
                 setShow(false);
                 let arr = JSON.parse(JSON.stringify(teams));;
                 arr.unshift(response.data.data)
                 setTeams(arr);
-            }).catch(error=>{
+            }).catch(error => {
                 console.log(error);
             })
-        }else{
+        } else {
             console.log(validation);
             setError(validation);
         }
     }
 
-    useEffect(()=>{
-        axios.get(SPORT_CATEGORY_API,{
-            headers:{
+    useEffect(() => {
+        axios.get(SPORT_CATEGORY_API, {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setSportCTGR(response.data.data);
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
         })
-    },[null]);
+    }, [null]);
 
     return (
         <div className={styles.container}>
@@ -114,24 +114,24 @@ export default function CreateTeamForm({teams, setTeams}) {
                 </Modal.Header>
                 <Modal.Body className={styles.body}>
                     <form onSubmit={handleSubmit}>
-                        <input value={name} placeholder="Name" className={styles.row} onChange={handleName}></input>
+                        <input value={name} placeholder="Tên" className={styles.row} onChange={handleName}></input>
                         <div className={styles.row}>
                             <select value={nameCity} className={styles.col} onChange={handleCity}>
-                                <option><FormattedMessage id="Province/City" /></option>
-                                {location.map(element=>{
-                                    return(<option value={element.Name}>{element.Name}</option>)
+                                <option>Tỉnh/Thành phố</option>
+                                {location.map(element => {
+                                    return (<option value={element.Name}>{element.Name}</option>)
                                 })}
                             </select>
                             <select value={nameDistrict} className={styles.col} onChange={handleDistrict}>
-                                <option><FormattedMessage id="District" /></option>
-                                {districts.map(element=>{
-                                    return(<option value={element.Name}>{element.Name}</option>)
+                                <option>Quận/Huyện</option>
+                                {districts.map(element => {
+                                    return (<option value={element.Name}>{element.Name}</option>)
                                 })}
                             </select>
                         </div>
                         <select value={sport} className={styles.row} onChange={handleSport}>
-                            <option><FormattedMessage id="Sport" /></option>
-                            {sportCTGR.map(element=>{
+                            <option>Môn thể thao</option>
+                            {sportCTGR.map(element => {
                                 return (<option value={element.name}>{element.name}</option>)
                             })}
                         </select>

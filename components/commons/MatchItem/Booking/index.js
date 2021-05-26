@@ -48,7 +48,7 @@ export default function Booking({ show, setShow, match }) {
                 <Modal.Title ><FormattedMessage id="Book Stadium" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={<FormattedMessage id="Search Stadium" />} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={"Tìm sân vận động"} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {
                         return (

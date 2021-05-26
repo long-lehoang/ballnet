@@ -68,13 +68,13 @@ export default function EditLocation(props) {
             <Modal.Body className={styles.body}>
                 <p>{error}</p>
                 <select value={nameCity} className={styles.select} onChange={handleSelectCity}>
-                    <option><FormattedMessage id="Province/City" /></option>
+                    <option>Tỉnh/Thành phố</option>
                     {location.map(element => {
                         return (<option value={element.Name}>{element.Name}</option>)
                     })}
                 </select>
                 <select value={nameDistrict} className={styles.select} onChange={handleSelectDistrict}>
-                    <option><FormattedMessage id="District" /></option>
+                    <option>Quận/Huyện</option>
                     {district.map(element => {
                         return (<option value={element.Name}>{element.Name}</option>)
                     })}

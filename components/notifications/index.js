@@ -83,13 +83,11 @@ export default function Notification(props) {
 
     }
 
-    function handleReviewMatch()
-    {
+    function handleReviewMatch() {
         setShowReviewMatch(true);
     }
 
-    function handleReviewStadium()
-    {
+    function handleReviewStadium() {
         setShowReviewStadium(true);
     }
 

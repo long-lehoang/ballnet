@@ -115,14 +115,14 @@ export default function LoginForm(props) {
                                     component={InputField}
 
                                     label={<FormattedMessage id="Username" />}
-                                    placeholder={<FormattedMessage id="Enter Username" />}
+                                    placeholder={"Nhập tên đăng nhập"}
                                 />
                                 <FastField
                                     name="password"
                                     component={InputField}
                                     type="password"
                                     label={<FormattedMessage id="Password" />}
-                                    placeholder={<FormattedMessage id="Enter Password" />}
+                                    placeholder={"Nhập mật khẩu"}
                                 />
 
                                 <FormGroup as={Row} controlId="formHorizontalCheck">

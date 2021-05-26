@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { MATCH_API } from '../../../../config/config';
 import { setMessage } from '../../../../slices/messageSlice';
@@ -46,7 +47,7 @@ export default function TeamRequest({ show, setShow, match }) {
                 <Modal.Title ><FormattedMessage id="Team Request To Join Match" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
-                <input className={styles.search} placeholder={<FormattedMessage id="Search Request" />} onChange={handleSearch}></input>
+                <input className={styles.search} placeholder={"Tìm yêu cầu"} onChange={handleSearch}></input>
                 <div className={styles.list}>
                     {list.map((element, key) => {
                         return (

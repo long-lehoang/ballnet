@@ -8,14 +8,14 @@ import { AVATAR, HOST, TEAM_REQUEST_API } from '../../../../../../config/config'
 import { setMessage } from '../../../../../../slices/messageSlice';
 import styles from './styles.module.scss';
 
-export default function Item({id, avatar, name, username}) {
+export default function Item({ id, avatar, name, username }) {
     const dispatch = useDispatch();
     const [show, setShow] = useState(true);
     const img = avatar !== null ? HOST + avatar : AVATAR;
     const router = useRouter();
-    const token = useSelector(state=>state.token);
+    const token = useSelector(state => state.token);
 
-    function handleInvite(){
+    function handleInvite() {
         let formData = new FormData();
         let team_id = router.query.teamID;
         console.log(team_id);
@@ -23,12 +23,12 @@ export default function Item({id, avatar, name, username}) {
         formData.append('team_id', team_id);
 
         axios.post(TEAM_REQUEST_API + `invite`, formData, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setShow(false);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(`Can't invite ${name} to join Team`)
         })
     }
@@ -40,7 +40,7 @@ export default function Item({id, avatar, name, username}) {
     }
 
     return (
-        <div className={show?styles.item:styles.none}>
+        <div className={show ? styles.item : styles.none}>
             <div>
                 <img src={img}></img>
                 <Link href={`/${username}`}><span>{name}</span></Link>

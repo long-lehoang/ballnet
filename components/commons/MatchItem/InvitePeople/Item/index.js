@@ -7,24 +7,24 @@ import { AVATAR_TEAM, HOST, MATCH_API, MATCH_INVITATION_API, MATCH_JOINING_API }
 import { setMessage } from '../../../../../slices/messageSlice';
 import styles from './styles.module.scss';
 
-export default function Item({id, username, avatar, name, match_id, team_id}) {
+export default function Item({ id, username, avatar, name, match_id, team_id }) {
     const dispatch = useDispatch();
     const img = avatar !== null ? HOST + avatar : AVATAR_TEAM;
-    const token = useSelector(state=>state.token);
+    const token = useSelector(state => state.token);
     const [show, setShow] = useState(true);
 
-    function handleInvite(){
+    function handleInvite() {
         let formData = new FormData();
         formData.append('team_id', team_id);
         formData.append('match_id', match_id);
         formData.append('player_id', id)
         axios.post(MATCH_JOINING_API, formData, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setShow(false);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message)
         })
     }
@@ -42,9 +42,9 @@ export default function Item({id, username, avatar, name, match_id, team_id}) {
                 <Link href={`/${username}`}><span>{name}</span></Link>
             </div>
             {show ? <button onClick={handleInvite}><FormattedMessage id="Invite" /></button> :
-            <button disabled ><FormattedMessage id="Invite" /></button>
+                <button disabled ><FormattedMessage id="Invite" /></button>
             }
-            
+
         </div>
     )
 }

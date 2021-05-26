@@ -21,8 +21,7 @@ export default function FriendSuggest() {
         })
     }, [null])
 
-    function handleAddfr(username)
-    {
+    function handleAddfr(username) {
         let formData = new FormData()
         formData.append('username', username)
         axios.post(FRIEND_REQUESTS_API, formData, {
@@ -31,7 +30,7 @@ export default function FriendSuggest() {
             }
         }).then(response => {
             let arr = JSON.parse(JSON.stringify(list));
-            arr = arr.filter(element=>element.username !== username)
+            arr = arr.filter(element => element.username !== username)
             setList(arr);
         }).catch(error => {
             console.log(error);
@@ -60,7 +59,7 @@ export default function FriendSuggest() {
                                 </div>
                             </div>
                             <div className={styles.col}>
-                                <button onClick={()=>{handleAddfr(element.username)}} className={styles.btn}>+</button>
+                                <button onClick={() => { handleAddfr(element.username) }} className={styles.btn}>+</button>
                             </div>
                         </div>
                     )

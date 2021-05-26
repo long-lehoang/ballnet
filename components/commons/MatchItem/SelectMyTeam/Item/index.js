@@ -7,22 +7,22 @@ import { AVATAR_TEAM, HOST, MATCH_INVITATION_API } from '../../../../../config/c
 import { setMessage } from '../../../../../slices/messageSlice';
 import styles from './styles.module.scss';
 
-export default function Item({id, avatar, name, match_id, setShow}) {
+export default function Item({ id, avatar, name, match_id, setShow }) {
     const dispatch = useDispatch();
     const img = avatar !== null ? HOST + avatar : AVATAR_TEAM;
-    const token = useSelector(state=>state.token);
+    const token = useSelector(state => state.token);
 
-    function handleSelect(){
+    function handleSelect() {
         let formData = new FormData();
         formData.append('match_id', match_id);
 
         axios.post(MATCH_INVITATION_API + `${id}/request`, formData, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response=>{
+        }).then(response => {
             setShow(false);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox(error.response.data.message)
         })
     }

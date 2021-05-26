@@ -13,7 +13,7 @@ import EditPostForm from "../commons/EditPostForm";
 import Comment from "../commons/Post/Comment";
 import styles from "./styles.module.scss";
 
-export default function PostPage({postD, permission}) {
+export default function PostPage({ postD, permission }) {
     const router = useRouter();
     const id = router.query.post_id;
     const post = postD.post;

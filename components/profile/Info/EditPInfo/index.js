@@ -90,9 +90,9 @@ export default function EditPInfo(props){
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <p>{errEmail}</p>
-                <input type="email" placeholder={<FormattedMessage id="Email" />} value={email} onChange={(event)=>{setEmail(event.target.value)}}></input>
+                <input type="email" placeholder={"Email"} value={email} onChange={(event)=>{setEmail(event.target.value)}}></input>
                 <p>{errPhone}</p>
-                <input type="text" placeholder={<FormattedMessage id="Phone Number" />} value={phone} onChange={(event)=>{setPhone(event.target.value)}}></input>
+                <input type="text" placeholder={"Số điện thoại"} value={phone} onChange={(event)=>{setPhone(event.target.value)}}></input>
                 <p>{errBirthday}</p>
                 <input type="date" placeholder="dd/mm/yyyy" value={birthday} onChange={(event)=>{setBirthday(event.target.value)}}></input>
             </Modal.Body>

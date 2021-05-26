@@ -23,7 +23,7 @@ import { FormattedMessage } from 'react-intl';
 
 
 
-export default function Profile({permission, userN, profileN}) {
+export default function Profile({ permission, userN, profileN }) {
     const [option, setOption] = useState(1);
     const status = profileN.status || "No status";
     const [cover, setCover] = useState(profileN.cover !== null ? HOST + profileN.cover : '');
@@ -34,7 +34,7 @@ export default function Profile({permission, userN, profileN}) {
     const [friend, setFriend] = useState(userN.isFriend);
     const [request, setRequest] = useState(userN.isRequest);
     const [waiting, setWaiting] = useState(userN.isWaiting);
-    const [idRequest, setIdRequest] = useState(userN.idRequest||'');
+    const [idRequest, setIdRequest] = useState(userN.idRequest || '');
     const router = useRouter();
     const dispatch = useDispatch()
     function loadComponent(option) {
@@ -72,74 +72,74 @@ export default function Profile({permission, userN, profileN}) {
         });
     }
 
-    function handleAdd(){
+    function handleAdd() {
         let formData = new FormData();
         formData.append('username', userN.username);
         axios.post(FRIEND_REQUESTS_API, formData, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setWaiting(true);
             setIdRequest(response.data.data);
             openMessageBox("Error happened when add friend");
 
         })
     }
-    function handleUnfriend(){
+    function handleUnfriend() {
         axios.delete(FRIENDS_API + `${userN.username}`, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setFriend(false);
             router.push('/');
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
             openMessageBox("Error happened when unfriend");
 
         })
     }
 
-    function handleAccept(){
+    function handleAccept() {
         axios.post(FRIEND_REQUESTS_API + `${idRequest}/accept`, {}, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setFriend(true);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox("Error happened when accept request");
 
         })
     }
 
-    function handleDeny(){
+    function handleDeny() {
         axios.post(FRIEND_REQUESTS_API + `${idRequest}/deny`, {}, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setRequest(false);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox("Error happened when deny request");
         })
     }
 
-    function handleCancel(){
+    function handleCancel() {
         axios.post(FRIEND_REQUESTS_API + `${idRequest}/deny`, {}, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>{
+        }).then((response) => {
             setWaiting(false);
-        }).catch(error=>{
+        }).catch(error => {
             openMessageBox("Error happened when cancel request");
         })
     }
 
-    function openMessageBox(message, title = 'Error'){
-        const data = {title: title, message: message, show: true};
+    function openMessageBox(message, title = 'Error') {
+        const data = { title: title, message: message, show: true };
         const action = setMessage(data);
         dispatch(action);
     }
@@ -170,14 +170,14 @@ export default function Profile({permission, userN, profileN}) {
                                 </span>
                             </div>
                             <div className={styles.btn}>
-                                {permission ? <Link href="/setting"><button className={styles.btn_setting}><FormattedMessage id="Setting" /></button></Link>: 
-                                friend ? <button className={styles.btn_unfr} onClick={handleUnfriend}><FormattedMessage id="Unfriend" /></button> : 
-                                request ? <button className={styles.btn_accept} onClick={handleAccept}><FormattedMessage id="Accept" /></button>:
-                                waiting ? <button className={styles.btn_cancel} onClick={handleCancel}><FormattedMessage id="Cancel" /></button>:
-                                <button className={styles.btn_add} onClick={handleAdd}><FormattedMessage id="Add Friend" /></button>}        
-                                {request ?<button className={styles.btn_deny} onClick={handleDeny}><FormattedMessage id="Deny" /></button>:''}
+                                {permission ? <Link href="/setting"><button className={styles.btn_setting}><FormattedMessage id="Setting" /></button></Link> :
+                                    friend ? <button className={styles.btn_unfr} onClick={handleUnfriend}><FormattedMessage id="Unfriend" /></button> :
+                                        request ? <button className={styles.btn_accept} onClick={handleAccept}><FormattedMessage id="Accept" /></button> :
+                                            waiting ? <button className={styles.btn_cancel} onClick={handleCancel}><FormattedMessage id="Cancel" /></button> :
+                                                <button className={styles.btn_add} onClick={handleAdd}><FormattedMessage id="Add Friend" /></button>}
+                                {request ? <button className={styles.btn_deny} onClick={handleDeny}><FormattedMessage id="Deny" /></button> : ''}
                             </div>
-                        
+
                         </div>
                         <div className={styles.info}>
                             <span className={styles.status}>{status}</span>
@@ -200,21 +200,21 @@ export default function Profile({permission, userN, profileN}) {
                             <FontAwesomeIcon className={styles.icon} icon={faUser} height={20}></FontAwesomeIcon>
                             <span><FormattedMessage id="Friends" /></span>
                         </button>
-                        {friend||permission ? 
-                        <button onClick={() => setOption(5)} className={option == 5 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
-                            <span><FormattedMessage id="Matches" /></span>
-                        </button> : ''}
-                        {friend||permission ?
-                        <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
-                            <FontAwesomeIcon className={styles.icon} icon={faMap} height={20}></FontAwesomeIcon>
-                            <span><FormattedMessage id="Stadiums" /></span>
-                        </button> : ''}
+                        {friend || permission ?
+                            <button onClick={() => setOption(5)} className={option == 5 ? styles.active : ''}>
+                                <FontAwesomeIcon className={styles.icon} icon={faCalendarAlt} height={20}></FontAwesomeIcon>
+                                <span><FormattedMessage id="Matches" /></span>
+                            </button> : ''}
+                        {friend || permission ?
+                            <button onClick={() => setOption(6)} className={option == 6 ? styles.active : ''}>
+                                <FontAwesomeIcon className={styles.icon} icon={faMap} height={20}></FontAwesomeIcon>
+                                <span><FormattedMessage id="Stadiums" /></span>
+                            </button> : ''}
                     </div>
                     {loadComponent(option)}
                 </div>
                 <div className={styles.right}>
-                    
+
                     <div className={styles.component}>
                         <MatchSuggest></MatchSuggest>
                     </div>

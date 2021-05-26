@@ -64,7 +64,7 @@ export default function Filter({requests, setRequest, result}){
             </div>
             <div className={styles.find}>
                 <FontAwesomeIcon height={12} icon={faSearch}></FontAwesomeIcon>
-                <input onChange={handleSearch} placeholder={<FormattedMessage id="Find a request" />}></input>
+                <input onChange={handleSearch} placeholder={"Tìm yêu cầu"}></input>
             </div>
         </div>
     )

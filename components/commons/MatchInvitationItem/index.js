@@ -18,7 +18,7 @@ export default function Item({ team, item }) {
     const [team2, setTeam2] = useState(item.team_2);
     const [member1, setMember1] = useState(item.member1);
     const [member2, setMember2] = useState(item.member2);
- 
+
     const [members1, setMembers1] = useState([]);
     const [members2, setMembers2] = useState([]);
     const token = useSelector(state => state.token);
@@ -96,12 +96,12 @@ export default function Item({ team, item }) {
         <div className={!del ? styles.container : styles.none}>
             <div className={styles.edit}>
                 <div className={styles.user}>
-                    <img src={item.avatar_user==null ? AVATAR : HOST + item.avatar_user}></img>
+                    <img src={item.avatar_user == null ? AVATAR : HOST + item.avatar_user}></img>
                     <span>{item.name_user}</span>
                 </div>
                 <button className={styles.btnShowPopup}>...</button>
                 <div className={styles.popup}>
-                    
+
                 </div>
             </div>
             <hr></hr>
@@ -109,7 +109,7 @@ export default function Item({ team, item }) {
                 <Link href={`/team/${item.team_1}`}>
                     <img src={avatar1} className={styles.logo}></img>
                 </Link>
-                
+
                 {team2 == null ? <button className={styles.btnTeamJoin}>+</button> :
                     <Link href={`/team/${item.team_2}`}>
                         <img src={avatar2} className={styles.logo}></img>
