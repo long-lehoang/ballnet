@@ -31,15 +31,15 @@ export default function InfoComponent(props) {
             console.log(error.response)
         });
 
-        axios.get(FOLLOWS_API + props.username + '/count', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then((response) => {
-            setFollow(response.data.data)
-        }).catch((error) => {
-            console.log(error.response)
-        })
+        // axios.get(FOLLOWS_API + props.username + '/count', {
+        //     headers: {
+        //         'Authorization': `Bearer ${token}`
+        //     }
+        // }).then((response) => {
+        //     setFollow(response.data.data)
+        // }).catch((error) => {
+        //     console.log(error.response)
+        // })
 
         axios.get(SPORT_API + props.username + '/main', {
             headers: {
@@ -78,13 +78,12 @@ export default function InfoComponent(props) {
                 {props.permission ? <input id="button-avatar" type="file" onChange={handleAvatar}></input> : ''}
             </div>
             <div className={styles.friend_follow}>
-                <div>
+                {/* <div>
                     <span className={styles.label}><FormattedMessage id="Followers" /></span>
                     <span className={styles.number}>{follow}</span>
-                </div>
+                </div> */}
                 <div>
-                    <span className={styles.label}><FormattedMessage id="Friends" /></span>
-                    <span className={styles.number}>{friend}</span>
+                    <span className={styles.label}><FormattedMessage id="Friends" />: {friend}</span>
                 </div>
             </div>
             <div className={styles.item}>

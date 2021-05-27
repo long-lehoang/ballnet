@@ -7,6 +7,8 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: block;
   padding-top: 50px;
+  padding-left: 15px;
+  padding-right: 15px;
   .row {
     display: flex;
     justify-content: center;
@@ -29,6 +31,7 @@
     .friends {
       font: var(--title);
       color: var(--text-color-2);
+      text-align: center;
     }
   }
 }
