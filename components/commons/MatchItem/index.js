@@ -300,19 +300,27 @@ export default function Item({ item }) {
                 <button className={styles.btnShowPopup}>...</button>
                 <div className={styles.popup}>
                     {item.captain1 ? <button onClick={handleEdit}><FormattedMessage id="Edit" /></button> : ''}
-                    {item.captain2 ? <button onClick={handleTeamLeave}><FormattedMessage id="Leave" /></button> : ''}
-                    {item.admin1 ? <button onClick={() => handleManageUserRequest(1)}><FormattedMessage id="User Request" /> &#40;{item.name1}&#41;</button> : ''}
-                    {item.admin2 ? <button onClick={() => handleManageUserRequest(2)}><FormattedMessage id="User Request" /> &#40;{item.name2}&#41;</button> : ''}
                     {item.captain1 ? <button onClick={() => handleManageTeamRequest(2)}><FormattedMessage id="Team Request" /></button> : ''}
-                    {item.admin1 && item.team_2 == null ? <button onClick={handleInviteTeam}><FormattedMessage id="Invite Team" /></button> : ''}
-                    <button onClick={() => { handleInvitePeople(1) }}><FormattedMessage id="Invite People" /> &#40;{item.name1}&#41;</button>
-                    {item.team_2 !== null ? <button onClick={() => { handleInvitePeople(2) }}><FormattedMessage id="Invite People" /> &#40;{item.name2}&#41;</button> : ''}
-                    {item.captain1 && item.team_2 !== null ? <button onClick={handleRemoveTeam}><FormattedMessage id="Remove" /> {item.name2}</button> : ''}
-                    {item.captain1 ? <button onClick={handleDelete}><FormattedMessage id="Delete" /></button> : ''}
                     {item.captain1 ? <button onClick={handleBooking}><FormattedMessage id="Book Stadium" /></button> : ''}
+                    {item.captain1 ? <button onClick={handleDelete}><FormattedMessage id="Delete" /></button> : ''}
                 </div>
             </div>
             <hr></hr>
+            <div className={styles.actionTeam}>
+                <button className={styles.btnShowPopup1}>...</button>
+                <div className={styles.popup1}>
+                    {item.admin1 ? <button onClick={() => handleManageUserRequest(1)}><FormattedMessage id="User Request" /></button> : ''}
+                    <button onClick={() => { handleInvitePeople(1) }}><FormattedMessage id="Invite People" /></button>
+                </div>
+                <button className={styles.btnShowPopup2}>...</button>
+                <div className={styles.popup2}>
+                    {item.admin1 && item.team_2 == null ? <button onClick={handleInviteTeam}><FormattedMessage id="Invite Team" /></button> : ''}
+                    {item.admin2 ? <button onClick={() => handleManageUserRequest(2)}><FormattedMessage id="User Request" /></button> : ''}
+                    {item.team_2 !== null ? <button onClick={() => { handleInvitePeople(2) }}><FormattedMessage id="Invite People" /></button> : ''}
+                    {item.captain2 ? <button onClick={handleTeamLeave}><FormattedMessage id="Leave" /></button> : ''}
+                    {item.captain1 && item.team_2 !== null ? <button onClick={handleRemoveTeam}><FormattedMessage id="Remove" /> {item.name2}</button> : ''}
+                </div>
+            </div>
             <div className={styles.team}>
                 <Link href={`/team/${item.team_1}`}>
                     <img src={avatar1} className={styles.logo}></img>
@@ -375,16 +383,6 @@ export default function Item({ item }) {
                     </div>
                 </span>
             </div>
-            <div className={styles.type}>
-                <span>{item.sport} &#40;{typeSport}&#41;</span>
-            </div>
-            <div className={styles.time}>
-                <span>{time.toLocaleString()}</span>
-            </div>
-            <div className={styles.location}>
-                <span>{item.stadium == null ? '' : `${item.stadium}, `}{location}</span>
-            </div>
-            <hr></hr>
             <div className={styles.action}>
                 <div>
                     {isJoin1 ? <button className={styles.btnLeave} onClick={() => { handleLeave(1) }}><FormattedMessage id="Leave" /></button> :
@@ -412,6 +410,18 @@ export default function Item({ item }) {
                     </div>
                 }
             </div>
+            <hr></hr>
+
+            <div className={styles.type}>
+                <span>{item.sport} &#40;{typeSport}&#41;</span>
+            </div>
+            <div className={styles.time}>
+                <span>{time.toLocaleString()}</span>
+            </div>
+            <div className={styles.location}>
+                <span>{item.stadium == null ? '' : `${item.stadium}, `}{location}</span>
+            </div>
+
         </div>
     )
 }
