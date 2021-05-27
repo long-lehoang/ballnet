@@ -11,9 +11,14 @@ import { setMessage } from '../../../slices/messageSlice';
 import AddExtension from './AddExtension';
 import EditInfo from './EditInfo';
 import { useRouter } from 'next/dist/client/router';
-import ReactMapGL, { Marker } from 'react-map-gl';
+import ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl';
 import LazyLoad from 'react-lazyload';
 import { FormattedMessage } from 'react-intl';
+
+const geolocateControlStyle = {
+    right: 10,
+    top: 10
+};
 
 export default function StadiumProfile(props) {
     const user = useSelector(state => state.infoUser);
@@ -21,12 +26,10 @@ export default function StadiumProfile(props) {
     const [img, setImg] = useState(props.stadium.avatar == null ? AVATAR_TEAM : HOST + props.stadium.avatar);
 
     const [viewport, setViewport] = useState({
-        latitude: 10.805095,
-        longitude: 106.648346,
+        latitude: props.stadium.latitude,
+        longitude: props.stadium.longitude,
         zoom: 16
     });
-    const [lat, setLat] = useState(10.805095);
-    const [lng, setLng] = useState(106.648346);
 
     const token = useSelector(state => state.token);
     const [showExtension, setShowExtension] = useState(false);
@@ -78,20 +81,6 @@ export default function StadiumProfile(props) {
             openMessageBox("Can't remove");
         });
     }
-
-    useEffect(() => {
-        axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${props.stadium.location}.json?access_token=${MAP_API_KEY}`).then(response => {
-            let center = response.data.features[0].center;
-            setLng(center[0]);
-            setLat(center[1]);
-            let view = { ...viewport }
-            view.longitude = center[0];
-            view.latitude = center[1];
-            setViewport(view);
-        }).catch(error => {
-            console.log(error);
-        })
-    }, [null]);
 
     return (
 
@@ -156,12 +145,17 @@ export default function StadiumProfile(props) {
                     onViewportChange={setViewport}
                     mapStyle="mapbox://styles/mapbox/streets-v11"
                     mapboxApiAccessToken={MAP_API_KEY}>
-                    <Marker latitude={lat} longitude={lng} offsetLeft={-20} offsetTop={-10}>
+                    <Marker latitude={props.stadium.latitude} longitude={props.stadium.longitude} offsetLeft={-20} offsetTop={-10}>
                         <div className={styles.marker}>
                             <p>{props.stadium.name}</p>
                             <span><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></span>
                         </div>
                     </Marker>
+                    <GeolocateControl
+                        style={geolocateControlStyle}
+                        positionOptions={{ enableHighAccuracy: true }}
+                        trackUserLocation={true}
+                    />
                 </ReactMapGL>
             </div>
             <div className={styles.booking}>
