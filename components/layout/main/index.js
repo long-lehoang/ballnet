@@ -14,6 +14,7 @@ export default function LayoutMain({ children }) {
 
             <main className={styles.main}>
                 <MessageBox></MessageBox>
+                <LoadingBox></LoadingBox>
                 <header className={styles.header}>
                     <Header></Header>
                 </header>

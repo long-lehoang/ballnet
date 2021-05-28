@@ -10,7 +10,7 @@ import { setMessage } from '../../../slices/messageSlice';
 import styles from './styles.module.scss';
 
 export default function FriendRequest() {
-    //TODO
+    
     const [list, setList] = useState([]);
     const token = useSelector(state => state.token);
     const dispatch = useDispatch();
