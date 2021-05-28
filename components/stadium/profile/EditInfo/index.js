@@ -9,6 +9,7 @@ import styles from './styles.module.scss';
 import location from '../../../../data/location.json';
 import QueryString from 'qs';
 import { FormattedMessage } from 'react-intl';
+import GetLocation from '../../../commons/GetLocation';
 
 export default function EditInfo(props) {
     const token = useSelector(state => state.token);
@@ -26,6 +27,11 @@ export default function EditInfo(props) {
     const [district, setDistrict] = useState(defaultDistrict == null ? [] : defaultDistrict.Districts); // list option select district
     const [ward, setWard] = useState(address[address.length - 3]);
     const [street, setStreet] = useState(address[address.length - 4]);
+    const [lat, setLat] = useState(props.lat);
+    const [lng, setLng] = useState(props.lng);
+    const [showMap, setShowMap] = useState(false);
+    const [check, setCheck] = useState(false);
+
     function handleSelectCity(event) {
         let search = event.target.value;
 
@@ -48,6 +54,38 @@ export default function EditInfo(props) {
         setNameDistrict(obj.Name);
 
     }
+    function validate() {
+        if (name == '') {
+            return false;
+        }
+        if (phone == '') {
+            return false;
+        }
+        if (sport == '') {
+            return false;
+        }
+        if (nameCity == '') {
+            return false;
+        }
+
+        if (nameDistrict == '') {
+            return false;
+        }
+        if (ward == '') {
+            return false;
+        }
+        if (street == '') {
+            return false;
+        }
+        if (lat == 0) {
+            return false;
+        }
+        if (lng == 0) {
+            return false;
+        }
+        return true;
+    }
+
 
     function handleSubmit() {
 
@@ -68,6 +106,8 @@ export default function EditInfo(props) {
             props.setLocation(`${street}, ${ward}, ${nameDistrict}, ${nameCity}`);
             props.setSport(sport);
             props.setShow(false);
+            props.setLat(lat);
+            props.setLng(lng);
         }).catch((error) => {
             openMessageBox("Update failed!");
         })
@@ -79,7 +119,9 @@ export default function EditInfo(props) {
         const action = setMessage(data);
         dispatch(action);
     }
-
+    useEffect(() => {
+        setCheck(validate());
+    })
     useEffect(() => {
         axios.get(SPORT_CATEGORY_API, {
             headers: {
@@ -98,6 +140,7 @@ export default function EditInfo(props) {
                 <Modal.Title ><FormattedMessage id="Stadium" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
+                <GetLocation show={showMap} setShow={setShowMap} lat={lat} setLat={setLat} lng={lng} setLng={setLng} ></GetLocation>
 
                 <input className={styles.fullwidth} value={name} placeholder={"Tên"} onChange={(event) => { setName(event.target.value) }}></input>
                 <input value={phone} placeholder={"Số điện thoại"} onChange={(event) => { setPhone(event.target.value) }}></input>
@@ -122,10 +165,16 @@ export default function EditInfo(props) {
                 </select>
                 <input value={ward} placeholder="Phường/Xã" onChange={(event) => { setWard(event.target.value) }}></input>
                 <input value={street} placeholder="Số nhà" onChange={(event) => { setStreet(event.target.value) }}></input>
+                <div className={styles.btnLocate}>
+                    <span><FormattedMessage id="Exact Location" /></span>
+                    <button onClick={() => { setShowMap(true) }}><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></button>
+                </div>
+
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => { props.setShow(false) }}><FormattedMessage id="Close" /></Button>
-                <Button variant="primary" onClick={() => { handleSubmit() }}><FormattedMessage id="Save changes" /></Button>
+                {check ? <Button variant="primary" onClick={() => { handleSubmit() }}><FormattedMessage id="Save changes" /></Button> :
+                <Button variant="secondary"><FormattedMessage id="Save changes" /></Button>}
             </Modal.Footer>
         </Modal>
     )

@@ -39,7 +39,9 @@ export default function StadiumProfile(props) {
     const [phone, setPhone] = useState(props.stadium.phone);
     const [location, setLocation] = useState(props.stadium.location);
     const [sport, setSport] = useState(props.stadium.sport);
-    const [editInfo, toggleEditInfo] = useState(false);
+    const [editInfo, toggleEditInfo] = useState(false);    
+    const [lat, setLat] = useState(props.stadium.latitude);
+    const [lng, setLng] = useState(props.stadium.longitude);
     const router = useRouter();
 
 
@@ -92,10 +94,14 @@ export default function StadiumProfile(props) {
                 setLocation={setLocation}
                 setPhone={setPhone}
                 setSport={setSport}
+                setLat={setLat}
+                setLng={setLng}
                 name={name}
                 phone={phone}
                 location={location}
                 sport={sport}
+                lat={lat}
+                lng={lng}
                 id={props.stadium.id}
             />
             <img className={styles.img} src={img}></img>

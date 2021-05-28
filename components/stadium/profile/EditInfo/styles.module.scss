@@ -14,4 +14,22 @@
     .fullwidth{
         width: 94%;
     }
+    .btnLocate{
+        display: flex;
+        margin: 10px;
+        height: 40px;
+        border: 1px solid var(--text-color-1);
+        color: var(--text-color-2);
+        width: 94%;
+        span{
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+        button{
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: var(--background-header);
+        }
+    }
 }
