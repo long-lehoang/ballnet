@@ -118,21 +118,21 @@ export default function CreateTeamForm({ teams, setTeams }) {
                         <div className={styles.row}>
                             <select value={nameCity} className={styles.col} onChange={handleCity}>
                                 <option>Tỉnh/Thành phố</option>
-                                {location.map(element => {
-                                    return (<option value={element.Name}>{element.Name}</option>)
+                                {location.map((element,key) => {
+                                    return (<option key={key} value={element.Name}>{element.Name}</option>)
                                 })}
                             </select>
                             <select value={nameDistrict} className={styles.col} onChange={handleDistrict}>
                                 <option>Quận/Huyện</option>
-                                {districts.map(element => {
-                                    return (<option value={element.Name}>{element.Name}</option>)
+                                {districts.map((element,key) => {
+                                    return (<option key={key} value={element.Name}>{element.Name}</option>)
                                 })}
                             </select>
                         </div>
                         <select value={sport} className={styles.row} onChange={handleSport}>
                             <option>Môn thể thao</option>
-                            {sportCTGR.map(element => {
-                                return (<option value={element.name}>{element.name}</option>)
+                            {sportCTGR.map((element,key) => {
+                                return (<option key={key} value={element.name}>{element.name}</option>)
                             })}
                         </select>
                         <span>{error}</span>

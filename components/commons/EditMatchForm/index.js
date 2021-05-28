@@ -181,8 +181,8 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
                         </div>
                         <select value={city} onChange={selectCity} className={styles.input}>
                         <option>Chọn thành phố</option>
-                        {location.map( element => {
-                            return (<option value={element.Name}>{element.Name}</option>)
+                        {location.map( (element,key) => {
+                            return (<option key={key} value={element.Name}>{element.Name}</option>)
                         })}
                         </select>
                     </div>
@@ -192,8 +192,8 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
                         </div>
                         <select value={district} onChange={selectDistrict} className={styles.input}>
                         <option>Chọn quận huyện</option>
-                        {districts.map( element => {
-                            return (<option value={element.Name}>{element.Name}</option>)
+                        {districts.map( (element,key) => {
+                            return (<option key={key} value={element.Name}>{element.Name}</option>)
                         })}
                         </select>
                     </div>

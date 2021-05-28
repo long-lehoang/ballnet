@@ -83,20 +83,20 @@ export default function Filter({people, setPeople, result}){
             <input className={styles.search} onChange={handleSearch} placeholder="Nhập để tìm kiếm"></input>
             <select className={styles.select} onChange={handleSport}>
                 <option value="all">Môn thể thao</option>
-                {sport.map(element => {
-                    return (<option value={element.name}>{element.name}</option>)
+                {sport.map((element,key) => {
+                    return (<option key={key} value={element.name}>{element.name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectCity}>
                 <option value="all">Tỉnh/Thành phố</option>
-                {location.map( element => {
-                    return (<option value={element.Id}>{element.Name}</option>)
+                {location.map( (element,key) => {
+                    return (<option key={key} value={element.Id}>{element.Name}</option>)
                 })}
             </select>
             <select className={styles.select} onChange={handleSelectDistrict}>
                 <option value="all">Quận/Huyện</option>
-                {district.map( element => {
-                    return (<option value={element.Id}>{element.Name}</option>)
+                {district.map( (element,key) => {
+                    return (<option key={key} value={element.Id}>{element.Name}</option>)
                 })}
             </select>
         </div>

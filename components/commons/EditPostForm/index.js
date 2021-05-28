@@ -146,9 +146,9 @@ export default function EditPostForm(props) {
                             <textarea value={content} placeholder="Bạn đang nghĩ gì?" onChange={(e) => { setContent(e.target.value) }}></textarea>
                         </div>
                         <div className={styles.groupPreview}>
-                            {preview.map(element => {
+                            {preview.map((element,key) => {
                                 return (
-                                    <img src={element} width={(100 / preview.length) + "%"} />
+                                    <img key={key} src={element} width={(100 / preview.length) + "%"} />
                                 )
                             })}
                         </div>

@@ -12,17 +12,40 @@ export default function Comment(props) {
     const profile = useSelector(state => state.profile);
     const [comment, setComment] = useState();
     const [listComment, setListComment] = useState([]);
-    const [load, setLoad] = useState();
     const token = useSelector(state => state.token);
-    // Pusher.logToConsole = true;
-    // var pusher = new Pusher('903afb56e4567c43f695', {
-    //     cluster: 'ap1'
-    // });
+    const user = useSelector(state=>state.infoUser);
+    const profile = useSelector(state=>state.profile);
 
-    // var channel = pusher.subscribe('my-channel');
-    // channel.bind('comment', function(data) {
-    //     alert(JSON.stringify(data));
-    // });
+    function handleSubmit(event)
+    {
+        event.preventDefault();
+
+        let formData = new FormData();
+        formData.append("comment", comment);
+        
+        axios.post(POSTS_API + props.post.id + '/comment', formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) => {
+            props.toggleComment(true);
+            props.setCountComment(props.countComment + 1);
+
+            let list = [...listComment]
+            let obj = {
+                username: user.username,
+                name: user.name,
+                avatar: profile.avatar,
+                comment: comment
+            }
+            list.push(obj);
+            setListComment(list);
+
+            setComment("");
+        }).catch((error) => {
+            console.log(error.message);
+        });
+    }
 
     useEffect(() => {
         axios.get(POSTS_API + props.id + '/comment', {
@@ -30,25 +53,22 @@ export default function Comment(props) {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-            setListComment(response.data.data);
+            let arr = [...listComment]
+            arr.concat(response.data.data);
+            setListComment(arr);
         })
-    }, [load]);
+    }, [null]);
 
     return (
         <div className={styles.comments}>
             <hr></hr>
-            <form className={styles.input} onSubmit={(event) => {
-                event.preventDefault();
-                props.handleComment(comment);
-                setComment("");
-                setLoad(true);
-            }}>
+            <form className={styles.input} onSubmit={handleSubmit}>
                 <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
                 <input placeholder={"Nhập bình luận"} value={comment} onChange={(event) => { setComment(event.target.value) }}></input>
             </form>
-            {listComment.map(cmt => {
+            {listComment.map((cmt,key) => {
                 return (
-                    <LazyLoad className={styles.comment} key={cmt.id} placeholder="Loading...">
+                    <LazyLoad className={styles.comment} key={key} placeholder="Loading...">
                         <img src={cmt.avatar == null ? AVATAR : HOST + cmt.avatar} className={styles.avatar}></img>
                         <div className={styles.content}>
                             <div className={styles.group}>

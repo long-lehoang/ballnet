@@ -46,7 +46,7 @@ export default function Feed({team}) {
     return (
         <div className={styles.container}>
             <div className={styles.row}>
-                <CreatePostForm team={team.id}></CreatePostForm>
+                <CreatePostForm team={team.id} list={posts} setList={setPosts} ></CreatePostForm>
             </div>
             {posts.map((element, key) => {
                 return (

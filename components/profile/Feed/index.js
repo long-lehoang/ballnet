@@ -47,7 +47,7 @@ export default function Feed({user_id, permission}) {
     return (
         <div className={styles.container}>
             {permission ? <div className={styles.row}>
-                <CreatePostForm></CreatePostForm>
+                <CreatePostForm list={posts} setList={setPosts} ></CreatePostForm>
             </div> : ''}
             {posts.map((element, key) => {
                 return (

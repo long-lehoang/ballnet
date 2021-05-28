@@ -14,6 +14,7 @@ import LazyLoad from 'react-lazyload';
 import Loading from '../commons/Loading';
 
 export default function HomePage({ posts }) {
+    const [list, setList] = useState(posts);
     return (
         <div className={styles.container}>
             <div className={styles.col_1}>
@@ -29,9 +30,9 @@ export default function HomePage({ posts }) {
             </div>
             <div className={styles.col_2} >
                 <div className={styles.row}>
-                    <CreatePostForm></CreatePostForm>
+                    <CreatePostForm list={list} setList={setList}></CreatePostForm>
                 </div>
-                {posts.map((element,key) => {
+                {list.map((element,key) => {
                     return(
                     <LazyLoad key={key} height={200} placeholder={<Loading/>}>                       
                         <Post key={key} post={element}></Post>

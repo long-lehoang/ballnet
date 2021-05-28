@@ -104,22 +104,6 @@ export default function Post(props) {
         }
     }
 
-    function handleComment(value) {
-        var formData = new FormData();
-        formData.append("comment", value);
-        toggleComment(true);
-        setCountComment(countComment + 1);
-
-        axios.post(POSTS_API + props.post.id + '/comment', formData, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then((response) => {
-            console.log(response.data.message);
-        }).catch((error) => {
-            console.log(error.message);
-        });
-    }
 
     function handleShare() {
 
@@ -209,7 +193,7 @@ export default function Post(props) {
                     </button>
                 </div>
             </div>
-            {activeComment ? <Comment id={props.post.id} handleComment={handleComment} /> : <div></div>}
+            {activeComment ? <Comment id={props.post.id} setCountComment={setCountComment} toggleComment={toggleComment} /> : <div></div>}
             {
                 edit ?
                     <EditPostForm

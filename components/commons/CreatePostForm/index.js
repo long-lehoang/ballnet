@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { AVATAR, FRIENDS_API, HOST, MAP_API_KEY, POSTS_API } from '../../../config/config';
 import { Modal } from "react-bootstrap";
@@ -9,8 +9,9 @@ import Select from 'react-select';
 import axios from 'axios';
 import tagging from '../../../lib/tags';
 import { FormattedMessage } from 'react-intl';
+import { setMessage } from '../../../slices/messageSlice';
 
-export default function CreatePostForm({ team = false }) {
+export default function CreatePostForm({ team = false, list, setList }) {
     const [show, setShow] = useState(false);
     const [permission, setPermission] = useState('Public');
     const [content, setContent] = useState('');
@@ -25,6 +26,8 @@ export default function CreatePostForm({ team = false }) {
     const profile = useSelector(state => state.profile);
     const token = useSelector(state => state.token);
     const [check, setCheck] = useState(false);
+    const dispatch = useDispatch();
+
     function handleSelect(value) {
         let tags = [];
         value.forEach(element => {
@@ -90,6 +93,12 @@ export default function CreatePostForm({ team = false }) {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
+        }).then(response=>{
+            let arr = [...list]
+            arr.unshift(response.data.data)
+            setList(arr);
+        }).catch(error=>{
+            openMessageBox(error.response.data.message);
         });
         refreshForm();
         setShow(false);
@@ -101,6 +110,13 @@ export default function CreatePostForm({ team = false }) {
         return '';
         return result[0].name;
     }
+
+    function openMessageBox(message, title = 'Error') {
+        const data = { title: title, message: message, show: true };
+        const action = setMessage(data);
+        dispatch(action);
+    }
+
     useEffect(() => {
         setCheck(validate());
     })
@@ -124,7 +140,7 @@ export default function CreatePostForm({ team = false }) {
             setOption(response.data.data);
             setOptionSearch(options);
         }).catch((error) => {
-            console.log(error.message);
+            openMessageBox(error.response.data.message);
         });
     }, [null]);
     return (
@@ -157,9 +173,9 @@ export default function CreatePostForm({ team = false }) {
                             <textarea value={content} placeholder="Bạn đang nghĩ gì?" onChange={(e) => { setContent(e.target.value) }}></textarea>
                         </div>
                         <div className={styles.groupPreview}>
-                            {preview.map(element => {
+                            {preview.map((element,key) => {
                                 return (
-                                    <img src={element} width={(100 / preview.length) + "%"} />
+                                    <img key={key} src={element} width={(100 / preview.length) + "%"} />
                                 )
                             })}
                         </div>

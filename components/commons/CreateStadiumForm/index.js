@@ -149,14 +149,14 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
                     </select>
                     <select value={nameCity} className={styles.select} onChange={handleSelectCity}>
                         <option>Tỉnh/Thành phố</option>
-                        {location.map(element => {
-                            return (<option value={element.Name}>{element.Name}</option>)
+                        {location.map((element,key) => {
+                            return (<option key={key} value={element.Name}>{element.Name}</option>)
                         })}
                     </select>
                     <select value={nameDistrict} className={styles.select} onChange={handleSelectDistrict}>
                         <option>Quận/Huyện</option>
-                        {district.map(element => {
-                            return (<option value={element.Name}>{element.Name}</option>)
+                        {district.map((element, key) => {
+                            return (<option key={key} value={element.Name}>{element.Name}</option>)
                         })}
                     </select>
                     <input value={ward} placeholder={"Phường/Xã"} onChange={(event) => { setWard(event.target.value) }}></input>
