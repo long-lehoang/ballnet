@@ -28,6 +28,10 @@
         .name {
           font: var(--sub-title);
           color: var(--text-color-3);
+          span{
+            font: var(--content);
+            color: var(--text-color-2);
+          }
         }
         .time {
           color: var(--text-color-1);

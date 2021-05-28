@@ -23,7 +23,7 @@ export default function Post(props) {
     const [countComment, setCountComment] = useState(0);
     const [countShare, setCountShare] = useState(0);
     const [edit, toggleEdit] = useState(false);
-    const [tags, setTags] = useState();
+    const [tags, setTags] = useState([]);
     const [del, setDel] = useState(false);
     const [like, toggleLike] = useState(false);
     const [share, toggleShare] = useState(false);
@@ -160,7 +160,9 @@ export default function Post(props) {
                     </div>
                     <div className={styles.text}>
                         <div className={styles.name}>
-                            <Link href={`/${usernameAuthor}`}><a>{nameAuthor}</a></Link> {tagging(tags)}
+                            <Link href={`/${usernameAuthor}`}><a>{nameAuthor} </a></Link> 
+                            {props.post.location !== null ? <span> <FormattedMessage id="is at" /> {props.post.location} </span> : ''}
+                            {tags.length > 0 ? <span> <FormattedMessage id="is stay with" /> {tagging(tags)} </span> : ''}
                         </div>
                         <div className={styles.time}>
                             <FontAwesomeIcon icon={faClock} className={styles.iconTime}></FontAwesomeIcon>

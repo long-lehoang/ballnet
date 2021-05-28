@@ -6,6 +6,10 @@ import location from '../../../data/location.json';
 import axios from "axios";
 import { AVATAR, HOST, SPORT_CATEGORY_API, STADIUM_API } from "../../../config/config";
 import { FormattedMessage } from "react-intl";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import GetLocation from "../GetLocation";
+import { setMessage } from "../../../slices/messageSlice";
 
 export default function CreateStadiumForm({ stadiums, setStadiums }) {
     const [show, setShow] = useState(false);
@@ -22,7 +26,9 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
     const [ward, setWard] = useState('');
     const [street, setStreet] = useState('');
     const profile = useSelector(state => state.profile);
-
+    const [lat, setLat] = useState(10.7);
+    const [lng, setLng] = useState(106.6);
+    const [showMap, setShowMap] = useState(false);
     function handleSelectCity(event) {
         let search = event.target.value;
 
@@ -69,6 +75,12 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
         if (street == '') {
             return false;
         }
+        if (lat == 0) {
+            return false;
+        }
+        if (lng == 0) {
+            return false;
+        }
         return true;
     }
 
@@ -78,7 +90,8 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
         formData.append('phone', phone);
         formData.append('sport', sport);
         formData.append('location', `${street}, ${ward}, ${nameDistrict}, ${nameCity}`);
-
+        formData.append('latitude', lat);
+        formData.append('longitude', lng);
         axios.post(STADIUM_API, formData, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -117,6 +130,7 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
 
     return (
         <div className={styles.container}>
+            <GetLocation show={showMap} setShow={setShowMap} lat={lat} setLat={setLat} lng={lng} setLng={setLng} ></GetLocation>
             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
             <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
                 <Modal.Header className={styles.header} closeButton>
@@ -147,6 +161,10 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
                     </select>
                     <input value={ward} placeholder={"Phường/Xã"} onChange={(event) => { setWard(event.target.value) }}></input>
                     <input value={street} placeholder={"Số nhà"} onChange={(event) => { setStreet(event.target.value) }}></input>
+                    <div className={styles.btnLocate}>
+                        <span><FormattedMessage id="Exact Location" /></span>
+                        <button onClick={() => { setShowMap(true) }}><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></button>
+                    </div>
                     <div className={styles.submit}>
                         {check ? <button className={styles.btnSubmit} onClick={handleSubmit}><FormattedMessage id="Create" /></button> :
                             <button className={styles.btnDisable}><FormattedMessage id="Create" /></button>}

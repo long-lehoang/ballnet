@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
-import { AVATAR, FRIENDS_API, HOST, POSTS_API } from '../../../config/config';
+import { AVATAR, FRIENDS_API, HOST, MAP_API_KEY, POSTS_API } from '../../../config/config';
 import { Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,10 +20,11 @@ export default function CreatePostForm({ team = false }) {
     const [showListFriends, setShowListFriends] = useState(false);
     const [preview, setPreview] = useState([]);
     const [optionSearch, setOptionSearch] = useState([]);
+    const [option, setOption] = useState([]);
     const user = useSelector(state => state.infoUser);
     const profile = useSelector(state => state.profile);
     const token = useSelector(state => state.token);
-
+    const [check, setCheck] = useState(false);
     function handleSelect(value) {
         let tags = [];
         value.forEach(element => {
@@ -42,7 +43,7 @@ export default function CreatePostForm({ team = false }) {
 
     function handleImage(event) {
         let img = images;
-        let result = preview;
+        let result = [...preview];
         console.log(event.target.files);
         for (let i = 0; i < event.target.files.length; i++) {
             img.push(event.target.files[i]);
@@ -54,6 +55,20 @@ export default function CreatePostForm({ team = false }) {
         setPreview(result);
     }
 
+    function getLocate() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=${MAP_API_KEY}`).then(response => {
+                setLocation(response.data.features[3].place_name);
+            })
+        });
+    }
+
+    function validate() {
+        if (content == '') {
+            return false;
+        }
+        return true;
+    }
     function handleSubmit(event) {
         event.preventDefault();
         var formData = new FormData();
@@ -79,7 +94,16 @@ export default function CreatePostForm({ team = false }) {
         refreshForm();
         setShow(false);
     }
-
+    function findName(id)
+    {
+        let result = option.filter(element=>element.id==id)
+        if(result.length == 0)
+        return '';
+        return result[0].name;
+    }
+    useEffect(() => {
+        setCheck(validate());
+    })
     useEffect(() => {
         axios.get(FRIENDS_API, {
             headers: {
@@ -97,6 +121,7 @@ export default function CreatePostForm({ team = false }) {
                     </div>
                 });
             });
+            setOption(response.data.data);
             setOptionSearch(options);
         }).catch((error) => {
             console.log(error.message);
@@ -114,7 +139,11 @@ export default function CreatePostForm({ team = false }) {
                         <div className={styles.title}>
                             <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} width="40px" height="40px"></img>
                             <div className={styles.name}>
-                                <span>{user.name}</span>
+                                <div>
+                                    {user.name} 
+                                    {location !== '' ? <span> <FormattedMessage id="is at" /> {location}</span> : ''}
+                                    {tags.length > 0 ? <span> <FormattedMessage id="is stay with" /> {tags.map(element=>findName(element)).join(', ')} </span> : ''}
+                                </div>
                                 {team === false ?
                                     <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
                                         <option value="Only me">Chỉ mình tôi</option>
@@ -129,7 +158,6 @@ export default function CreatePostForm({ team = false }) {
                         </div>
                         <div className={styles.groupPreview}>
                             {preview.map(element => {
-                                console.log('img');
                                 return (
                                     <img src={element} width={(100 / preview.length) + "%"} />
                                 )
@@ -143,10 +171,12 @@ export default function CreatePostForm({ team = false }) {
                                 <label for="tag"><FontAwesomeIcon className={styles.iconTag} icon={faUser}></FontAwesomeIcon></label>
                                 <input id="tag" type="button" onClick={() => setShowListFriends(true)}></input>
                                 <label for="location"><FontAwesomeIcon className={styles.iconLocation} icon={faMapMarkedAlt}></FontAwesomeIcon></label>
-                                <input id="location" type="button"></input>
+                                <input id="location" onClick={getLocate} type="button"></input>
                             </div>
                         </div>
-                        <button type="submit" className={styles.btnSubmit}><FormattedMessage id="Post" /></button>
+                        {check ? <button type="submit" className={styles.btnSubmit}><FormattedMessage id="Post" /></button> :
+                            <button type="submit" disabled className={styles.btnDisable}><FormattedMessage id="Post" /></button>}
+
                     </form>
                 </Modal.Body>
             </Modal>

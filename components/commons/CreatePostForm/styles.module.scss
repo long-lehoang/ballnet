@@ -47,7 +47,7 @@
         .name{
             padding-left: 10px;
             display: block;
-            span{
+            div{
                 display: block;
             }
             select{
@@ -116,6 +116,15 @@
     .btnSubmit{
         width: 100%;
         background-color: var(--background-header);
+        border-radius: 5px;
+        border: none;
+        color: var(--text-color-4);
+        height: 30px;
+        margin-top: 20px;
+    }
+    .btnDisable{
+        width: 100%;
+        background-color: var(--text-color-1);
         border-radius: 5px;
         border: none;
         color: var(--text-color-4);
