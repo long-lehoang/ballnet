@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 import Head from 'next/head';
 import Header from '../header';
 import MessageBox from '../../commons/MessageBox';
-import { FormattedMessage } from 'react-intl';
+import LoadingBox from '../../commons/LoadingBox';
 
 export default function LayoutMain({ children }) {
     return (

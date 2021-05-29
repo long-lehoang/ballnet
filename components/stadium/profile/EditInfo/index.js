@@ -10,6 +10,8 @@ import location from '../../../../data/location.json';
 import QueryString from 'qs';
 import { FormattedMessage } from 'react-intl';
 import GetLocation from '../../../commons/GetLocation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function EditInfo(props) {
     const token = useSelector(state => state.token);
@@ -93,7 +95,9 @@ export default function EditInfo(props) {
             name: name,
             phone: phone,
             sport: sport,
-            location: `${street}, ${ward}, ${nameDistrict}, ${nameCity}`
+            location: `${street}, ${ward}, ${nameDistrict}, ${nameCity}`,
+            latitude: lat,
+            longitude: lng,
         })
 
         axios.put(STADIUM_API + props.id, formData, {
@@ -108,6 +112,7 @@ export default function EditInfo(props) {
             props.setShow(false);
             props.setLat(lat);
             props.setLng(lng);
+            props.setViewport({longitude: lng,latitude:lat,zoom:16});
         }).catch((error) => {
             openMessageBox("Update failed!");
         })

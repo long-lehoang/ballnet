@@ -29,10 +29,9 @@ export default function Post(props) {
     const [share, toggleShare] = useState(false);
     const [comment, toggleComment] = useState(false);
     const [activeComment, toggleActiveComment] = useState(false);
-
-    const post = props.post;
-    //get detail post
-
+    const [content, setContent] = useState(props.post.content);
+    const [permission, setPermission] = useState(props.post.private);
+    const [location, setLocation] = useState(props.post.location);
     function handleDelete() {
         setDel(true);
         axios.delete(POSTS_API + props.post.id, {
@@ -69,7 +68,7 @@ export default function Post(props) {
                 setImages(result.images);
                 setTags(result.tags);
             }).catch((error) => {
-                console.log(error.message);
+                console.log(error.response.data.message);
             })
         }
     }, [edit])
@@ -145,7 +144,7 @@ export default function Post(props) {
                     <div className={styles.text}>
                         <div className={styles.name}>
                             <Link href={`/${usernameAuthor}`}><a>{nameAuthor} </a></Link> 
-                            {props.post.location !== null ? <span> <FormattedMessage id="is at" /> {props.post.location} </span> : ''}
+                            {location !== null ? <span> <FormattedMessage id="is at" /> {location} </span> : ''}
                             {tags.length > 0 ? <span> <FormattedMessage id="is stay with" /> {tagging(tags)} </span> : ''}
                         </div>
                         <div className={styles.time}>
@@ -163,7 +162,7 @@ export default function Post(props) {
                 </div>
             </div>
             <div className={styles.body}>
-                <span>{props.post.content}</span>
+                <span>{content}</span>
                 <div className={styles.images}>
                     {images.map((img, key) => {
                         return (<img key={key} src={HOST + img}></img>)
@@ -193,19 +192,24 @@ export default function Post(props) {
                     </button>
                 </div>
             </div>
-            {activeComment ? <Comment id={props.post.id} setCountComment={setCountComment} toggleComment={toggleComment} /> : <div></div>}
+            {activeComment ? <Comment id={props.post.id} setCountComment={setCountComment} countComment={countComment} toggleComment={toggleComment} /> : <div></div>}
             {
                 edit ?
                     <EditPostForm
                         show={edit}
                         setShow={toggleEdit}
                         toggle={toggleEdit}
-                        content={props.post.content}
+                        content={content}
                         id={props.post.id}
-                        permission={props.post.private}
+                        permission={permission}
                         images={images}
-                        location={props.post.location}
+                        location={location}
                         tags={tags}
+                        setContent={setContent}
+                        setPermission={setPermission}
+                        setLocation={setLocation}
+                        setTags={setTags}
+                        setImages={setImages}
                     /> :
                     <div></div>
             }

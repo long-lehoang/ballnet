@@ -102,6 +102,7 @@ export default function StadiumProfile(props) {
                 sport={sport}
                 lat={lat}
                 lng={lng}
+                setViewport={setViewport}
                 id={props.stadium.id}
             />
             <img className={styles.img} src={img}></img>
@@ -151,7 +152,7 @@ export default function StadiumProfile(props) {
                     onViewportChange={setViewport}
                     mapStyle="mapbox://styles/mapbox/streets-v11"
                     mapboxApiAccessToken={MAP_API_KEY}>
-                    <Marker latitude={props.stadium.latitude} longitude={props.stadium.longitude} offsetLeft={-20} offsetTop={-10}>
+                    <Marker latitude={lat} longitude={lng} offsetLeft={-20} offsetTop={-10}>
                         <div className={styles.marker}>
                             <p>{props.stadium.name}</p>
                             <span><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></span>

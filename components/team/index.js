@@ -12,7 +12,6 @@ export default function Team({team})
     return(
         <div className={styles.container}>
             <h3><FormattedMessage id="Teams" /></h3>
-
             <div className={styles.filter}>
                 <Filter team={team} setTeam={setList} result={list}/>
             </div>

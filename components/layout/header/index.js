@@ -134,7 +134,7 @@ export default function Header() {
             </div>
 
             <div className={styles.col}>
-                <div className={styles.nav}>
+                <div key={1} className={styles.nav}>
                     <Link href="/">
                         <div className={styles.btnNav}>
                             <div className={styles.iconNav}>
@@ -146,7 +146,7 @@ export default function Header() {
                         </div>
                     </Link>
 
-                    <div className={styles.btnNav}>
+                    <div key={2} className={styles.btnNav}>
                         <div className={styles.iconNav}>
                             <FontAwesomeIcon height={22} icon={faUsers}></FontAwesomeIcon>
                         </div>
@@ -157,7 +157,7 @@ export default function Header() {
                     </div>
 
                     <Link href="/match">
-                        <div className={styles.btnNav}>
+                        <div key={3} className={styles.btnNav}>
                             <div className={styles.iconNav}>
                                 <FontAwesomeIcon height={22} icon={faCalendarAlt}></FontAwesomeIcon>
                             </div>
@@ -169,7 +169,7 @@ export default function Header() {
                     </Link>
 
                     <Link href="/stadium">
-                        <div className={styles.btnNav}>
+                        <div key={4} className={styles.btnNav}>
                             <div className={styles.iconNav}>
                                 <FontAwesomeIcon height={22} icon={faMap}></FontAwesomeIcon>
                             </div>
@@ -179,7 +179,7 @@ export default function Header() {
                         </div>
                     </Link>
 
-                    <div className={styles.btnNav}>
+                    <div key={5} className={styles.btnNav}>
                         <div className={styles.iconNav}>
                             <FontAwesomeIcon height={22} icon={faUserPlus}></FontAwesomeIcon>
                         </div>
@@ -201,7 +201,7 @@ export default function Header() {
                     </Link> */}
                     <div className={styles.group_notice}>
                         {newNotice > 0 ? <span className={styles.number}>{newNotice}</span> : ''}
-                        <div className={styles.btnNav} onClick={handleReadNotice}>
+                        <div key={6} className={styles.btnNav} onClick={handleReadNotice}>
                             <div className={styles.iconNav}>
                                 <FontAwesomeIcon height={22} icon={faBell}></FontAwesomeIcon>
                             </div>

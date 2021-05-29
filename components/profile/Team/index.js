@@ -33,8 +33,8 @@ export default function Team({ permission }) {
             <div className={styles.list}>
                 {teams.map((element, key) => {
                     return (
-                        <LazyLoad key={key} height={200} placeholder={<Loading />}>
-                            <Item key={key} item={element}></Item>
+                        <LazyLoad key={element.id} height={200} placeholder={<Loading />}>
+                            <Item key={element.id} item={element}></Item>
                         </LazyLoad>
                     )
                 })}

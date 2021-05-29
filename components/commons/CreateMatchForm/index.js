@@ -10,6 +10,7 @@ import { formatDateTime } from '../../../lib/time';
 import { setMessage } from '../../../slices/messageSlice';
 import { useRouter } from 'next/router';
 import { FormattedMessage } from 'react-intl';
+import { setLoading } from '../../../slices/loadingSlice';
 
 
 export default function CreateMatchForm({ team, matchs, setMatchs }) {
@@ -54,6 +55,8 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
     }
 
     function handleSubmit() {
+        setShow(false);
+        dispatch(setLoading(true))
         var formData = new FormData();
         formData.append('private', permission);
         formData.append('sport', team.sport);
@@ -69,11 +72,13 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
             }
         }).then(response => {
             console.log(response.data.data);
-            setShow(false);
             let arr = JSON.parse(JSON.stringify(matchs));
             arr.unshift(response.data.data)
             setMatchs(arr);
+            dispatch(setLoading(false));
         }).catch(error => {
+            setShow(true);
+            dispatch(setLoading(false));
             openMessageBox(error.response.data.message);
         })
     }

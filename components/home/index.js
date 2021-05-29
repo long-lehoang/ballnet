@@ -6,10 +6,7 @@ import StadiumSuggest from '../commons/StadiumSuggest';
 import MatchSuggest from '../commons/MatchSuggest';
 import FriendSuggest from '../commons/FriendSuggest';
 import FriendRequest from '../commons/FriendRequest';
-import axios from 'axios';
-import { POSTS_API } from '../../config/config';
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import Loading from '../commons/Loading';
 
@@ -34,8 +31,8 @@ export default function HomePage({ posts }) {
                 </div>
                 {list.map((element,key) => {
                     return(
-                    <LazyLoad key={key} height={200} placeholder={<Loading/>}>                       
-                        <Post key={key} post={element}></Post>
+                    <LazyLoad key={element.id} height={200} placeholder={<Loading/>}>                       
+                        <Post key={element.id} post={element}></Post>
                     </LazyLoad>
                     )
                 })}

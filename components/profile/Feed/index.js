@@ -51,8 +51,8 @@ export default function Feed({user_id, permission}) {
             </div> : ''}
             {posts.map((element, key) => {
                 return (
-                    <LazyLoad key={key} height={200} placeholder={<Loading />}>
-                        <Post key={key} post={element}></Post>
+                    <LazyLoad key={element.id} height={200} placeholder={<Loading />}>
+                        <Post key={element.id} post={element}></Post>
                     </LazyLoad>
                 )
             })}

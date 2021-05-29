@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { AVATAR, HOST, SPORT_CATEGORY_API, TEAM_API } from '../../../config/config';
 import { Modal } from "react-bootstrap";
@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import location from '../../../data/location.json';
 import axios from 'axios';
 import { FormattedMessage } from 'react-intl';
+import { setMessage } from '../../../slices/messageSlice';
+import { setLoading } from '../../../slices/loadingSlice';
 
 export default function CreateTeamForm({ teams, setTeams }) {
     const [districts, setDistrict] = useState([]);
@@ -19,6 +21,13 @@ export default function CreateTeamForm({ teams, setTeams }) {
     const [show, setShow] = useState(false);
     const profile = useSelector(state => state.profile);
     const token = useSelector(state => state.token);
+    const dispatch = useDispatch();
+
+    function openMessageBox(message, title = 'Error') {
+        const data = { title: title, message: message, show: true };
+        const action = setMessage(data);
+        dispatch(action);
+    }
 
     function handleName(event) {
         let value = event.target.value;
@@ -65,6 +74,9 @@ export default function CreateTeamForm({ teams, setTeams }) {
     }
 
     function handleSubmit(event) {
+        setShow(false);
+
+        dispatch(setLoading(true));
         event.preventDefault();
 
         let validation = validate();
@@ -80,12 +92,15 @@ export default function CreateTeamForm({ teams, setTeams }) {
                 }
             }).then(response => {
                 resetForm();
-                setShow(false);
                 let arr = JSON.parse(JSON.stringify(teams));;
                 arr.unshift(response.data.data)
                 setTeams(arr);
+                dispatch(setLoading(false))
+
             }).catch(error => {
-                console.log(error);
+                dispatch(setLoading(false))
+                setShow(true);
+                openMessageBox(error.response.data.message);
             })
         } else {
             console.log(validation);

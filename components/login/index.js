@@ -142,7 +142,7 @@ export default function LoginForm(props) {
                                 </FormGroup>
 
                                 <FormGroup as={Row}>
-                                    <Col sm={6}>
+                                    <Col sm={8}>
                                         <Button size="lg" variant="danger" type="submit"><FormattedMessage id="Sign in" /></Button>
                                     </Col>
                                 </FormGroup>

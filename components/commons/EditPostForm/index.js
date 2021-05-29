@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { AVATAR, FRIENDS_API, HOST, MAP_API_KEY, POSTS_API } from '../../../config/config';
 import { Modal } from "react-bootstrap";
@@ -8,13 +8,15 @@ import { faImage, faMapMarkedAlt, faUser } from "@fortawesome/free-solid-svg-ico
 import Select from 'react-select';
 import axios from 'axios';
 import { FormattedMessage } from 'react-intl';
+import { setMessage } from '../../../slices/messageSlice';
+import { setLoading } from '../../../slices/loadingSlice';
 
 export default function EditPostForm(props) {
     const [permission, setPermission] = useState(props.permission);
     const [content, setContent] = useState(props.content);
     const [location, setLocation] = useState(props.location);
-    const [tags, setTags] = useState(props.tags);
-    const [images, setImages] = useState(props.images);
+    const [tags, setTags] = useState(props.tags.map(element=>element.id));
+    const [images, setImages] = useState([]);
     const [showListFriends, setShowListFriends] = useState(false);
     const [optionSearch, setOptionSearch] = useState([]);
     const [preview, setPreview] = useState([]);
@@ -23,6 +25,13 @@ export default function EditPostForm(props) {
     const profile = useSelector(state => state.profile);
     const token = useSelector(state => state.token);
     const [check, setCheck] = useState(false);
+    const dispatch = useDispatch();
+
+    function openMessageBox(message, title = 'Error'){
+        const data = {title: title, message: message, show: true};
+        const action = setMessage(data);
+        dispatch(action);
+    }
 
     function handleSelect(value) {
         let tags = [];
@@ -66,6 +75,7 @@ export default function EditPostForm(props) {
         return '';
         return result[0].name;
     }
+    
     function validate() {
         if (content == '') {
             return false;
@@ -74,7 +84,8 @@ export default function EditPostForm(props) {
     }
 
     function handleSubmit(event) {
-
+        props.setShow(false);
+        dispatch(setLoading(true));
         event.preventDefault();
         var formData = new FormData();
         formData.append('private', permission);
@@ -90,9 +101,19 @@ export default function EditPostForm(props) {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
+        }).then(response=>{
+            props.setContent(content);
+            props.setPermission(permission);
+            props.setLocation(location);
+            props.setTags(option.filter(element=>tags.includes(element.id)));
+            props.setImages(response.data.data);
+            refreshForm();
+            dispatch(setLoading(false));
+        }).catch(error=>{
+            props.setShow(true);
+            dispatch(setLoading(false));
+            openMessageBox(error.response.data.message);
         });
-        refreshForm();
-        props.setShow(false);
     }
     useEffect(() => {
         setCheck(validate());
@@ -137,7 +158,7 @@ export default function EditPostForm(props) {
                                 {permission !== 'Team' ?
                                     <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
                                         <option value="Only me">Chỉ mình tôi</option>
-                                        <option value="Friends">Bạn bè</option>
+                                        <option value="Friend">Bạn bè</option>
                                         <option value="Public">Công khai</option>
                                     </select> : ''}
                             </div>

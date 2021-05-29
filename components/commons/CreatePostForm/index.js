@@ -10,6 +10,7 @@ import axios from 'axios';
 import tagging from '../../../lib/tags';
 import { FormattedMessage } from 'react-intl';
 import { setMessage } from '../../../slices/messageSlice';
+import { setLoading } from '../../../slices/loadingSlice';
 
 export default function CreatePostForm({ team = false, list, setList }) {
     const [show, setShow] = useState(false);
@@ -73,6 +74,8 @@ export default function CreatePostForm({ team = false, list, setList }) {
         return true;
     }
     function handleSubmit(event) {
+        setShow(false);
+        dispatch(setLoading(true));
         event.preventDefault();
         var formData = new FormData();
         formData.append('content', content);
@@ -97,11 +100,13 @@ export default function CreatePostForm({ team = false, list, setList }) {
             let arr = [...list]
             arr.unshift(response.data.data)
             setList(arr);
+            refreshForm();
+            dispatch(setLoading(false));
         }).catch(error=>{
+            dispatch(setLoading(false));
+            setShow(true);
             openMessageBox(error.response.data.message);
         });
-        refreshForm();
-        setShow(false);
     }
     function findName(id)
     {
@@ -163,7 +168,7 @@ export default function CreatePostForm({ team = false, list, setList }) {
                                 {team === false ?
                                     <select value={permission} onChange={(event) => { setPermission(event.target.value) }}>
                                         <option value="Only me">Chỉ mình tôi</option>
-                                        <option value="Friends">Bạn bè</option>
+                                        <option value="Friend">Bạn bè</option>
                                         <option value="Public">Công khai</option>
                                     </select> : ''}
 

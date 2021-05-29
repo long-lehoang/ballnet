@@ -17,11 +17,14 @@ export default function PostPage({ postD, permission }) {
     const router = useRouter();
     const id = router.query.post_id;
     const post = postD.post;
-    const images = postD.images;
+    const [content, setContent] = useState(post.content);
+    const [location, setLocation] = useState(post.location);
+    const [permis, setPermission] = useState(post.private)
+    const [images, setImages] = useState(postD.images);
     const avatarAuthor = postD.author.avatar ? HOST + postD.author.avatar : AVATAR;
     const nameAuthor = postD.author.name;
     const usernameAuthor = postD.author.username;
-    const tags = postD.tags;
+    const [tags, setTags] = useState(postD.tags);
 
     const [countLike, setCountLike] = useState(postD.like);
     const [countComment, setCountComment] = useState(postD.comment);
@@ -129,7 +132,10 @@ export default function PostPage({ postD, permission }) {
                         </div>
                         <div className={styles.text}>
                             <div className={styles.name}>
-                                <Link href={`/${usernameAuthor}`}><a>{nameAuthor}</a></Link> {tagging(tags)}
+                                <Link href={`/${usernameAuthor}`}><a>{nameAuthor}</a></Link>
+                                {location !== null ? <span> <FormattedMessage id="is at" /> {location} </span> : ''}
+                                {tags.length > 0 ? <span> <FormattedMessage id="is stay with" /> {tagging(tags)} </span> : ''}
+
                             </div>
                             <div className={styles.time}>
                                 <FontAwesomeIcon icon={faClock} className={styles.iconTime}></FontAwesomeIcon>
@@ -146,7 +152,7 @@ export default function PostPage({ postD, permission }) {
                     </div>
                 </div>
                 <div className={styles.body}>
-                    <span>{post.content}</span>
+                    <span>{content}</span>
                     <div className={styles.images}>
                         {images.map((img, key) => {
                             return (<img key={key} src={HOST + img}></img>)
@@ -183,12 +189,17 @@ export default function PostPage({ postD, permission }) {
                             show={edit}
                             setShow={toggleEdit}
                             toggle={toggleEdit}
-                            content={post.content}
+                            content={content}
                             id={id}
-                            permission={post.private}
+                            permission={permis}
                             images={images}
-                            location={post.location}
+                            location={location}
                             tags={tags}
+                            setContent={setContent}
+                            setPermission={setPermission}
+                            setLocation={setLocation}
+                            setTags={setTags}
+                            setImages={setImages}
                         /> :
                         <div></div>
                 }

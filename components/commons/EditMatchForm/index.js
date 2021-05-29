@@ -11,6 +11,7 @@ import { setMessage } from '../../../slices/messageSlice';
 import { useRouter } from 'next/router';
 import qs from 'qs';
 import { FormattedMessage } from 'react-intl';
+import { setLoading } from '../../../slices/loadingSlice';
 
 export default function EditMatchForm({item, show, setShow,setParentTypeSport, setParentStart, setParentType, setParentLocation}) {
     const [start, setStart] = useState(new Date(item.time.split(', ')[0]));
@@ -24,7 +25,6 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
     const [check, setCheck] = useState(false);
     const token = useSelector(state=>state.token);
     const dispatch = useDispatch();
-    const router = useRouter();
     
     function validate()
     {        
@@ -54,6 +54,8 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
 
     function handleSubmit()
     {
+        setShow(false);
+        dispatch(setLoading(true));
         let timeStart = formatDateTime(start),
             timeEnd = formatDateTime(end);
         let formData = qs.stringify({
@@ -71,8 +73,11 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
             setParentLocation(`${district}, ${city}`);
             setParentStart(new Date(timeStart));
             setParentTypeSport(type);
-            setShow(false);
+            dispatch(setLoading(false));
         }).catch(error=>{
+            dispatch(setLoading(false));
+            setShow(true);
+
             openMessageBox(error.response.data.message);
         })
     }

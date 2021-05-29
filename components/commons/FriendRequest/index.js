@@ -2,7 +2,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR, FRIEND_REQUESTS_API, HOST } from '../../../config/config';
@@ -25,7 +25,7 @@ export default function FriendRequest() {
         }).catch(error => {
             console.log(error);
         })
-    })
+    },[null])
 
     function handleAccept(id) {
         axios.post(FRIEND_REQUESTS_API + `${id}/accept`, {}, {

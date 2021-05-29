@@ -14,7 +14,6 @@ export default function Comment(props) {
     const [listComment, setListComment] = useState([]);
     const token = useSelector(state => state.token);
     const user = useSelector(state=>state.infoUser);
-    const profile = useSelector(state=>state.profile);
 
     function handleSubmit(event)
     {
@@ -23,7 +22,7 @@ export default function Comment(props) {
         let formData = new FormData();
         formData.append("comment", comment);
         
-        axios.post(POSTS_API + props.post.id + '/comment', formData, {
+        axios.post(POSTS_API + props.id + '/comment', formData, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -54,7 +53,7 @@ export default function Comment(props) {
             }
         }).then((response) => {
             let arr = [...listComment]
-            arr.concat(response.data.data);
+            arr = arr.concat(response.data.data);
             setListComment(arr);
         })
     }, [null]);

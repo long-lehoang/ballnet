@@ -28,8 +28,8 @@ export default function Match({user_id}){
             <div className={styles.list}>
                 {list.map((element,key)=>{
                     return(
-                        <LazyLoad key={key} height={200} placeholder={<Loading/>}>
-                            <Item item={element} key={key}></Item>
+                        <LazyLoad key={element.id} height={200} placeholder={<Loading/>}>
+                            <Item item={element} key={element.id}></Item>
                         </LazyLoad>
                     )
                 })}

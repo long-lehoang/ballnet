@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import GetLocation from "../GetLocation";
 import { setMessage } from "../../../slices/messageSlice";
+import { setLoading } from "../../../slices/loadingSlice";
 
 export default function CreateStadiumForm({ stadiums, setStadiums }) {
     const [show, setShow] = useState(false);
@@ -85,6 +86,8 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
     }
 
     function handleSubmit() {
+        setShow(false);
+        dispatch(setLoading(true));
         let formData = new FormData();
         formData.append('name', name);
         formData.append('phone', phone);
@@ -101,7 +104,10 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
             let arr = JSON.parse(JSON.stringify(stadiums));
             arr.unshift(response.data.data)
             setStadiums(arr);
+            dispatch(setLoading(false));
         }).catch((error) => {
+            dispatch(setLoading(false));
+            setShow(true);
             openMessageBox("Created failed!");
         })
 

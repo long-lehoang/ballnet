@@ -33,8 +33,8 @@ export default function Stadium({user_id})
                 {
                     list.map((item, key)=>{
                         return(
-                            <LazyLoad key={key} height={200} placeholder={<Loading/>}>
-                                <Item item={item} key={key}/>
+                            <LazyLoad key={item.id} height={200} placeholder={<Loading/>}>
+                                <Item item={item} key={item.id}/>
                             </LazyLoad>
                         )
                     })
