@@ -137,7 +137,7 @@ export default function LoginForm(props) {
                                         />
                                     </Col> */}
                                     <Col xs={6}>
-                                        <Link href="/forget_password">
+                                        <Link href="/reset-password">
                                             <a><FormattedMessage id="Forget Password?" /></a>
                                         </Link>
                                     </Col>
@@ -149,11 +149,11 @@ export default function LoginForm(props) {
                                     </Col>
                                 </FormGroup>
                             </Form>
-                            <div className={styles.btn_gg}>
+                            {/* <div className={styles.btn_gg}>
                                 <Button variant="outline-secondary" block>
                                     <FontAwesomeIcon className={styles.icon_gg} icon={faGoogle} /><FormattedMessage id="Login with Google" />
                                 </Button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 )
