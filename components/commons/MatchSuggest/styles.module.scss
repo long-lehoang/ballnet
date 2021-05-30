@@ -2,7 +2,7 @@
   width: 100%;
   display: block;
   min-width: 250px;
-  padding: 20px;
+  padding: 20px 0px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-top: 20px solid var(--background-header);
 
@@ -10,66 +10,12 @@
   .header {
     font: var(--sub-title);
     color: var(--text-color-3);
-    padding: 20px 0;
+    padding: 20px 20px;
     border-bottom: 1px solid var(--background);
   }
   .body {
     width: 100%;
     display: block;
     font: var(--content);
-    .element {
-      width: 100%;
-      background-color: var(--background);
-      padding: 10px 30px;
-      margin-top: 10px;
-      display: block;
-      .team {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--text-color-3);
-        .logo {
-          height: 30px;
-          width: 30px;
-          border-radius: 50%;
-          border: 1px solid var(--text-color-2);
-        }
-      }
-      .time {
-        padding-top: 5px;
-        display: flex;
-        justify-content: center;
-        color: var(--background-header);
-      }
-      .location,
-      .type {
-        padding-top: 5px;
-        display: flex;
-        justify-content: center;
-        color: var(--text-color-2);
-      }
-      .btn{
-        padding-top: 10px;
-        display: flex;
-        justify-content: space-around;
-        .btnJoin{
-          border: none;
-          width: 50px;
-          height: 20px;
-          background-color: var(--button-color-1);
-          border-radius: 5px;
-          color: var(--text-color-4);
-        }
-        .btnShare{
-          border: none;
-          width: 50px;
-          height: 20px;
-          background-color: var(--background-header);
-          border-radius: 5px;
-          color: var(--text-color-4);
-        }
-      }
-    }
   }
 }

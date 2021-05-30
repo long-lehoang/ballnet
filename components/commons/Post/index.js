@@ -14,7 +14,7 @@ import { FormattedMessage } from 'react-intl';
 
 export default function Post(props) {
     const token = useSelector(state => state.token);
-
+    const user = useSelector(state=>state.infoUser);
     const [images, setImages] = useState([]);
     const [avatarAuthor, setAvatarAuthor] = useState('');
     const [nameAuthor, setNameAuthor] = useState('');
@@ -154,7 +154,7 @@ export default function Post(props) {
                     </div>
                 </div>
                 <div className={styles.col}>
-                    <button className={styles.btn}><FontAwesomeIcon icon={faEllipsisV}></FontAwesomeIcon></button>
+                    {user.id == props.post.user_id ? <button className={styles.btn}><FontAwesomeIcon icon={faEllipsisV}></FontAwesomeIcon></button> : ''}
                     <div className={styles.popup}>
                         <button onClick={() => { toggleEdit(!edit) }}><FormattedMessage id="Edit" /></button>
                         <button onClick={handleDelete}><FormattedMessage id="Delete" /></button>

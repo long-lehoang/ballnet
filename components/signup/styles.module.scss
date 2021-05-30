@@ -8,7 +8,7 @@
 
     /* Background_header */
     .sign_in {
-      width: 66px;
+      min-width: 66px;
       height: 31px;
       background: var(--background);
       border-radius: 5px 0px 0px 5px;
@@ -16,7 +16,7 @@
       color: var(--text-color-3);
     }
     .sign_up{
-      width: 66px;
+      min-width: 66px;
       height: 31px;
       background: var(--background-header);
       border-radius: 0px 5px 5px 0px;

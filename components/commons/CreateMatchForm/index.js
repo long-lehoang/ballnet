@@ -134,8 +134,8 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
                                 <FormattedMessage id="Private" />
                             </div>
                             <select value={permission} onChange={(event) => { setPrivate(event.target.value) }} className={styles.input}>
-                                <option>Đội</option>
-                                <option>Công khai</option>
+                                <option value="Team">Câu lạc bộ</option>
+                                <option value="Public">Công khai</option>
                             </select>
                         </div>
                         <div className={styles.col}>

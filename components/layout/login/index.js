@@ -3,6 +3,8 @@ import styles from "./styles.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from "react-intl";
+import MessageBox from '../../commons/MessageBox';
+import LoadingBox from '../../commons/LoadingBox';
 
 export default function LayoutLogin({ children }) {
     return (
@@ -13,6 +15,8 @@ export default function LayoutLogin({ children }) {
             </Head>
 
             <main className={styles.main}>
+                <MessageBox></MessageBox>
+                <LoadingBox></LoadingBox>
                 <div className={styles.banner}>
                     <div className={styles.title}>
                         <div className={styles.logo}>

@@ -31,8 +31,7 @@ export default function Match({team}){
                 {list.map((element,key)=>{
                     return(
                         <LazyLoad key={key} height={200} placeholder={<Loading/>}>
-                            {console.log(element)}                       
-                            <Item item={element} key={key}></Item>
+                            <Item item={element} key={element.id}></Item>
                         </LazyLoad>
                     )
                 })}

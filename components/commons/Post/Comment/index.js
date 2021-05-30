@@ -1,11 +1,12 @@
 import axios from 'axios';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import LazyLoad from 'react-lazyload';
 import { useSelector } from 'react-redux';
 import { AVATAR, HOST, POSTS_API } from '../../../../config/config';
+import convertTime from '../../../../lib/time';
 import styles from './styles.module.scss';
 
 export default function Comment(props) {
@@ -13,15 +14,14 @@ export default function Comment(props) {
     const [comment, setComment] = useState();
     const [listComment, setListComment] = useState([]);
     const token = useSelector(state => state.token);
-    const user = useSelector(state=>state.infoUser);
+    const user = useSelector(state => state.infoUser);
 
-    function handleSubmit(event)
-    {
+    function handleSubmit(event) {
         event.preventDefault();
 
         let formData = new FormData();
         formData.append("comment", comment);
-        
+
         axios.post(POSTS_API + props.id + '/comment', formData, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -35,7 +35,8 @@ export default function Comment(props) {
                 username: user.username,
                 name: user.name,
                 avatar: profile.avatar,
-                comment: comment
+                comment: comment,
+                time: new Date(),
             }
             list.push(obj);
             setListComment(list);
@@ -65,19 +66,23 @@ export default function Comment(props) {
                 <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
                 <input placeholder={"Nhập bình luận"} value={comment} onChange={(event) => { setComment(event.target.value) }}></input>
             </form>
-            {listComment.map((cmt,key) => {
-                return (
-                    <LazyLoad className={styles.comment} key={key} placeholder="Loading...">
-                        <img src={cmt.avatar == null ? AVATAR : HOST + cmt.avatar} className={styles.avatar}></img>
-                        <div className={styles.content}>
-                            <div className={styles.group}>
-                                <Link href={`/${cmt.username}`}><a className={styles.name}>{cmt.name}</a></Link>
-                                <div className={styles.text}>{cmt.comment}</div>
+            <div className={styles.list}>
+
+                {listComment.map((cmt, key) => {
+                    return (
+                        <LazyLoad className={styles.comment} key={key} placeholder="Loading...">
+                            <img src={cmt.avatar == null ? AVATAR : HOST + cmt.avatar} className={styles.avatar}></img>
+                            <div className={styles.content}>
+                                <div className={styles.group}>
+                                    <Link href={`/${cmt.username}`}><a className={styles.name}>{cmt.name}</a></Link>
+                                    <div className={styles.text}>{cmt.comment}</div>
+                                </div>
+                                <div className={styles.time}>{convertTime(cmt.time)}</div>
                             </div>
-                        </div>
-                    </LazyLoad>
-                )
-            })}
+                        </LazyLoad>
+                    )
+                })}
+            </div>
         </div>
     )
 }

@@ -3,6 +3,7 @@
  */
 export const HOST = 'http://localhost:8989';
 //AUTH
+export const RESET_PASSWORD_API = HOST + '/api/reset-password/';
 export const LOGIN_API = HOST + '/api/login';
 export const LOGOUT_API = HOST + '/api/logout';
 export const SIGNUP_API = HOST + '/api/signup';

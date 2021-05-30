@@ -54,12 +54,12 @@ export default function Filter({requests, setRequest, result}){
         <div className={styles.container}>
             <div>
                 <select className={styles.group} onChange={handleGroup}>
-                    <option value="all"><FormattedMessage id="All Requests" /> </option>
-                    <option value="new"><FormattedMessage id="New Requests" /></option>
+                    <option value="all">Tất cả yêu cầu</option>
+                    <option value="new">Yêu cầu mới</option>
                 </select>
                 <select className={styles.sort} onChange={handleSort}>
-                    <option value="asc"><FormattedMessage id="A-Z" /></option>
-                    <option value="desc"><FormattedMessage id="Z-A" /></option>
+                    <option value="asc">A-Z</option>
+                    <option value="desc">Z-A</option>
                 </select>
             </div>
             <div className={styles.find}>

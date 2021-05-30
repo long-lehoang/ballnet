@@ -16,6 +16,8 @@ import { setError } from "../../slices/loginErrorSlice";
 import { setUser } from "../../slices/infoUserSlice";
 import { useCookies } from "react-cookie"
 import { FormattedMessage } from "react-intl";
+import { setLoading } from "../../slices/loadingSlice";
+import { setMessage } from "../../slices/messageSlice";
 
 LoginForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -30,8 +32,14 @@ export default function LoginForm(props) {
     const dispatch = useDispatch();
     const [cookie, setCookie] = useCookies(["user"])
 
-    const handleSubmit = (values) => {
+    function openMessageBox(message, title = 'Error') {
+        const data = { title: title, message: message, show: true };
+        const action = setMessage(data);
+        dispatch(action);
+    }
 
+    const handleSubmit = (values) => {
+        dispatch(setLoading(true));
         axios.post(LOGIN_API, values)
             .then((response) => {
                 // Code for handling the response 
@@ -45,34 +53,30 @@ export default function LoginForm(props) {
                     })
                     const actionUser = setUser(response.data.data.user);
                     dispatch(actionUser);
-                    const actionError = setError(false);
-                    dispatch(actionError);
+                    dispatch(setLoading(false));
                     router.push('/');
                 } else {
-                    const actionError = setError(true);
-                    dispatch(actionError);
+                    dispatch(setLoading(false));
+                    openMessageBox(response.data.message);
                 }
 
             })
             .catch((error) => {
                 if (error.response) {
                     // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    const actionError = setError(true);
-                    dispatch(actionError);
-                    console.log(error.response.data)
+                    // that falls out of the range of 2xx   
+                    dispatch(setLoading(false));
+                    openMessageBox(error.response.data.message);
                 } else if (error.request) {
                     // The request was made but no response was received
                     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                     // http.ClientRequest in node.js
-                    const actionError = setError(true);
-                    dispatch(actionError);
-                    console.log(error.request);
+                    dispatch(setLoading(false));
+                    openMessageBox('No response');
                 } else {
                     // Something happened in setting up the request that triggered an Error
-                    const actionError = setError(true);
-                    dispatch(actionError);
-                    console.log(error.message)
+                    dispatch(setLoading(false));
+                    openMessageBox('Something happened in setting up the request that triggered an Error');
                 }
             })
     }
@@ -81,7 +85,6 @@ export default function LoginForm(props) {
         password: '',
         remember: false
     }
-    const error = useSelector(state => state.loginError);
 
     const validationSchema = Yup.object().shape({
         username: Yup.string().required('This field is required.'),
@@ -108,7 +111,6 @@ export default function LoginForm(props) {
                                 <FormattedMessage id="Sign in" />
                                 <hr />
                             </div>
-                            {error && <p><FormattedMessage id="Login failed" /></p>}
                             <Form className={styles.form}>
                                 <FastField
                                     name="username"

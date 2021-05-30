@@ -35,7 +35,7 @@ export default function PostPage({ postD, permission }) {
     const [comment, toggleComment] = useState(postD.isComment);
     const [activeComment, toggleActiveComment] = useState(false);
     const token = useSelector(state => state.token);
-
+    const user = useSelector(state=>state.infoUser);
     function handleDelete() {
         axios.delete(POSTS_API + id, {
             headers: {
@@ -144,7 +144,7 @@ export default function PostPage({ postD, permission }) {
                         </div>
                     </div>
                     <div className={styles.col}>
-                        <button className={styles.btn}><FontAwesomeIcon icon={faEllipsisV}></FontAwesomeIcon></button>
+                        {user.id == post.user_id ? <button className={styles.btn}><FontAwesomeIcon icon={faEllipsisV}></FontAwesomeIcon></button> : ''}
                         <div className={styles.popup}>
                             <button onClick={() => { toggleEdit(!edit) }}><FormattedMessage id="Edit" /></button>
                             {permission ? <button onClick={handleDelete}><FormattedMessage id="Delete" /></button> : ''}

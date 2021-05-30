@@ -19,32 +19,39 @@
       padding-right: 20px;
     }
   }
-
-  .comment {
-    padding-top: 20px;
-    display: flex;
-    align-items: center;
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
-    .content {
-      padding-left: 10px;
-      display: block;
-      color: var(--text-color-2);
-      width: 100%;
-      overflow-wrap: anywhere;
-
-      .group {
-        border-radius: 20px;
-        background-color: var(--background);
-        padding: 10px;
-        .name {
-          color: var(--text-color-3);
+  .list{
+    display: block;
+    max-height: 300px;
+    overflow-y: scroll;
+    .comment {
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+  
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+      .content {
+        padding-left: 10px;
+        display: block;
+        color: var(--text-color-2);
+        width: 100%;
+        overflow-wrap: anywhere;
+  
+        .group {
+          border-radius: 20px;
+          background-color: var(--background);
+          padding: 10px;
+          .name {
+            color: var(--text-color-3);
+          }
+          .text {
+          }
         }
-        .text {
+        .time{
+          padding-left: 10px;
         }
       }
     }
