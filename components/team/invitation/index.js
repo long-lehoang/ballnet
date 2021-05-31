@@ -14,7 +14,7 @@ export default function Invitation({ team }) {
             </div>
             <div className={styles.lists}>
                 {
-                    team.map((item, key) => {
+                    list.map((item, key) => {
                         return (
                             <Item item={item} key={key} />
                         )
