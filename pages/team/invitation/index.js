@@ -71,7 +71,7 @@ InvitationPage.getInitialProps = async ({ req, res }) => {
         }
     })
     return {
-        errorCode: error,
+        errorCode: errCode,
 
         token: user.access_token,
         username: user.user.username,
