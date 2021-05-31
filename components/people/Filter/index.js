@@ -65,6 +65,19 @@ export default function Filter({people, setPeople, result}){
         setPeople(pp);
     }
 
+    function handleSport(event) {
+        const sport = event.target.value;
+        if (sport == 'all') {
+            setPeople(people);
+            return;
+        }
+        let arr = [...people];
+        let pp = arr.filter(element => {
+            return element.sport == sport;
+        });
+        setPeople(pp);
+    }
+
     useEffect(() => {
         axios.get(SPORT_CATEGORY_API, {
             headers: {
