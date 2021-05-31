@@ -1,7 +1,7 @@
 /**
  * API BALLNET
  */
-export const HOST = 'http://18.222.173.14:8989';
+export const HOST = 'https://18.222.173.14';
 //AUTH
 export const RESET_PASSWORD_API = HOST + '/api/reset-password/';
 export const LOGIN_API = HOST + '/api/login';
