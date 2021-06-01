@@ -8,8 +8,8 @@ import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const geolocateControlStyle = {
-    right: 10,
-    top: 10
+    right: 0,
+    top: 0
 };
 
 export default function GetLocation(props) {
@@ -40,7 +40,7 @@ export default function GetLocation(props) {
                     mapStyle="mapbox://styles/mapbox/streets-v11"
                     mapboxApiAccessToken={MAP_API_KEY}>
 
-                    <Marker latitude={props.lat} longitude={props.lng} offsetLeft={-20} offsetTop={-10}>
+                    <Marker latitude={props.lat} longitude={props.lng} offsetLeft={0} offsetTop={0}>
                         <div className={styles.marker}>
                             <span><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></span>
                         </div>

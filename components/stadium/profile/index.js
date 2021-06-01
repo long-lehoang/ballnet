@@ -16,8 +16,8 @@ import LazyLoad from 'react-lazyload';
 import { FormattedMessage } from 'react-intl';
 
 const geolocateControlStyle = {
-    right: 10,
-    top: 10
+    right: 0,
+    top: 0
 };
 
 export default function StadiumProfile(props) {
@@ -152,7 +152,7 @@ export default function StadiumProfile(props) {
                     onViewportChange={setViewport}
                     mapStyle="mapbox://styles/mapbox/streets-v11"
                     mapboxApiAccessToken={MAP_API_KEY}>
-                    <Marker latitude={lat} longitude={lng} offsetLeft={-20} offsetTop={-10}>
+                    <Marker latitude={lat} longitude={lng} offsetLeft={0} offsetTop={0}>
                         <div className={styles.marker}>
                             <p>{props.stadium.name}</p>
                             <span><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></span>
