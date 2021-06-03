@@ -52,7 +52,7 @@ StadiumProfilePage.getInitialProps = async ({ query, req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data || '')
+    const user = JSON.parse(data || '{}')
     const token = user.access_token;
     let stadium;
     let errCode = false;

@@ -22,7 +22,7 @@ function extractData(data, result = []) {
     else result.push(data);
     return result;
 }
-export default function Home({errorCode, token, username, posts, user }) {
+export default function Home({ errorCode, token, username, posts, user }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -53,7 +53,7 @@ export default function Home({errorCode, token, username, posts, user }) {
 
     return (
         <LayoutMain>
-            <HomePage posts={posts||[]}></HomePage>
+            <HomePage posts={posts || []}></HomePage>
         </LayoutMain>
     )
 }
@@ -61,13 +61,16 @@ export default function Home({errorCode, token, username, posts, user }) {
 
 Home.getInitialProps = async ({ req, res }) => {
     const data = parseCookies(req).user
+
     if (res) {
         if ((data === undefined) || (Object.keys(data).length === 0 && data.constructor === Object)) {
             res.writeHead(301, { Location: "/login", 'Cache-Control': 'no-cache' })
             res.end()
         }
     }
-    const user = JSON.parse(data||'')
+
+
+    const user = JSON.parse(data || '{}')
     const token = user.access_token;
     var posts = [];
     let errCode = false;
@@ -86,7 +89,7 @@ Home.getInitialProps = async ({ req, res }) => {
     }).catch((error) => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     })

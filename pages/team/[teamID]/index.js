@@ -45,14 +45,15 @@ export default function TeamProfilePage({ errorCode, token, username, user, team
 }
 
 TeamProfilePage.getInitialProps = async ({ query, req, res }) => {
-    const data = parseCookies(req).user
     if (res) {
         if ((data === undefined) || (Object.keys(data).length === 0 && data.constructor === Object)) {
             res.writeHead(301, { Location: "/login", 'Cache-Control': 'no-cache' })
             res.end()
         }
     }
-    const user = JSON.parse(data || '')
+    const data = parseCookies(req).user
+
+    const user = JSON.parse(data || '{}')
     const token = user.access_token;
     let team;
     let errCode = false;

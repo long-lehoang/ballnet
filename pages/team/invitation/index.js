@@ -52,7 +52,7 @@ InvitationPage.getInitialProps = async ({ req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data || '')
+    const user = JSON.parse(data || '{}')
     const token = user.access_token;
     let team;
     let errCode = false;

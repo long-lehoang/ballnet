@@ -52,7 +52,7 @@ Post.getInitialProps = async ({ query, req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data || '')
+    const user = JSON.parse(data || '{}')
     const token = user.access_token
     let post;
     let errCode = false;
