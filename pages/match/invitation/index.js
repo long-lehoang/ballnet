@@ -10,8 +10,6 @@ import Error from 'next/error'
 import MatchInvitation from '../../../components/match_invitation';
 
 export default function MatchInvitationPage({errorCode,token, username, user, match}) {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }

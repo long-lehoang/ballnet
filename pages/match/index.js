@@ -10,8 +10,6 @@ import { parseCookies } from '../../lib/cookie';
 import Error from 'next/error'
 
 export default function MatchPage({errorCode,token, username, user, match}) {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
