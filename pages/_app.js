@@ -12,7 +12,6 @@ const languages = {
     vi: require('../locale/vi.json'),
     en: require('../locale/en.json')
 };
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter()

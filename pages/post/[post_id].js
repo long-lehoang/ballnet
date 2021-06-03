@@ -45,6 +45,8 @@ export default function Post({errorCode,token, username, user, post, permisson})
 }
 
 Post.getInitialProps = async ({ query, req, res }) => {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
     const data = parseCookies(req).user
     if (res) {
         if ((data === undefined) || (Object.keys(data).length === 0 && data.constructor === Object)) {
