@@ -15,7 +15,7 @@ import { PROFILE_API } from '../../config/config'
 import axios from 'axios'
 import { setProfile } from '../../slices/profileSlice'
 
-export default function Setting({token, user, username}) {
+export default function Setting({ token, user, username }) {
     const [option, setOption] = useState(1);
 
     function loadComponent(option) {
@@ -88,7 +88,7 @@ Setting.getInitialProps = async ({ req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     return {
         token: user.access_token,
         username: user.user.username,

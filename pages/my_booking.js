@@ -49,7 +49,7 @@ MyBooking.getInitialProps = async ({ req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     const token = user.access_token;
 
     return {

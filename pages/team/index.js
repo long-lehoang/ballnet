@@ -9,7 +9,7 @@ import Team from '../../components/team';
 import { parseCookies } from '../../lib/cookie';
 import Error from 'next/error'
 
-export default function TeamPage({errorCode,token, username, user, team}) {
+export default function TeamPage({ errorCode, token, username, user, team }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -39,7 +39,7 @@ export default function TeamPage({errorCode,token, username, user, team}) {
 
     return (
         <LayoutMain>
-            <Team team={team||[]}></Team>
+            <Team team={team || []}></Team>
         </LayoutMain>
     )
 }
@@ -52,21 +52,21 @@ TeamPage.getInitialProps = async ({ req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     const token = user.access_token;
     let team;
     let errCode = false;
 
-    await axios.get(TEAM_API,{
-        headers:{
+    await axios.get(TEAM_API, {
+        headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then(response=>{
+    }).then(response => {
         team = response.data.data
-    }).catch(error=>{
+    }).catch(error => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     })

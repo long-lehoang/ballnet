@@ -9,7 +9,7 @@ import { parseCookies } from '../../../lib/cookie';
 import Error from 'next/error'
 import MatchInvitation from '../../../components/match_invitation';
 
-export default function MatchInvitationPage({errorCode,token, username, user, match}) {
+export default function MatchInvitationPage({ errorCode, token, username, user, match }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -39,7 +39,7 @@ export default function MatchInvitationPage({errorCode,token, username, user, ma
 
     return (
         <LayoutMain>
-            <MatchInvitation match={match||[]}></MatchInvitation>
+            <MatchInvitation match={match || []}></MatchInvitation>
         </LayoutMain>
     )
 }
@@ -52,21 +52,21 @@ MatchInvitationPage.getInitialProps = async ({ req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     const token = user.access_token;
     let match;
     let errCode = false;
 
-    await axios.get(MATCH_JOINING_API + 'invitation',{
-        headers:{
+    await axios.get(MATCH_JOINING_API + 'invitation', {
+        headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then(response=>{
+    }).then(response => {
         match = response.data.data
-    }).catch(error=>{
+    }).catch(error => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     })

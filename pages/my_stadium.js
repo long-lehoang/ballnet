@@ -16,6 +16,6 @@ MyStadium.getInitialProps = async ({ req, res, next }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     return {}
 }

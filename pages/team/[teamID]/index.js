@@ -9,7 +9,7 @@ import { parseCookies } from '../../../lib/cookie';
 import TeamProfile from '../../../components/team/profile';
 import Error from 'next/error'
 
-export default function TeamProfilePage({errorCode,token, username, user, team}) {
+export default function TeamProfilePage({ errorCode, token, username, user, team }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -39,7 +39,7 @@ export default function TeamProfilePage({errorCode,token, username, user, team})
 
     return (
         <LayoutMain>
-            <TeamProfile team={team||[]} isMember={team.isMember} isAdmin={team.isAdmin} isCaptain={team.isCaptain}></TeamProfile>
+            <TeamProfile team={team || []} isMember={team.isMember} isAdmin={team.isAdmin} isCaptain={team.isCaptain}></TeamProfile>
         </LayoutMain>
     )
 }
@@ -52,21 +52,21 @@ TeamProfilePage.getInitialProps = async ({ query, req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     const token = user.access_token;
     let team;
     let errCode = false;
 
-    await axios.get(TEAM_API + `${query.teamID}`,{
-        headers:{
+    await axios.get(TEAM_API + `${query.teamID}`, {
+        headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then(response=>{
+    }).then(response => {
         team = response.data.data
-    }).catch(error=>{
+    }).catch(error => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     });

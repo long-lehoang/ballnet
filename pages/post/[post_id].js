@@ -9,7 +9,7 @@ import { setProfile } from '../../slices/profileSlice';
 import { setToken } from '../../slices/tokenSlice';
 import Error from 'next/error'
 
-export default function Post({errorCode,token, username, user, post, permisson}) {
+export default function Post({ errorCode, token, username, user, post, permisson }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -52,7 +52,7 @@ Post.getInitialProps = async ({ query, req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     const token = user.access_token
     let post;
     let errCode = false;
@@ -61,20 +61,20 @@ Post.getInitialProps = async ({ query, req, res }) => {
         headers: {
             'Authorization': `Bearer ${token}`
         }
-    }).then((response)=>{
+    }).then((response) => {
         post = response.data.data;
-    }).catch((error)=>{
+    }).catch((error) => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     })
     return {
         errorCode: errCode,
 
-        token: user.access_token, 
-        username: user.user.username, 
+        token: user.access_token,
+        username: user.user.username,
         user: user.user,
         post: post,
         permisson: post.author.username === user.user.username

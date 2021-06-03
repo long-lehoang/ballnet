@@ -36,7 +36,7 @@ Message.getInitialProps = async ({ req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     return {
         token: user.access_token,
         username: user.user.username

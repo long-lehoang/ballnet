@@ -9,7 +9,7 @@ import People from '../../components/people';
 import { parseCookies } from '../../lib/cookie';
 import Error from 'next/error'
 
-export default function PeoplePage({errorCode,token, username, user, people}) {
+export default function PeoplePage({ errorCode, token, username, user, people }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -39,7 +39,7 @@ export default function PeoplePage({errorCode,token, username, user, people}) {
 
     return (
         <LayoutMain>
-            <People people={people||[]}></People>
+            <People people={people || []}></People>
         </LayoutMain>
     )
 }
@@ -52,21 +52,21 @@ PeoplePage.getInitialProps = async ({ req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     const token = user.access_token;
     let people;
     let errCode = false;
 
-    await axios.get(PEOPLE_API,{
-        headers:{
+    await axios.get(PEOPLE_API, {
+        headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then(response=>{
+    }).then(response => {
         people = response.data.data
-    }).catch(error=>{
+    }).catch(error => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     })

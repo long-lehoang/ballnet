@@ -9,7 +9,7 @@ import { setUser } from '../slices/infoUserSlice';
 import { setProfile } from '../slices/profileSlice';
 import { setToken } from '../slices/tokenSlice';
 
-export default function UserProfile({errorCode, token, username, user, permission, userN, profileN}) {
+export default function UserProfile({ errorCode, token, username, user, permission, userN, profileN }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -45,7 +45,7 @@ export default function UserProfile({errorCode, token, username, user, permissio
     )
 }
 
-UserProfile.getInitialProps = async ({query, req, res }) => {
+UserProfile.getInitialProps = async ({ query, req, res }) => {
     const data = parseCookies(req).user
     if (res) {
         if ((data === undefined) || (Object.keys(data).length === 0 && data.constructor === Object)) {
@@ -53,7 +53,7 @@ UserProfile.getInitialProps = async ({query, req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data);
+    const user = JSON.parse(data || '');
     const token = user.access_token;
     let profileN, userN;
     let errCode = false;
@@ -66,7 +66,7 @@ UserProfile.getInitialProps = async ({query, req, res }) => {
     }).catch((error) => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     });
@@ -81,7 +81,7 @@ UserProfile.getInitialProps = async ({query, req, res }) => {
     }).catch((error) => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     });

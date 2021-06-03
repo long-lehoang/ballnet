@@ -6,10 +6,10 @@ import axios from 'axios';
 import { setProfile } from '../../../slices/profileSlice';
 import FriendRequest from '../../../components/people/friend_request';
 import { parseCookies } from '../../../lib/cookie';
-import { FRIEND_REQUESTS_API,PROFILE_API } from '../../../config/config';
+import { FRIEND_REQUESTS_API, PROFILE_API } from '../../../config/config';
 import Error from 'next/error'
 
-export default function FriendRequestPage({errorCode,token, username, user, friendRequest}) {
+export default function FriendRequestPage({ errorCode, token, username, user, friendRequest }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -36,10 +36,10 @@ export default function FriendRequestPage({errorCode,token, username, user, frie
             dispatch(actionProfile);
         })
     }
-    
+
     return (
         <LayoutMain>
-            <FriendRequest friendRequest={friendRequest||[]}></FriendRequest>
+            <FriendRequest friendRequest={friendRequest || []}></FriendRequest>
         </LayoutMain>
     )
 }
@@ -52,21 +52,21 @@ FriendRequestPage.getInitialProps = async ({ req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     const token = user.access_token;
     let friendRequest;
     let errCode = false;
 
-    await axios.get(FRIEND_REQUESTS_API,{
-        headers:{
+    await axios.get(FRIEND_REQUESTS_API, {
+        headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then(response=>{
+    }).then(response => {
         friendRequest = response.data.data
-    }).catch(error=>{
+    }).catch(error => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     })

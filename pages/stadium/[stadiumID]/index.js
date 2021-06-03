@@ -9,7 +9,7 @@ import { parseCookies } from '../../../lib/cookie';
 import Error from 'next/error'
 import StadiumProfile from '../../../components/stadium/profile';
 
-export default function StadiumProfilePage({errorCode,token, username, user, stadium}) {
+export default function StadiumProfilePage({ errorCode, token, username, user, stadium }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
@@ -44,7 +44,7 @@ export default function StadiumProfilePage({errorCode,token, username, user, sta
     )
 }
 
-StadiumProfilePage.getInitialProps = async ({query, req, res }) => {
+StadiumProfilePage.getInitialProps = async ({ query, req, res }) => {
     const data = parseCookies(req).user
     if (res) {
         if ((data === undefined) || (Object.keys(data).length === 0 && data.constructor === Object)) {
@@ -52,21 +52,21 @@ StadiumProfilePage.getInitialProps = async ({query, req, res }) => {
             res.end()
         }
     }
-    const user = JSON.parse(data)
+    const user = JSON.parse(data || '')
     const token = user.access_token;
     let stadium;
     let errCode = false;
 
-    await axios.get(STADIUM_API + query.stadiumID,{
-        headers:{
+    await axios.get(STADIUM_API + query.stadiumID, {
+        headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then(response=>{
+    }).then(response => {
         stadium = response.data.data
-    }).catch(error=>{
+    }).catch(error => {
         if (error.response) {
             errCode = error.response.status;
-        }else{
+        } else {
             errCode = 500;
         }
     })
