@@ -215,7 +215,7 @@ export default function Header() {
                 <Link href={"/" + link_profile}>
                     <div className={styles.profile}>
                         <div className={styles.avatar}>
-                            <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar}></img>
+                            <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} alt="Avatar"></img>
                         </div>
                         <div className={styles.name}>{user != null ? user.name : "No Name"}</div>
                     </div>

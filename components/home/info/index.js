@@ -48,7 +48,7 @@ export default function InfoHome() {
         <div className={styles.container}>
             <div className={styles.row}>
                 <Link href={"/" + link_profile}>
-                    <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
+                    <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} alt="Avatar"></img>
                 </Link>
             </div>
             <div className={styles.row}>

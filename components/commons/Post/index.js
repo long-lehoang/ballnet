@@ -139,7 +139,7 @@ export default function Post(props) {
             <div className={styles.header}>
                 <div className={styles.col}>
                     <div className={styles.avatar}>
-                        <img src={avatarAuthor == '' ? AVATAR : avatarAuthor}></img>
+                        <img src={avatarAuthor == '' ? AVATAR : avatarAuthor} alt="Avatar"></img>
                     </div>
                     <div className={styles.text}>
                         <div className={styles.name}>
@@ -165,7 +165,7 @@ export default function Post(props) {
                 <span>{content}</span>
                 <div className={styles.images}>
                     {images.map((img, key) => {
-                        return (<img key={key} src={HOST + img}></img>)
+                        return (<img key={key} src={HOST + img} alt="Image of post"></img>)
                     })}
                 </div>
             </div>
