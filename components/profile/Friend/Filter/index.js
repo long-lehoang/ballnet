@@ -54,12 +54,12 @@ export default function Filter({ friends, setFriend, result }) {
         <div className={styles.container}>
             <div>
                 <select className={styles.group} onChange={handleGroup}>
-                    <option value="all"><FormattedMessage id="All Friends" /></option>
-                    <option value="new"><FormattedMessage id="New Friends" /></option>
+                    <option value="all">Tất cả</option>
+                    <option value="new">Bạn mới</option>
                 </select>
                 <select className={styles.sort} onChange={handleSort}>
-                    <option value="asc"><FormattedMessage id="A-Z" /></option>
-                    <option value="desc"><FormattedMessage id="Z-A" /></option>
+                    <option value="asc">A-Z</option>
+                    <option value="desc">Z-A</option>
                 </select>
             </div>
             <div className={styles.find}>
