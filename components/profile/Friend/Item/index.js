@@ -53,7 +53,7 @@ export default function Item({ friend }) {
     return (
         <div className={styles.container}>
             <div className={styles.left} >
-                <img src={avatar} ></img>
+                <Link href={`/${friend.username}`}><img src={avatar} ></img></Link>
                 <div className={styles.info}>
                     <p className={styles.name}>{friend.name}</p>
                     <p className={styles.sub}>{info}</p>
