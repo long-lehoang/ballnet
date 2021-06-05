@@ -150,7 +150,7 @@ export default function CreatePostForm({ team = false, list, setList }) {
     }, [null]);
     return (
         <div className={styles.container}>
-            <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
+            <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} alt="Avatar"></img>
             <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
                 <Modal.Header className={styles.header} closeButton>
                     <Modal.Title className={styles.title}><FormattedMessage id="Create Post" /></Modal.Title>
@@ -158,7 +158,7 @@ export default function CreatePostForm({ team = false, list, setList }) {
                 <Modal.Body className={styles.body}>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.title}>
-                            <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} width="40px" height="40px"></img>
+                            <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar} alt="Avatar" width="40px" height="40px"></img>
                             <div className={styles.name}>
                                 <div>
                                     {user.name} 

@@ -73,7 +73,7 @@ export default function FriendRequest() {
                         <div key={key} className={styles.element}>
                             <div className={styles.col}>
                                 <div className={styles.avatar}>
-                                    <img src={element.avatar == null ? AVATAR : HOST + element.avatar}></img>
+                                    <img src={element.avatar == null ? AVATAR : HOST + element.avatar} alt="Avatar"></img>
                                 </div>
                                 <div className={styles.description}>
                                     <div className={styles.name}>

@@ -47,7 +47,7 @@ export default function FriendSuggest() {
                         <div key={key} className={styles.element}>
                             <div className={styles.col}>
                                 <div className={styles.avatar}>
-                                    <img src={element.info.avatar == null ? AVATAR : HOST + element.info.avatar}></img>
+                                    <img src={element.info.avatar == null ? AVATAR : HOST + element.info.avatar} alt="Avatar"></img>
                                 </div>
                                 <div className={styles.description}>
                                     <div className={styles.name}>
