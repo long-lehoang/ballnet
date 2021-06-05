@@ -10,6 +10,7 @@ export default function LayoutMain({ children }) {
             <Head>
                 <title>BallNet</title>
                 <link rel="icon" href="/logo.png" />
+                <meta name="description" content="Ballnet is social networking for sporter."/>  
             </Head>
 
             <main className={styles.main}>
