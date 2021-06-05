@@ -15,8 +15,8 @@
     "Match": "Match",
     "Stadium": "Stadium",
     "Login": "Login",
-    "Exact Location":"Exact Location",
-    "Get Location":"Get Location",
+    "Exact Location": "Exact Location",
+    "Get Location": "Get Location",
     "Logout": "Logout",
     "Signup": "Signup",
     "People": "People",
@@ -27,6 +27,7 @@
     "Account Setting": "Account Setting",
     "My Stadium": "My Stadium",
     "My Booking": "My Booking",
+    "Created at": "Team is created at",
     "No notification": "No notification",
     "Sign in": "Sign in",
     "Sign up": "Sign up",
@@ -144,5 +145,5 @@
     "Review Member": "Review Member",
     "Submit": "Submit",
     "Review Stadium": "Review Stadium",
-    "Loading":"Loading"
+    "Loading": "Loading"
 }

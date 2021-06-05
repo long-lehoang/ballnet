@@ -24,7 +24,7 @@ export default function Info({ team, permission }) {
     const [editLocation, toggleEditLocation] = useState(false);
     const [editAdmin, toggleEditAdmin] = useState(false);
     const created_at = new Date(team.created_at);
-    const establish = `Team created at ${created_at.getDate()}/${created_at.getMonth() + 1}/${created_at.getFullYear()}`;
+    const establish = `${created_at.getDate()}/${created_at.getMonth() + 1}/${created_at.getFullYear()}`;
     const token = useSelector(state => state.token);
     useEffect(() => {
         axios.get(TEAM_API + `${team.id}/admin`, {
@@ -83,7 +83,7 @@ export default function Info({ team, permission }) {
                 <div className={styles.title}>
                     <span><FormattedMessage id="Establish" /></span>
                 </div>
-                <div className={styles.content}>{establish}</div>
+                <div className={styles.content}><FormattedMessage id="Created at"/> {establish}</div>
             </div>
             <div className={styles.box}>
                 <EditAdmin show={editAdmin} setShow={toggleEditAdmin} value={admins} members={members} id={team.id} setValue={setAdmins}></EditAdmin>
