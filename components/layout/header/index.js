@@ -72,9 +72,8 @@ export default function Header() {
                     'Authorization': `Bearer ${token}`
                 }
             }).then(response => {
-                console.log(response.data.message);
             }).catch(error => {
-                console.log(error.message);
+                console.log(error);
             })
         }
         setNewNotice(0);

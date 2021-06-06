@@ -66,7 +66,6 @@ export default function Item({ item }) {
                 Authorization: `Bearer ${token}`
             }
         }).then(response => {
-            console.log(response.data);
             if (option == 1) {
                 if (response.data.data.status == 'active') {
                     setIsJoin1(true);
@@ -158,7 +157,6 @@ export default function Item({ item }) {
     }
 
     function handleAccept(option) {
-        console.log("ok");
         var formData = new FormData();
         let id = option == 2 ? idRequest2 : idRequest1
         axios.put(MATCH_JOINING_API + id, formData, {

@@ -40,7 +40,7 @@ export default function InfoHome() {
                 setSport(response.data.data.sport || "");
                 dispatch(setLoading(false));
             }).catch((error) => {
-                console.log(error.response)
+                console.log(error)
             })
         }
     }, [user])

@@ -30,9 +30,8 @@ export default function Info(props) {
             }
         }).then((response) => {
             setSport(response.data.data);
-            console.log(response.data.data);
         }).catch((error) => {
-            console.log(error.response)
+            console.log(error)
         })
     }, [null]);
 

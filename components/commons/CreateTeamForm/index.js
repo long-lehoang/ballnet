@@ -103,7 +103,6 @@ export default function CreateTeamForm({ teams, setTeams }) {
                 openMessageBox(error.response.data.message);
             })
         } else {
-            console.log(validation);
             setError(validation);
         }
     }

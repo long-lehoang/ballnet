@@ -19,7 +19,7 @@ export default function MatchInvitation({team}){
         }).then(response=>{
             setList(response.data.data);
         }).catch(error=>{
-            console.log(error.response.data.message)
+            console.log(error)
         })
     }, [null]);
 
@@ -29,7 +29,6 @@ export default function MatchInvitation({team}){
                 {list.map((element,key)=>{
                     return(
                         <LazyLoad key={key} height={200} placeholder={<Loading/>}>
-                            {console.log(element)}                       
                             <Item item={element} team={team} key={key}></Item>
                         </LazyLoad>
                     )

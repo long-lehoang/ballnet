@@ -14,6 +14,8 @@ import { useRouter } from 'next/dist/client/router';
 import ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl';
 import LazyLoad from 'react-lazyload';
 import { FormattedMessage } from 'react-intl';
+import { validateFile } from '../../../lib/image';
+import { setLoading } from '../../../slices/loadingSlice';
 
 const geolocateControlStyle = {
     right: 0,
@@ -52,6 +54,11 @@ export default function StadiumProfile(props) {
     }
 
     function handleCover(event) {
+        if(!validateFile(event.target)){
+            return false;
+        }
+        dispatch(setLoading(true));
+
         var formData = new FormData();
         formData.append('image', event.target.files[0]);
 
@@ -62,8 +69,11 @@ export default function StadiumProfile(props) {
         }).then((response) => {
             let url = URL.createObjectURL(event.target.files[0]);
             setImg(url);
+            dispatch(setLoading(false));
+
         }).catch((error) => {
-            console.log(error);
+            dispatch(setLoading(false));
+
             openMessageBox('Có lỗi xảy ra trong quá trình thay đổi ảnh bìa.')
         });
     }
@@ -106,7 +116,7 @@ export default function StadiumProfile(props) {
                 id={props.stadium.id}
             />
             <img className={styles.img} src={img}></img>
-            {permission ? <input type="file" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
+            {permission ? <input type="file" accept=".jpg, .png, .jpeg" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
             {permission ? <label for="btn-change"><FormattedMessage id="Change" /></label> : ''}
             <div className={styles.info}>
                 <div className={styles.group}>

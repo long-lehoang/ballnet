@@ -76,7 +76,6 @@ UserProfile.getInitialProps = async ({ query, req, res }) => {
             'Authorization': `Bearer ${token}`
         }
     }).then((response) => {
-        console.log(response.data.data);
         userN = response.data.data;
     }).catch((error) => {
         if (error.response) {

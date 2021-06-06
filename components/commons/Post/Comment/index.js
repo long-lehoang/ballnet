@@ -43,7 +43,7 @@ export default function Comment(props) {
 
             setComment("");
         }).catch((error) => {
-            console.log(error.message);
+            console.log(error);
         });
     }
 

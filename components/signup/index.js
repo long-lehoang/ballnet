@@ -35,7 +35,6 @@ export default function SignupForm(props) {
         >
             {formikProps => {
                 const { values, errors, touched } = formikProps;
-                console.log({ values, errors, touched });
 
                 return (
                     <div className={styles.container}>

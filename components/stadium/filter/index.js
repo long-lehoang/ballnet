@@ -86,7 +86,7 @@ export default function Filter({ stadium, setStadium, result }) {
         }).then(response => {
             setSport(response.data.data);
         }).catch(error => {
-            console.log(error.response.data.message);
+            console.log(error);
         })
 
     }, [null]);

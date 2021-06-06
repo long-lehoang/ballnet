@@ -27,7 +27,6 @@ export default function Item({ item }) {
         }).then((response) => {
             setLeave(true);
         }).catch(error => {
-            console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình rời đội.')
         })
     }
@@ -43,7 +42,6 @@ export default function Item({ item }) {
             setJoin(true);
             setIdRequest(response.data.data);
         }).catch(error => {
-            console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình tham gia đội.')
         });
     }
@@ -55,12 +53,10 @@ export default function Item({ item }) {
         }).then((response) => {
             setJoin(false);
         }).catch(error => {
-            console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
         });
     }
     function handleMessage() {
-        console.log("add");
     }
 
     function openMessageBox(message, title = 'Error') {

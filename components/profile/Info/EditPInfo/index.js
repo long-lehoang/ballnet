@@ -45,7 +45,6 @@ export default function EditPInfo(props){
 
             props.setEmail(email);
         }).catch((error)=>{
-            console.log(error);
             err = true;
             setErrEmail("Can't update email !");
         });
@@ -59,7 +58,6 @@ export default function EditPInfo(props){
         }).then((response)=>{
             props.setPhone(phone);
         }).catch((error)=>{
-            console.log(error);
             err = true;
 
             setErrPhone("Can't update phone !");
@@ -75,7 +73,6 @@ export default function EditPInfo(props){
             props.setBirthday(birthday);
         }).catch((error)=>{
             err = true;
-            console.log(error);
             setErrBirthday("Can't update birthday !");
         });
         if(!err)

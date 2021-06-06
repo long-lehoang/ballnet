@@ -20,6 +20,8 @@ import { Router, useRouter } from 'next/dist/client/router';
 import ChangeCaptain from './ChangeCaptain';
 import MatchInvitation from './MatchInvitation';
 import { FormattedMessage } from 'react-intl';
+import { validateFile } from '../../../lib/image';
+import { setLoading } from '../../../slices/loadingSlice';
 
 
 export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
@@ -56,6 +58,10 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
     }
 
     function handleCover(event) {
+        if(!validateFile(event.target)){
+            return false;
+        }
+        dispatch(setLoading(true));
         var formData = new FormData();
         formData.append('image', event.target.files[0]);
 
@@ -66,8 +72,10 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
         }).then((response) => {
             let url = URL.createObjectURL(event.target.files[0]);
             setCover(url);
+            dispatch(setLoading(false));
+
         }).catch((error) => {
-            console.log(error);
+            dispatch(setLoading(false));
             openMessageBox('Có lỗi xảy ra trong quá trình thay đổi ảnh bìa.')
 
         });
@@ -85,7 +93,6 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
                 setMember(false);
                 router.push('/');
             }).catch(error => {
-                console.log(error);
                 openMessageBox(error.response.data.message);
             })
         }
@@ -102,7 +109,6 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
             setWaiting(true);
             setIdRequest(response.data.data);
         }).catch(error => {
-            console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình tham gia đội.')
         });
     }
@@ -114,7 +120,6 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
         }).then((response) => {
             setWaiting(false);
         }).catch(error => {
-            console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
         });
     }
@@ -128,7 +133,6 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
             setMember(true);
             setInvited(false);
         }).catch(error => {
-            console.log(error);
             openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
         });
 
@@ -155,7 +159,7 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
         <div className={styles.container}>
             <div className={styles.top}>
                 <img src={cover} key={cover} className={styles.cover}></img>
-                {isCaptain ? <input type="file" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
+                {isCaptain ? <input type="file" accept=".jpg, .png, .jpeg" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
                 {isCaptain ? <label for="btn-change"><FormattedMessage id="Change" /></label> : ''}
             </div>
             <div className={styles.content}>

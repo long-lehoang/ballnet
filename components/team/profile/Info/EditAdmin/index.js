@@ -34,12 +34,9 @@ export default function EditAdmin(props) {
     const token = useSelector(state => state.token);
     const dispatch = useDispatch();
     function handleSelect(value) {
-        var a = ids;
         let arrIdOption = value.map(val => val.value);
-        console.log(arrIdOption);
         let arrId = ids.concat(arrIdOption);
         let admins = props.members.filter(member => arrId.includes(member.id));
-        console.log(admins);
         setIds(arrId);
         setAdmin(admins);
     }

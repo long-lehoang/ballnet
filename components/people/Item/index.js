@@ -31,7 +31,6 @@ export default function Item({ item }) {
             setIdRequest(response.data.data);
 
         }).catch(error => {
-            console.log(error);
             openMessageBox("Error happened when add friend");
         })
     }
@@ -93,7 +92,6 @@ export default function Item({ item }) {
     }
 
     function handleMessage() {
-        console.log("add");
     }
     return (
         <div className={styles.container}>

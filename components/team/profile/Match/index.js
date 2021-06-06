@@ -20,7 +20,7 @@ export default function Match({team}){
         }).then(response=>{
             setList(response.data.data);
         }).catch(error=>{
-            console.log(error.response.data.message)
+            console.log(error)
         })
     }, [null]);
 

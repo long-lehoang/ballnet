@@ -71,7 +71,6 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
                 Authorization: `Bearer ${token}`
             }
         }).then(response => {
-            console.log(response.data.data);
             let arr = JSON.parse(JSON.stringify(matchs));
             arr.unshift(response.data.data)
             setMatchs(arr);

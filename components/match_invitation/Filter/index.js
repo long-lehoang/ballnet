@@ -85,7 +85,7 @@ export default function Filter({ match, setMatch, result }) {
         }).then(response => {
             setSport(response.data.data);
         }).catch(error => {
-            console.log(error.response.data.message);
+            console.log(error);
         })
 
     }, [null]);

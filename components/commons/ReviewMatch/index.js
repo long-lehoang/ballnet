@@ -23,12 +23,10 @@ export default function ReviewMatch({ show, setShow, match_id, setDel }) {
             results[1] = event.target.value
         }
         results = results.join(' - ');
-        console.log(results);
         setResult(results);
     }
 
     function handleRatingTeam(newRating) {
-        console.log(newRating);
         setRatingTeam(newRating);
     }
 

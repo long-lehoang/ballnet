@@ -20,6 +20,8 @@ import Link from 'next/link';
 import { setMessage } from '../../slices/messageSlice';
 import { useRouter } from 'next/router';
 import { FormattedMessage } from 'react-intl';
+import { validateFile } from '../../lib/image';
+import { setLoading } from '../../slices/loadingSlice';
 
 
 
@@ -57,6 +59,10 @@ export default function Profile({ permission, userN, profileN }) {
     }
 
     function handleCover(event) {
+        if(!validateFile(event.target)){
+            return false;
+        }
+        dispatch(setLoading(true));
         var formData = new FormData();
         formData.append('image', event.target.files[0]);
 
@@ -67,7 +73,10 @@ export default function Profile({ permission, userN, profileN }) {
         }).then((response) => {
             let url = URL.createObjectURL(event.target.files[0]);
             setCover(url);
+            dispatch(setLoading(false));
+
         }).catch((error) => {
+            dispatch(setLoading(false));
             console.log(error);
         });
     }
@@ -95,7 +104,6 @@ export default function Profile({ permission, userN, profileN }) {
             setFriend(false);
             router.push('/');
         }).catch(error => {
-            console.log(error);
             openMessageBox("Error happened when unfriend");
 
         })
@@ -148,7 +156,7 @@ export default function Profile({ permission, userN, profileN }) {
         <div className={styles.container}>
             <div className={styles.top}>
                 <img src={cover} key={cover} className={styles.cover}></img>
-                {permission ? <input type="file" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
+                {permission ? <input type="file" accept=".jpg, .png, .jpeg" name="image" id="btn-change" onChange={handleCover} className={styles.btnChange}></input> : ''}
                 {permission ? <label for="btn-change"><FormattedMessage id="Change" /></label> : ''}
             </div>
             <div className={styles.content}>

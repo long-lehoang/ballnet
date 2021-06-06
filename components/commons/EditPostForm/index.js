@@ -10,6 +10,7 @@ import axios from 'axios';
 import { FormattedMessage } from 'react-intl';
 import { setMessage } from '../../../slices/messageSlice';
 import { setLoading } from '../../../slices/loadingSlice';
+import { validateFile } from '../../../lib/image';
 
 export default function EditPostForm(props) {
     const [permission, setPermission] = useState(props.permission);
@@ -50,9 +51,11 @@ export default function EditPostForm(props) {
     }
 
     function handleImage(event) {
+        if(!validateFile(event.target)){
+            return false;
+        }
         let img = images;
         let result = [...preview];
-        console.log(event.target.files);
         for (let i = 0; i < event.target.files.length; i++) {
             img.push(event.target.files[i]);
             let url = URL.createObjectURL(event.target.files[i]);
@@ -134,7 +137,6 @@ export default function EditPostForm(props) {
                 });
             });
             setOption(response.data.data);
-            // console.log(options);
             setOptionSearch(options);
         });
     }, [null]);
@@ -177,7 +179,7 @@ export default function EditPostForm(props) {
                             <span className={styles.left}><FormattedMessage id="Add to your post" /></span>
                             <div className={styles.right}>
                                 <label for="image"><FontAwesomeIcon className={styles.iconImage} icon={faImage}></FontAwesomeIcon></label>
-                                <input id="image" type="file" multiple onChange={(event) => handleImage(event)} />
+                                <input id="image" type="file" multiple accept=".jpg, .png, .jpeg" onChange={(event) => handleImage(event)} />
                                 <label for="tag"><FontAwesomeIcon className={styles.iconTag} icon={faUser}></FontAwesomeIcon></label>
                                 <input id="tag" type="button" onClick={() => setShowListFriends(true)}></input>
                                 <label for="location"><FontAwesomeIcon className={styles.iconLocation} icon={faMapMarkedAlt}></FontAwesomeIcon></label>

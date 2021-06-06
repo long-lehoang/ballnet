@@ -88,7 +88,6 @@ export default function GeneralSetting() {
                 const actionUser = setUser(response.data.data);
                 dispatch(actionUser);
             }).catch((error) => {
-                console.log(error);
                 setResult("Failed to save name");
             });
 
@@ -114,7 +113,6 @@ export default function GeneralSetting() {
                 setResult("Failed to save username");
             })
         } else {
-            console.log("false");
             return false;
         }
     }

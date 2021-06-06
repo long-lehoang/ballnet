@@ -19,7 +19,7 @@ export default function Match({user_id}){
         }).then(response=>{
             setList(response.data.data);
         }).catch(error=>{
-            console.log(error.response.data.message)
+            console.log(error)
         })
     }, [null]);
 

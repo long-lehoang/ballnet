@@ -39,9 +39,8 @@ export default function Post(props) {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-            console.log(response.data.message);
         }).catch((error) => {
-            console.log(error.message);
+            console.log(error);
         });
     }
 
@@ -53,7 +52,6 @@ export default function Post(props) {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((response) => {
-                console.log(response.data.data);
                 let result = response.data.data;
                 setNameAuthor(result.author.name);
                 setUsernameAuthor(result.author.username);
@@ -84,9 +82,8 @@ export default function Post(props) {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((response) => {
-                console.log(response.data.message);
             }).catch((error) => {
-                console.log(error.message);
+                console.log(error);
             });
         } else {
             toggleLike(true);
@@ -96,9 +93,8 @@ export default function Post(props) {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((response) => {
-                console.log(response.data.message);
             }).catch((error) => {
-                console.log(error.message);
+                console.log(error);
             });
         }
     }
@@ -114,9 +110,8 @@ export default function Post(props) {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((response) => {
-                console.log(response.data.message);
             }).catch((error) => {
-                console.log(error.message);
+                console.log(error);
             });
         } else {
             toggleShare(true);
@@ -127,9 +122,8 @@ export default function Post(props) {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((response) => {
-                console.log(response.data.message);
             }).catch((error) => {
-                console.log(error.message);
+                console.log(error);
             });
         }
     }

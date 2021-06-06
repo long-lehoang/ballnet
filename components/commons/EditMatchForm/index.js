@@ -91,7 +91,6 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
     function selectCity(event)
     {
         const nameCity = event.target.value;
-        console.log(nameCity);
         //set options for select district
         if(nameCity !== 'Select City'){
             const obj = location.find((element) => element.Name === nameCity);
@@ -121,7 +120,6 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
     }
     
     useEffect(()=>{
-        console.log(check);
         setCheck(validate());
     })
 
@@ -132,7 +130,6 @@ export default function EditMatchForm({item, show, setShow,setParentTypeSport, s
             }
         }).then(response=>{
             setListType(response.data.data);
-            console.log(response.data.data);
         }).catch(error=>{
             console.log(error.response.data.message)
         })

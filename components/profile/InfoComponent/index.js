@@ -7,6 +7,8 @@ import { AVATAR, FOLLOWS_API, FRIENDS_API, HOST, PROFILE_API, SPORT_API } from '
 import styles from './styles.module.scss';
 import { setProfile } from '../../../slices/profileSlice';
 import { FormattedMessage } from 'react-intl';
+import { validateFile } from '../../../lib/image';
+import { setLoading } from '../../../slices/loadingSlice';
 
 export default function InfoComponent(props) {
     const [avatar, setAvatar] = useState(props.profile.avatar !== null ? (HOST + props.profile.avatar) : AVATAR);
@@ -28,7 +30,7 @@ export default function InfoComponent(props) {
         }).then((response) => {
             setFriend(response.data.data)
         }).catch((error) => {
-            console.log(error.response)
+            console.log(error)
         });
 
         // axios.get(FOLLOWS_API + props.username + '/count', {
@@ -49,11 +51,15 @@ export default function InfoComponent(props) {
             setMatch(response.data.data.num_match || 0);
             setSport(response.data.data.sport || "");
         }).catch((error) => {
-            console.log(error.response)
+            console.log(error)
         })
     }, [null])
 
     function handleAvatar(event) {
+        if(!validateFile(event.target)){
+            return false;
+        }
+        dispatch(setLoading(true));
         var formData = new FormData();
         formData.append('image', event.target.files[0]);
 
@@ -65,7 +71,9 @@ export default function InfoComponent(props) {
             let url = URL.createObjectURL(event.target.files[0]);
             setAvatar(url);
             dispatch(setProfile(response.data.data));
+            dispatch(setLoading(false));
         }).catch((error) => {
+            dispatch(setLoading(false));
             console.log(error);
         });
     }
@@ -75,7 +83,7 @@ export default function InfoComponent(props) {
             <div className={styles.avatar}>
                 <img src={avatar} key={avatar}></img>
                 {props.permission ? <label for="button-avatar"><FontAwesomeIcon height={20} icon={faCamera}></FontAwesomeIcon></label> : ''}
-                {props.permission ? <input id="button-avatar" type="file" onChange={handleAvatar}></input> : ''}
+                {props.permission ? <input id="button-avatar" type="file" accept=".jpg, .png, .jpeg" onChange={handleAvatar}></input> : ''}
             </div>
             <div className={styles.friend_follow}>
                 {/* <div>

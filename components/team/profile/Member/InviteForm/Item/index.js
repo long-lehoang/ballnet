@@ -18,7 +18,6 @@ export default function Item({ id, avatar, name, username }) {
     function handleInvite() {
         let formData = new FormData();
         let team_id = router.query.teamID;
-        console.log(team_id);
         formData.append('user_id', id);
         formData.append('team_id', team_id);
 
