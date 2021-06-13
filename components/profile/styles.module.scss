@@ -1,11 +1,13 @@
 .container{
-    width: 100%;
+    width: 100vw;
     height: 100%;
+    position: absolute;
+    top: 57px;
+    left: 0;
     .top{
         width: 100%;
         background-color: rgb(187, 187, 187);
         position: relative;
-        width: 100%;
         height: calc(100vw*0.25);
         overflow: hidden;
         .cover{
@@ -38,11 +40,14 @@
     }
     .content{
         width: 100%;
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
         display: grid;
         grid-template-columns: 1fr 2.2fr 1fr;
         grid-gap: 30px;
         background-color: inherit;
-        padding: 20px 10%;
+        padding: 20px 50px;
         .left{
             .item{
                 padding-bottom: 20px;
@@ -207,7 +212,10 @@
             grid-template-columns: 1fr 2.2fr 1fr;
             grid-gap: 30px;
             background-color: inherit;
-            padding: 20px 10%;
+            padding: 20px 50px;        
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
             .left{
                 display: block !important;
             }
@@ -230,7 +238,10 @@
             grid-template-columns: 1fr 2.2fr 1fr;
             grid-gap: 30px;
             background-color: inherit;
-            padding: 20px 10%;
+            padding: 20px 50px;        
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
             .left{
                 display: block !important;
             }

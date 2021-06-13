@@ -13,9 +13,9 @@ export default function ComboAvatar({list = []}) {
     
     return (
         <div className={styles.container}>
-            {img1 !== undefined ?<img className={styles.item1} key={1} src={img1}></img> : ''}
-            {img2 !== undefined ?<img className={styles.item2} key={2} src={img2}></img> : ''}
-            {img3 !== undefined ?<img className={styles.item3} key={3} src={img3}></img> : ''}
+            {img1 !== undefined ?<img className={img2 === undefined ? styles.item11 : styles.item1} key={1} src={img1}></img> : ''}
+            {img2 !== undefined ?<img className={img3 === undefined ? styles.item22 : num === undefined ? styles.item222 : styles.item2} key={2} src={img2}></img> : ''}
+            {img3 !== undefined ?<img className={num === undefined ? styles.item33 : styles.item3} key={3} src={img3}></img> : ''}
             {num !== undefined ?<span className={styles.item4}>+{num}</span> : ''}
         </div>
     )
