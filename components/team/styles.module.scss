@@ -13,6 +13,17 @@
         // grid-auto-columns: 260px;
         // grid-auto-rows: 280px;
         gap: 10px;
+        .addComp{
+            img{
+                height: 100px;
+                width: 100px;
+                cursor: pointer;
+                border-radius: 50%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+        }
     }
 }
 

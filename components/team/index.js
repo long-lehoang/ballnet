@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import LazyLoad from 'react-lazyload';
+import { AVATAR_TEAM } from '../../config/config';
 import Loading from '../commons/Loading';
 import Filter from './filter'
 import Item from './Item'
@@ -16,6 +17,11 @@ export default function Team({team})
                 <Filter team={team} setTeam={setList} result={list}/>
             </div>
             <div className={styles.lists}>
+                <div className={styles.addComp}>
+                    <img src={AVATAR_TEAM}></img>
+                    <span>+</span>
+                    <p>Tạo mới</p>
+                </div>
                 {
                     list.map((item, key)=>{
                         return(
