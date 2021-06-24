@@ -13,8 +13,8 @@
     "Team Invitation": "Lời mời của đội",
     "Match": "Trận đấu",
     "Stadium": "Sân vận động",
-    "Get Location":"Chọn vị trí",
-    "Exact Location":"Vị trí chính xác",
+    "Get Location": "Chọn vị trí",
+    "Exact Location": "Vị trí chính xác",
     "Login": "Đăng nhập",
     "Logout": "Đăng xuất",
     "Signup": "Đăng ký",
@@ -61,6 +61,8 @@
     "Stadiums": "Sân vận động",
     "Leave": "Rời khỏi",
     "Forget Password": "Quên mật khẩu",
+    "General": "Cài đặt chung",
+    "Deadactive Account": "Xóa tài khoản",
     "Reset Password": "Lấy lại mật khẩu",
     "Location": "Vị trí",
     "Main Sport": "Môn thể thao chính",
@@ -145,6 +147,5 @@
     "Review Member": "Đánh giá thành viên",
     "Submit": "Gửi",
     "Review Stadium": "Đánh giá sân vận động",
-    "Loading":"Đang tải"
-
+    "Loading": "Đang tải"
 }

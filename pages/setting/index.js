@@ -4,6 +4,7 @@ import GeneralSetting from '../../components/setting/General'
 import DeadactiveAccount from '../../components/setting/DeadactiveAccount'
 
 import { useState } from 'react'
+import { FormattedMessage } from 'react-intl';
 import styles from './styles.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCog, faLock, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -61,15 +62,15 @@ export default function Setting({ token, user, username }) {
                 <div className={styles.menu}>
                     <button onClick={() => { setOption(1) }}>
                         <FontAwesomeIcon icon={faCog} className={styles.icon}></FontAwesomeIcon>
-                        <span>General</span>
+                        <span><FormattedMessage id="General" /></span>
                     </button>
                     <button onClick={() => { setOption(2) }}>
                         <FontAwesomeIcon icon={faLock} className={styles.icon}></FontAwesomeIcon>
-                        <span>Change Password</span>
+                        <span><FormattedMessage id="Change Password" /></span>
                     </button>
                     <button onClick={() => { setOption(3) }}>
                         <FontAwesomeIcon icon={faTrash} className={styles.icon}></FontAwesomeIcon>
-                        <span>Deadactive Account</span>
+                        <span><FormattedMessage id="Deadactive Account" /></span>
                     </button>
                 </div>
                 <div className={styles.content}>
