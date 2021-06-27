@@ -31,7 +31,7 @@ export default function AddExtension(props){
     return (
         <Modal show={props.show} onHide={()=>props.setShow(false)}>
             <Modal.Header closeButton>
-                <Modal.Title ><FormattedMessage id="Extension" /></Modal.Title>
+                <Modal.Title ><FormattedMessage id="Utility" /></Modal.Title>
             </Modal.Header>
             <Modal.Body className={styles.body}>
                 <p>{error}</p>

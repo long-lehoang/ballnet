@@ -139,7 +139,7 @@ export default function StadiumProfile(props) {
                 <hr></hr>
             </div>
             <div className={styles.extension}>
-                <h5><FormattedMessage id="EXTENSIONS" />
+                <h5><FormattedMessage id="UTILITIES" />
                     {permission ? <button className={styles.btnAdd} onClick={handleExtension}>+</button> : ''}
                 </h5>
                 {extensions.map((element, key) => {
