@@ -24,7 +24,7 @@ export default function SelectTeam({ show, setShow, match }) {
     }
 
     useEffect(() => {
-        axios.get(MY_TEAM_CAPTAIN_API, {
+        axios.get(MY_TEAM_CAPTAIN_API + match.sport, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -51,9 +51,13 @@
         .btnAdd{
             background-color: var(--button-color-1);
             margin-bottom: 5px;
+            min-width: 80px;
+            height: 30px;
         }
         .btnUnfr{
             background-color: var(--background-header);
+            min-width: 80px;
+            height: 30px;
         }
     }
 }

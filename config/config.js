@@ -36,7 +36,7 @@ export const MY_TEAM_API = HOST + '/api/myteam';
 //TEAM WITH SPORT
 export const TEAM_SPORT = HOST + '/api/team_sport/';
 //MYTEAM WITH CAPTAIN
-export const MY_TEAM_CAPTAIN_API = HOST + '/api/myteam_captain';
+export const MY_TEAM_CAPTAIN_API = HOST + '/api/myteam_captain/';
 
 //MATCH
 export const MATCH_API = HOST + '/api/matchs/';

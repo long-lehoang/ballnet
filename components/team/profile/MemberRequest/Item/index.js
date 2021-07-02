@@ -10,7 +10,7 @@ import styles from './styles.module.scss';
 export default function Item({ request }) {
     const avatar = request.avatar === null ? AVATAR : HOST + request.avatar;
     const date = new Date(request.requestTime);
-    const request_date = `Joined: ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+    const request_date = `Requested on: ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     const token = useSelector(state => state.token);
     const [show, setShow] = useState(true);
     const dispatch = useDispatch();
