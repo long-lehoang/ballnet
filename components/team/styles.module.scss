@@ -14,15 +14,38 @@
         // grid-auto-rows: 280px;
         gap: 10px;
         .addComp{
+            position: relative;
+            cursor: pointer;
+            width: 100%;
+            background-color: var(--background-component);
+            display: grid;
+            text-align: center;
             img{
-                height: 100px;
-                width: 100px;
-                cursor: pointer;
+                height: 70%;
+                width: 100%;
+            }
+        
+            button{
+                position: absolute;
+                bottom: calc(30% - 25px);
+                left: calc(50% - 25px);
+                width: 50px;
+                height: 50px;
+                border: 1px solid var(--text-color-2);
                 border-radius: 50%;
-                margin-left: auto;
-                margin-right: auto;
+                font-size: xxx-large;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
+            span{
+                position: relative;
+                font: var(--sub-title);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
     }
 }

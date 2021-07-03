@@ -6,9 +6,12 @@ import Loading from '../commons/Loading';
 import Filter from './filter'
 import Item from './Item'
 import styles from './styles.module.scss'
+import CreateTeamForm from '../commons/CreateTeamForm'
+
 export default function Team({team})
 {
     const [list, setList] = useState(team||[]);
+    const [show, setShow] = useState(false);
 
     return(
         <div className={styles.container}>
@@ -17,10 +20,11 @@ export default function Team({team})
                 <Filter team={team} setTeam={setList} result={list}/>
             </div>
             <div className={styles.lists}>
-                <div className={styles.addComp}>
+                <CreateTeamForm show={show} setShow={setShow} teams={list} setTeams={setList}></CreateTeamForm>
+                <div className={styles.addComp} onClick={()=>setShow(true)}>
                     <img src={AVATAR_TEAM}></img>
-                    <span>+</span>
-                    <p>Tạo mới</p>
+                    <button>+</button>
+                    <span><FormattedMessage id="Add" /></span>
                 </div>
                 {
                     list.map((item, key)=>{
