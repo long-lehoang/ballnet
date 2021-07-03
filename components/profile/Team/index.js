@@ -4,13 +4,16 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import Loading from '../../commons/Loading';
-import { MY_TEAM_API, POSTS_API, TEAM_API } from '../../../config/config';
+import { AVATAR, HOST, MY_TEAM_API, POSTS_API, TEAM_API } from '../../../config/config';
 import { useSelector } from 'react-redux';
 import Item from './Item';
+import { FormattedMessage } from 'react-intl';
 
 export default function Team({ permission }) {
     const token = useSelector(state => state.token)
     const [teams, setTeams] = useState([]);
+    const [show, setShow] = useState(false);
+    const profile = useSelector(state => state.profile);
 
     useEffect(() => {
         axios.get(MY_TEAM_API, {
@@ -28,7 +31,11 @@ export default function Team({ permission }) {
     return (
         <div className={styles.container}>
             {permission ? <div className={styles.row}>
-                <CreateTeamForm teams={teams} setTeams={setTeams}></CreateTeamForm>
+                <div className={styles.groupAdd}>
+                    <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
+                    <button className={styles.btn} onClick={() => setShow(true)}><FormattedMessage id="Create a Team" /></button>
+                </div>
+                <CreateTeamForm show={show} setShow={setShow} teams={teams} setTeams={setTeams}></CreateTeamForm>
             </div> : ''}
             <div className={styles.list}>
                 {teams.map((element, key) => {
