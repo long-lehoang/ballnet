@@ -45,6 +45,9 @@
             border-radius: 4px;
             color: var(--text-color-4);
             padding: 2px 10px;
+            height: 30px;
+            min-width: 80px;
+            white-space: nowrap;
         }
         .btnAdd{
             background-color: var(--button-color-1);
