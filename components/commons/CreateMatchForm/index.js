@@ -13,9 +13,7 @@ import { FormattedMessage } from 'react-intl';
 import { setLoading } from '../../../slices/loadingSlice';
 
 
-export default function CreateMatchForm({ team, matchs, setMatchs }) {
-    const [show, setShow] = useState(false);
-    const profile = useSelector(state => state.profile);
+export default function CreateMatchForm({show, setShow, team, matchs, setMatchs }) {
     const [start, setStart] = useState(new Date());
     const [end, setEnd] = useState(new Date());
     const [type, setType] = useState('');
@@ -27,7 +25,6 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
     const [check, setCheck] = useState(false);
     const token = useSelector(state => state.token);
     const dispatch = useDispatch();
-    const router = useRouter();
 
     function validate() {
         //type
@@ -65,7 +62,7 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
         let timeStart = formatDateTime(start),
             timeEnd = formatDateTime(end);
         formData.append('time', `${timeStart}, ${timeEnd}`);
-        formData.append('team_1', router.query.teamID);
+        formData.append('team_1', team.id);
         axios.post(MATCH_API, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -119,104 +116,100 @@ export default function CreateMatchForm({ team, matchs, setMatchs }) {
     }, [null]);
 
     return (
-        <div className={styles.container}>
-            <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
-            <button className={styles.btn} onClick={() => setShow(true)}><FormattedMessage id="Create Match" /></button>
-            <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
-                <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}><FormattedMessage id="Create Match" /></Modal.Title>
-                </Modal.Header>
-                <Modal.Body className={styles.body}>
-                    <div className={styles.group3}>
-                        <div className={styles.col}>
-                            <div className={styles.title}>
-                                <FormattedMessage id="Private" />
-                            </div>
-                            <select value={permission} onChange={(event) => { setPrivate(event.target.value) }} className={styles.input}>
-                                <option value="Team">Câu lạc bộ</option>
-                                <option value="Public">Công khai</option>
-                            </select>
+        <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
+            <Modal.Header className={styles.header} closeButton>
+                <Modal.Title className={styles.title}><FormattedMessage id="Create Match" /></Modal.Title>
+            </Modal.Header>
+            <Modal.Body className={styles.body}>
+                <div className={styles.group3}>
+                    <div className={styles.col}>
+                        <div className={styles.title}>
+                            <FormattedMessage id="Private" />
                         </div>
-                        <div className={styles.col}>
-                            <div className={styles.title}>
-                            <FormattedMessage id="Sport" />
-                            </div>
-                            <select value={team.sport} className={styles.input} disabled>
-                                <option value={team.sport}>{team.sport}</option>
-                            </select>
-                        </div>
-                        <div className={styles.col}>
-                            <div className={styles.title}>
-                            <FormattedMessage id="Type" />
-                            </div>
-                            <select value={type} onChange={(event) => { setType(event.target.value) }} className={styles.input}>
-                                <option>Chọn loại</option>
-                                {listType.map((element, key) => {
-                                    return (
-                                        <option key={key} value={element.type}>{element.type}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
+                        <select value={permission} onChange={(event) => { setPrivate(event.target.value) }} className={styles.input}>
+                            <option value="Team">Câu lạc bộ</option>
+                            <option value="Public">Công khai</option>
+                        </select>
                     </div>
+                    <div className={styles.col}>
+                        <div className={styles.title}>
+                        <FormattedMessage id="Sport" />
+                        </div>
+                        <select value={team.sport} className={styles.input} disabled>
+                            <option value={team.sport}>{team.sport}</option>
+                        </select>
+                    </div>
+                    <div className={styles.col}>
+                        <div className={styles.title}>
+                        <FormattedMessage id="Type" />
+                        </div>
+                        <select value={type} onChange={(event) => { setType(event.target.value) }} className={styles.input}>
+                            <option>Chọn loại</option>
+                            {listType.map((element, key) => {
+                                return (
+                                    <option key={key} value={element.type}>{element.type}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                </div>
 
-                    <div className={styles.group2}>
-                        <div className={styles.col}>
-                            <div className={styles.title}>
-                            <FormattedMessage id="City" />
-                            </div>
-                            <select value={city} onChange={selectCity} className={styles.input}>
-                                <option>Chọn thành phố</option>
-                                {location.map((element,key) => {
-                                    return (<option key={key} value={element.Name}>{element.Name}</option>)
-                                })}
-                            </select>
+                <div className={styles.group2}>
+                    <div className={styles.col}>
+                        <div className={styles.title}>
+                        <FormattedMessage id="City" />
                         </div>
-                        <div className={styles.col}>
-                            <div className={styles.title}>
-                            <FormattedMessage id="District" />
-                            </div>
-                            <select value={district} onChange={selectDistrict} className={styles.input}>
-                                <option>Chọn quận/huyện</option>
-                                {districts.map((element,key) => {
-                                    return (<option key={key} value={element.Name}>{element.Name}</option>)
-                                })}
-                            </select>
-                        </div>
+                        <select value={city} onChange={selectCity} className={styles.input}>
+                            <option>Chọn thành phố</option>
+                            {location.map((element,key) => {
+                                return (<option key={key} value={element.Name}>{element.Name}</option>)
+                            })}
+                        </select>
                     </div>
+                    <div className={styles.col}>
+                        <div className={styles.title}>
+                        <FormattedMessage id="District" />
+                        </div>
+                        <select value={district} onChange={selectDistrict} className={styles.input}>
+                            <option>Chọn quận/huyện</option>
+                            {districts.map((element,key) => {
+                                return (<option key={key} value={element.Name}>{element.Name}</option>)
+                            })}
+                        </select>
+                    </div>
+                </div>
 
-                    <div className={styles.group}>
-                        <div className={styles.col}>
-                            <div className={styles.title}>
-                            <FormattedMessage id="Start" />
-                            </div>
-                            <div className={styles.input}>
-                                <DateTimePicker
-                                    onChange={setStart}
-                                    value={start}
-                                    format="y-MM-dd h:mm a"
-                                />
-                            </div>
+                <div className={styles.group}>
+                    <div className={styles.col}>
+                        <div className={styles.title}>
+                        <FormattedMessage id="Start" />
                         </div>
-                        <div className={styles.col}>
-                            <div className={styles.title}>
-                            <FormattedMessage id="End" />
-                            </div>
-                            <div className={styles.input}>
-                                <DateTimePicker
-                                    onChange={setEnd}
-                                    value={end}
-                                    format="y-MM-dd h:mm a"
-                                />
-                            </div>
+                        <div className={styles.input}>
+                            <DateTimePicker
+                                onChange={setStart}
+                                value={start}
+                                format="y-MM-dd h:mm a"
+                            />
                         </div>
                     </div>
-                    <div className={styles.submit}>
-                        {check ? <button className={styles.btnSubmit} onClick={handleSubmit}><FormattedMessage id="Create" /></button> :
-                            <button className={styles.btnDisable}><FormattedMessage id="Create" /></button>}
+                    <div className={styles.col}>
+                        <div className={styles.title}>
+                        <FormattedMessage id="End" />
+                        </div>
+                        <div className={styles.input}>
+                            <DateTimePicker
+                                onChange={setEnd}
+                                value={end}
+                                format="y-MM-dd h:mm a"
+                            />
+                        </div>
                     </div>
-                </Modal.Body>
-            </Modal>
-        </div>
+                </div>
+                <div className={styles.submit}>
+                    {check ? <button className={styles.btnSubmit} onClick={handleSubmit}><FormattedMessage id="Create" /></button> :
+                        <button className={styles.btnDisable}><FormattedMessage id="Create" /></button>}
+                </div>
+            </Modal.Body>
+        </Modal>
     )
 }
