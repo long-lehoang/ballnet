@@ -12,8 +12,7 @@ import GetLocation from "../GetLocation";
 import { setMessage } from "../../../slices/messageSlice";
 import { setLoading } from "../../../slices/loadingSlice";
 
-export default function CreateStadiumForm({ stadiums, setStadiums }) {
-    const [show, setShow] = useState(false);
+export default function CreateStadiumForm({show,setShow, stadiums, setStadiums }) {
     const token = useSelector(state => state.token);
     const [check, setCheck] = useState(false);
     const dispatch = useDispatch();
@@ -135,49 +134,45 @@ export default function CreateStadiumForm({ stadiums, setStadiums }) {
     }, [null])
 
     return (
-        <div className={styles.container}>
-            <GetLocation show={showMap} setShow={setShowMap} lat={lat} setLat={setLat} lng={lng} setLng={setLng} ></GetLocation>
-            <img src={profile.avatar == null ? AVATAR : HOST + profile.avatar} className={styles.avatar}></img>
-            <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
-                <Modal.Header className={styles.header} closeButton>
-                    <Modal.Title className={styles.title}><FormattedMessage id="Create Stadium" /></Modal.Title>
-                </Modal.Header>
-                <Modal.Body className={styles.body}>
-
-                    <input className={styles.fullwidth} value={name} placeholder={"Tên"} onChange={(event) => { setName(event.target.value) }}></input>
-                    <input value={phone} placeholder={"Số điện thoại"} onChange={(event) => { setPhone(event.target.value) }}></input>
-                    <select value={sport} onChange={(event) => { setSport(event.target.value) }}>
-                        {listSport.map((element, key) => {
-                            return (
-                                <option key={key} value={element.name}>{element.name}</option>
-                            )
-                        })}
-                    </select>
-                    <select value={nameCity} className={styles.select} onChange={handleSelectCity}>
-                        <option>Tỉnh/Thành phố</option>
-                        {location.map((element,key) => {
-                            return (<option key={key} value={element.Name}>{element.Name}</option>)
-                        })}
-                    </select>
-                    <select value={nameDistrict} className={styles.select} onChange={handleSelectDistrict}>
-                        <option>Quận/Huyện</option>
-                        {district.map((element, key) => {
-                            return (<option key={key} value={element.Name}>{element.Name}</option>)
-                        })}
-                    </select>
-                    <input value={ward} placeholder={"Phường/Xã"} onChange={(event) => { setWard(event.target.value) }}></input>
-                    <input value={street} placeholder={"Số nhà"} onChange={(event) => { setStreet(event.target.value) }}></input>
-                    <div className={styles.btnLocate}>
-                        <span><FormattedMessage id="Exact Location" /></span>
-                        <button onClick={() => { setShowMap(true) }}><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></button>
-                    </div>
-                    <div className={styles.submit}>
-                        {check ? <button className={styles.btnSubmit} onClick={handleSubmit}><FormattedMessage id="Create" /></button> :
-                            <button className={styles.btnDisable}><FormattedMessage id="Create" /></button>}
-                    </div>
-                </Modal.Body>
-            </Modal>
-            <button className={styles.btn} onClick={() => setShow(true)}><FormattedMessage id="Create Stadium" /></button>
-        </div>
+        <Modal className={styles.modal_container} show={show} onHide={() => setShow(false)}>
+            <Modal.Header className={styles.header} closeButton>
+                <Modal.Title className={styles.title}><FormattedMessage id="Create Stadium" /></Modal.Title>
+            </Modal.Header>
+            <Modal.Body className={styles.body}>
+                <GetLocation show={showMap} setShow={setShowMap} lat={lat} setLat={setLat} lng={lng} setLng={setLng} ></GetLocation>
+                <input className={styles.fullwidth} value={name} placeholder={"Tên"} onChange={(event) => { setName(event.target.value) }}></input>
+                <input value={phone} placeholder={"Số điện thoại"} onChange={(event) => { setPhone(event.target.value) }}></input>
+                <select value={sport} onChange={(event) => { setSport(event.target.value) }}>
+                    {listSport.map((element, key) => {
+                        return (
+                            <option key={key} value={element.name}>{element.name}</option>
+                        )
+                    })}
+                </select>
+                <select value={nameCity} className={styles.select} onChange={handleSelectCity}>
+                    <option>Tỉnh/Thành phố</option>
+                    {location.map((element,key) => {
+                        return (<option key={key} value={element.Name}>{element.Name}</option>)
+                    })}
+                </select>
+                <select value={nameDistrict} className={styles.select} onChange={handleSelectDistrict}>
+                    <option>Quận/Huyện</option>
+                    {district.map((element, key) => {
+                        return (<option key={key} value={element.Name}>{element.Name}</option>)
+                    })}
+                </select>
+                <input value={ward} placeholder={"Phường/Xã"} onChange={(event) => { setWard(event.target.value) }}></input>
+                <input value={street} placeholder={"Số nhà"} onChange={(event) => { setStreet(event.target.value) }}></input>
+                <div className={styles.btnLocate}>
+                    <span><FormattedMessage id="Exact Location" /></span>
+                    <button onClick={() => { setShowMap(true) }}><FontAwesomeIcon height={20} icon={faMapMarkerAlt}></FontAwesomeIcon></button>
+                </div>
+                <div className={styles.submit}>
+                    {check ? <button className={styles.btnSubmit} onClick={handleSubmit}><FormattedMessage id="Create" /></button> :
+                        <button className={styles.btnDisable}><FormattedMessage id="Create" /></button>}
+                </div>
+            </Modal.Body>
+        </Modal>
+        
     )
 }

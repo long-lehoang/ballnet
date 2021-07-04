@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AVATAR, AVATAR_TEAM, HOST, MATCH_API, MATCH_INVITATION_API, MATCH_JOINING_API } from '../../../config/config';
 import { setMessage } from '../../../slices/messageSlice';
 import styles from './styles.module.scss';
+import { FormattedMessage } from 'react-intl'
 
 export default function Item({ team, item }) {
     const [time, setTime] = useState(new Date(item.time.split(", ")[0]));
