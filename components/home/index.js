@@ -19,14 +19,20 @@ export default function HomePage({ posts }) {
     const token = useSelector(state => state.token);
     const [hasMore, setHasMore] = useState(true);
     const [nextUrl, setNextUrl] = useState(POSTS_API+`?page=2`);
-
+    const [wait, setWait] = useState(false);
     function loadMore(page){
         let url = ''
-        if(nextUrl != undefined){
+        if(nextUrl != null){
             url = nextUrl;
         }else{
-            url = POSTS_API;
+            return false;
         }
+
+        if(wait){
+            return false;
+        }
+        setWait(true);
+
         axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -35,11 +41,10 @@ export default function HomePage({ posts }) {
             let lists = list;
             lists = lists.concat(response.data.data.data);
             setList(lists);
-
+            setNextUrl(response.data.data.next_page_url);
+            setWait(false);
             if(response.data.data.next_page_url == null){
                 setHasMore(false);
-            }else{
-                setNextUrl(response.data.data.next_page_url);
             }
         }).catch((error) => {
             console.log(error);
