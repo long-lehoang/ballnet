@@ -34,6 +34,7 @@
             button{
                 padding: 0 20px;
                 border-radius: 4px;
+                white-space: nowrap;
                 border: none;
                 color: var(--text-color-4);
                 outline: none;
@@ -51,7 +52,8 @@
     .btnAddMatch{
         margin-top: 10px;
         margin-left: calc(50% - 40px);
-        width: 80px;
+        min-width: 80px;
+        white-space: nowrap;
         height: 30px;
         background-color: var(--background-header);
         border: none;
