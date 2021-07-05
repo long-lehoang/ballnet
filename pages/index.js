@@ -10,18 +10,6 @@ import { POSTS_API, PROFILE_API } from '../config/config';
 import Error from 'next/error'
 
 
-function extractData(data, result = []) {
-    if (Array.isArray(data))
-        data.forEach(element => {
-            if (Array.isArray(element))
-                element.forEach(subele => {
-                    result.push(subele);
-                });
-            else result.push(element);
-        });
-    else result.push(data);
-    return result;
-}
 export default function Home({ errorCode, token, username, posts, user }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
@@ -80,12 +68,8 @@ Home.getInitialProps = async ({ req, res }) => {
             'Authorization': `Bearer ${token}`
         }
     }).then((response) => {
-        posts = extractData(response.data.data).sort(function (a, b) {
-            let time1 = new Date(a.updated_at);
-            let time2 = new Date(b.updated_at);
+        posts = response.data.data.data;
 
-            return time2 - time1;
-        })
     }).catch((error) => {
         if (error.response) {
             errCode = error.response.status;
