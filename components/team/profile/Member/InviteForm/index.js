@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { TEAM_API } from '../../../../../config/config';
 import Item from './Item';
 import styles from './styles.module.scss';
 
-export default function InviteForm({ friends }) {
+export default function InviteForm({ team }) {
     const [show, setShow] = useState(false);
-    const [list, setList] = useState(friends)
+    const [list, setList] = useState([]);
+
+    const token = useSelector(state=>state.token);
+
     function handleSearch(event){
         let search = event.target.value;
         let fr = friends.filter( element => {
@@ -14,6 +20,19 @@ export default function InviteForm({ friends }) {
         });
         setList(fr);
     }
+
+    useEffect(()=>{
+        axios.get(TEAM_API + `${team.id}/invite`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response=>{
+            setList(response.data.data);
+            
+        }).catch(error => {
+            console.log(error);
+        });
+    },[null])
 
     return (
         <div>
