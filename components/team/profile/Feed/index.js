@@ -7,54 +7,67 @@ import { TEAM_API } from '../../../../config/config';
 import CreatePostForm from '../../../commons/CreatePostForm';
 import Post from '../../../commons/Post';
 import Loading from '../../../commons/Loading';
+import InfiniteScroll from 'react-infinite-scroller';
 
-function extractData(data, result = []) {
-    if (Array.isArray(data))
-        data.forEach(element => {
-            if (Array.isArray(element))
-                element.forEach(subele => {
-                    result.push(subele);
-                });
-            else result.push(element);
-        });
-    else result.push(data);
-    return result;
-}
 
 export default function Feed({team}) {
     const token = useSelector(state => state.token)
     const [posts, setPosts] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [nextUrl, setNextUrl] = useState(TEAM_API + `${team.id}/feed`);
+    const [wait, setWait] = useState(false);
+    function loadMore(page){
+        let url = ''
+        if(nextUrl != null){
+            url = nextUrl;
+        }else{
+            return false;
+        }
+        if(wait){
+            return false;
+        }
+        setWait(true);
 
-    useEffect(()=>{
-        axios.get(TEAM_API + `${team.id}/feed`, {
+        axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            },
+            cache: true
         }).then((response) => {
-            setPosts(extractData(response.data.data).sort(function (a, b) {
-                let time1 = new Date(a.updated_at);
-                let time2 = new Date(b.updated_at);
-    
-                return time2 - time1;
-            }));
+            let lists = posts;
+            lists = lists.concat(response.data.data.data);
+            setPosts(lists);
+            setNextUrl(response.data.data.next_page_url);
+            setWait(false);
+
+            if(response.data.data.next_page_url == null){
+                setHasMore(false);
+            }
         }).catch((error) => {
             console.log(error);
         })
-
-    },[null])
-
+    }
+    
     return (
         <div className={styles.container}>
             <div className={styles.row}>
                 <CreatePostForm team={team.id} list={posts} setList={setPosts} ></CreatePostForm>
             </div>
-            {posts.map((element, key) => {
-                return (
-                    <LazyLoad key={element.id} height={200} placeholder={<Loading />}>
-                        <Post key={element.id} post={element}></Post>
-                    </LazyLoad>
-                )
-            })}
+            <InfiniteScroll
+                pageStart={1}
+                loadMore={loadMore}
+                hasMore={hasMore}
+                loader={<div className="loader" key={0}>Loading ...</div>}
+            >
+                {posts.map((element, key) => {
+                    return (
+                        <LazyLoad key={element.id} height={200} placeholder={<Loading />}>
+                            <Post key={element.id} post={element}></Post>
+                        </LazyLoad>
+                    )
+                })}
+            </InfiniteScroll>
+            
         </div>
     )
 }

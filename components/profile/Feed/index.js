@@ -16,6 +16,7 @@ export default function Feed({user_id, permission}) {
     const [posts, setPosts] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [nextUrl, setNextUrl] = useState(PROFILE_API + `post/${user_id}`);
+    const [wait, setWait] = useState(false);
 
     function loadMore(page){
         let url = ''
@@ -24,6 +25,12 @@ export default function Feed({user_id, permission}) {
         }else{
             return false;
         }
+
+        if(wait){
+            return false;
+        }
+        setWait(true);
+
         axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -34,7 +41,7 @@ export default function Feed({user_id, permission}) {
             lists = lists.concat(response.data.data.data);
             setPosts(lists);
             setNextUrl(response.data.data.next_page_url);
-            
+            setWait(false);
             if(response.data.data.next_page_url == null){
                 setHasMore(false);
             }
