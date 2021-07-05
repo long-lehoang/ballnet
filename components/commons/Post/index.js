@@ -50,7 +50,8 @@ export default function Post(props) {
             axios.get(POSTS_API + props.post.id, {
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                cache: true
             }).then((response) => {
                 let result = response.data.data;
                 setNameAuthor(result.author.name);
