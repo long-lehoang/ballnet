@@ -62,7 +62,7 @@ StadiumPage.getInitialProps = async ({ req, res }) => {
             Authorization: `Bearer ${token}`
         }
     }).then(response => {
-        stadium = response.data.data
+        stadium = response.data.data.data
     }).catch(error => {
         if (error.response) {
             errCode = error.response.status;
