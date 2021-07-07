@@ -1,7 +1,8 @@
 /**
  * API BALLNET
  */
-export const HOST = 'https://www.api-ballnet.net';
+export const HOST = 'http://localhost';
+// export const HOST = 'https://www.api-ballnet.net';
 //AUTH
 export const RESET_PASSWORD_API = HOST + '/api/reset-password/';
 export const LOGIN_API = HOST + '/api/login';
@@ -41,6 +42,10 @@ export const MY_TEAM_CAPTAIN_API = HOST + '/api/myteam_captain/';
 //MATCH
 export const MATCH_API = HOST + '/api/matchs/';
 
+export const SEARCH_MATCH_API = HOST + '/api/search_match';
+export const SEARCH_PEOPLE_API = HOST + '/api/search_people';
+export const SEARCH_TEAM_API = HOST + '/api/search_team';
+export const SEARCH_STADIUM_API = HOST + '/api/search_stadium';
 //MATCH INVITATION
 export const MATCH_INVITATION_API = HOST + '/api/match_invitations/';
 

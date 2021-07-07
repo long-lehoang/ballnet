@@ -62,7 +62,7 @@ MatchPage.getInitialProps = async ({ req, res }) => {
             Authorization: `Bearer ${token}`
         }
     }).then(response => {
-        match = response.data.data
+        match = response.data.data.data
     }).catch(error => {
         if (error.response) {
             errCode = error.response.status;
