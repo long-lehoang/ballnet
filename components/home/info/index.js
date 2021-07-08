@@ -3,7 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AVATAR, FOLLOWS_API, FRIENDS_API, HOST, SPORT_API } from '../../../config/config';
+import { AVATAR, FRIENDS_API, HOST, SPORT_API } from '../../../config/config';
 import styles from './styles.module.scss';
 import loadStar from '../../../lib/star';
 import { FormattedMessage } from 'react-intl';
