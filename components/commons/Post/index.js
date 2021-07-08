@@ -160,7 +160,7 @@ export default function Post(props) {
                 <span>{content}</span>
                 <div className={styles.images}>
                     {images.map((img, key) => {
-                        return (<img key={key} max-height={300} max-width={400} src={HOST + img} alt="Image of post"></img>)
+                        return (<img key={key} height={200} width={400} src={HOST + img} alt="Image of post"></img>)
                     })}
                 </div>
             </div>
