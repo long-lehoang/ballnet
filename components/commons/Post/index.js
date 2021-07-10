@@ -80,7 +80,8 @@ export default function Post(props) {
 
             axios.delete(POSTS_API + props.post.id + '/like', {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'X-Socket-ID': window.Echo.socketId()
                 }
             }).then((response) => {
             }).catch((error) => {
@@ -91,7 +92,8 @@ export default function Post(props) {
             setCountLike(countLike + 1);
             axios.post(POSTS_API + props.post.id + '/like', {}, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'X-Socket-ID': window.Echo.socketId()
                 }
             }).then((response) => {
             }).catch((error) => {
@@ -108,7 +110,8 @@ export default function Post(props) {
             setCountShare(countShare - 1);
             axios.delete(POSTS_API + props.post.id + '/share', {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'X-Socket-ID': window.Echo.socketId()
                 }
             }).then((response) => {
             }).catch((error) => {
@@ -120,7 +123,8 @@ export default function Post(props) {
 
             axios.post(POSTS_API + props.post.id + '/share', {}, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'X-Socket-ID': window.Echo.socketId()
                 }
             }).then((response) => {
             }).catch((error) => {
@@ -128,6 +132,16 @@ export default function Post(props) {
             });
         }
     }
+
+    useEffect(() => {
+        window.Echo.private(`App.Models.Post.${props.post.id}`)
+            .listen('.like',function (e) {
+                setCountLike(e.count);
+            })
+            .listen('.share', function(e){
+                setCountShare(e.count)
+            });
+    }, [null])
 
     return (
         <div className={del ? styles.none : styles.container}>

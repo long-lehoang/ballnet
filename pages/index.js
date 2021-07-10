@@ -14,8 +14,8 @@ export default function Home({ errorCode, token, username, posts, user }) {
     if (errorCode) {
         return <Error statusCode={errorCode} />
     }
-
     const dispatch = useDispatch();
+
     const profile = useSelector(state => state.profile);
     const userState = useSelector(state => state.infoUser);
 
@@ -77,6 +77,11 @@ Home.getInitialProps = async ({ req, res }) => {
             errCode = 500;
         }
     })
+
+    if (errCode == 401) {
+        res.writeHead(301, { Location: "/login", 'Cache-Control': 'no-cache' })
+        res.end()
+    }
 
     return {
         errorCode: errCode,
