@@ -70,6 +70,11 @@ FriendRequestPage.getInitialProps = async ({ req, res }) => {
             errCode = 500;
         }
     })
+
+    if(errCode == 401){
+        res.writeHead(301, { Location: "/login", 'Cache-Control': 'no-cache' })
+        res.end()
+    }
     return {
         errorCode: errCode,
 

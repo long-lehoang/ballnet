@@ -23,7 +23,6 @@ export default function Header() {
     const [listNotice, addNotice] = useState([]);
     const [newNotice, setNewNotice] = useState(0);
     const [cookie, setCookie, removeCookie] = useCookies(["user"]);
-    let echo;
 
     const options = {
         broadcaster: 'pusher',
@@ -82,24 +81,20 @@ export default function Header() {
     }
 
     useEffect(() => {
-        echo = new Echo(options);
+        window.Echo = new Echo(options);
+
+        window.Echo.private(`App.Models.User.${user.id}`).notification((data) => {
+            const obj = { data: { ...data }, type: data.type, read_at: null, created_at: (new Date()).getTime() }
+
+            if (obj.read_at === null)
+                numNotice = numNotice + 1;
+            const notice = showNotice(obj);
+            let list = listNotice;
+            list.unshift(notice);
+            addNotice(list);
+            setNewNotice(numNotice);
+        });
     }, [null])
-
-    useEffect(() => {
-        if (user.id !== undefined && echo !== undefined) {
-            echo.private(`App.Models.User.${user.id}`).notification((data) => {
-                const obj = { data: { ...data }, type: data.type, read_at: null, created_at: (new Date()).getTime() }
-
-                if (obj.read_at === null)
-                    numNotice = numNotice + 1;
-                const notice = showNotice(obj);
-                let list = listNotice;
-                list.unshift(notice);
-                addNotice(list);
-                setNewNotice(numNotice);
-            });
-        }
-    }, [listNotice]);
 
     const router = useRouter();
 

@@ -24,33 +24,35 @@ export default function Comment(props) {
 
         axios.post(POSTS_API + props.id + '/comment', formData, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'X-Socket-ID': window.Echo.socketId()
             }
         }).then((response) => {
-            props.toggleComment(true);
-            props.setCountComment(props.countComment + 1);
-
-            let list = [...listComment]
-            let obj = {
-                username: user.username,
-                name: user.name,
-                avatar: profile.avatar,
-                comment: comment,
-                time: new Date(),
-            }
-            list.push(obj);
-            setListComment(list);
-
-            setComment("");
+            //
         }).catch((error) => {
             console.log(error);
         });
+
+        props.toggleComment(true);
+        props.setCountComment(props.countComment + 1);
+
+        let list = listComment
+        let obj = {
+            username: user.username,
+            name: user.name,
+            avatar: profile.avatar,
+            comment: comment,
+            time: new Date(),
+        }
+        list.push(obj);
+        setListComment(list);
+        setComment("");
     }
 
     useEffect(() => {
         axios.get(POSTS_API + props.id + '/comment', {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
             }
         }).then((response) => {
             let arr = [...listComment]
@@ -58,6 +60,23 @@ export default function Comment(props) {
             setListComment(arr);
         })
     }, [null]);
+
+    useEffect(() => {
+        window.Echo.private(`App.Models.Post.${props.id}`)
+            .listen('.comment', (e) => {
+                props.setCountComment(e.count);
+                let list = listComment
+                list.push(e);
+                setListComment(list);
+            })
+            .listen('.un.comment',function(e){
+                props.setCountComment(e.count);
+
+                let list = [...listCmt];
+                list = list.filter( e => e.cmt_id != e.cmt_id);
+                setListComment(list);
+            });
+    }, [null])
 
     return (
         <div className={styles.comments}>
@@ -70,7 +89,7 @@ export default function Comment(props) {
 
                 {listComment.map((cmt, key) => {
                     return (
-                        <LazyLoad className={styles.comment} key={key} placeholder="Loading...">
+                        <LazyLoad className={styles.comment} key={cmt.cmt_id} placeholder="Loading...">
                             <img src={cmt.avatar == null ? AVATAR : HOST + cmt.avatar} className={styles.avatar}></img>
                             <div className={styles.content}>
                                 <div className={styles.group}>
