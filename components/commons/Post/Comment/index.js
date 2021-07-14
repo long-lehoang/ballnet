@@ -65,16 +65,12 @@ export default function Comment(props) {
         window.Echo.private(`App.Models.Post.${props.id}`)
             .listen('.comment', (e) => {
                 props.setCountComment(e.count);
-                let list = listComment
-                list.push(e);
-                setListComment(list);
+                setListComment(listComment=>[...listComment,e]);
             })
             .listen('.un.comment',function(e){
                 props.setCountComment(e.count);
-
-                let list = [...listCmt];
-                list = list.filter( e => e.cmt_id != e.cmt_id);
-                setListComment(list);
+                setListComment(listComment=>listComment.filter( e => e.cmt_id != e.cmt_id));
+                //TODO
             });
     }, [null])
 

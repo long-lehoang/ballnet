@@ -1,8 +1,8 @@
 /**
  * API BALLNET
  */
-// export const HOST = 'http://localhost';
-export const HOST = 'https://www.api-ballnet.net';
+export const HOST = 'http://localhost';
+// export const HOST = 'https://www.api-ballnet.net';
 //AUTH
 export const RESET_PASSWORD_API = HOST + '/api/reset-password/';
 export const LOGIN_API = HOST + '/api/login';
@@ -70,6 +70,8 @@ export const SPORT_CATEGORY_API = HOST + '/api/sport_category/';
 export const TYPE_SPORT_API = HOST + '/api/type_sport/';
 //NOTIFICATION
 export const NOTIFICATION = HOST + '/api/notifications/';
+
+export const ROOM = HOST + '/api/rooms/';
 /**
  * API GOOGLE MAP
  */

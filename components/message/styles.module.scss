@@ -1,0 +1,104 @@
+.container{
+    width: 100%;
+    height: calc(100vh - 60px);
+    padding: 5% 8%;
+    display: grid;
+    grid-template-columns: 1.2fr 3fr;
+    position: relative;
+
+    .selectBox{
+        background-color: var(--background-component);
+        display: grid;
+        grid-template-rows: auto 60vh;
+        .header{
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 20px;
+            align-items: center;
+            span{
+                font: var(--sub-title); 
+            }
+            .active{
+                color: var(--text-color-1);
+                border-bottom: 1px solid var(--text-color-1);
+                cursor: default;
+            }
+            button{
+                border: none;
+                background-color: transparent;
+
+            }
+        }
+        .list{
+            border-top: 1px solid var(--text-color-1);
+            overflow-y: scroll;
+            height: 60vh;
+        }
+    }
+    .messageBox{
+        background-color: var(--background-component);
+        display: grid;
+        grid-template-rows: auto 50vh 10vh;
+        .header{
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .left{
+                display: flex;
+                align-items: center;
+                img{
+                    border-radius: 50%;
+                }
+                div{
+                    display: block;
+                    padding-left: 20px;
+                    span{
+                        display: block;
+                    }
+                    .online{
+                        color: rgb(8, 145, 8);
+                    }
+                    .offline{
+                        color: var(--text-color-2);
+                    }
+                }   
+            }
+            .right{
+                display: flex;
+                button{
+                    border: none;
+                    background-color: transparent;
+                }
+            }
+        }
+        .main{
+            padding: 20px;
+            height: 50vh;
+            overflow-y: scroll;
+        }
+        .footer{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px;
+            input{
+                width: calc(100% - 140px);
+                height: 40px;
+                outline: none;
+                border: 1px solid var(--text-color-2);
+                border-radius: 4px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            button{
+                height: 30px;
+                width: 100px;
+                border: none;
+                color: var(--text-color-4);
+                background-color: var(--background-header);
+                border-radius: 4px;
+            }
+        }
+    }
+}

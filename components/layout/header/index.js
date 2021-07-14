@@ -12,7 +12,6 @@ import { useRouter } from 'next/router';
 import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
 import { FormattedMessage } from 'react-intl';
-var numNotice = 0;
 
 export default function Header() {
     const token = useSelector(state => state.token);
@@ -50,17 +49,16 @@ export default function Header() {
             }
         }).then((response) => {
             const data = response.data.data;
-            let number = newNotice;
-            let list = listNotice;
+            let number = 0;
+            let list = [];
             data.forEach(element => {
                 if (element.read_at === null)
                     number = number + 1;
                 let notice = showNotice(element);
                 list.push(notice);
             });
-            numNotice = number;
-            setNewNotice(number);
-            addNotice(list);
+            setNewNotice(newNotice => newNotice + number);
+            addNotice(listNotice => listNotice.concat(list));
         });
     }, [null]);
 
@@ -76,7 +74,6 @@ export default function Header() {
             })
         }
         setNewNotice(0);
-        numNotice = 0;
         showNotification(!notification);
     }
 
@@ -87,12 +84,10 @@ export default function Header() {
             const obj = { data: { ...data }, type: data.type, read_at: null, created_at: (new Date()).getTime() }
 
             if (obj.read_at === null)
-                numNotice = numNotice + 1;
+                setNewNotice(newNotice => newNotice + 1);
+
             const notice = showNotice(obj);
-            let list = listNotice;
-            list.unshift(notice);
-            addNotice(list);
-            setNewNotice(numNotice);
+            addNotice(listNotice => [notice].concat(listNotice));
         });
     }, [null])
 
@@ -182,17 +177,17 @@ export default function Header() {
                             <Link href="/people/friend_request"><div className={styles.link}><FormattedMessage id="Friend Requests" /></div></Link>
                         </div>
                     </div>
-                    {/* <Link href="/message">
+                    <Link href="/message">
                         <div className={styles.btnNav}>
 
                             <div className={styles.iconNav}>
                                 <FontAwesomeIcon height={22} icon={faEnvelope}></FontAwesomeIcon>
                             </div>
                             <div className={styles.textNav}>
-                                Message
+                                <FormattedMessage id="Message" />
                             </div>
                         </div>
-                    </Link> */}
+                    </Link>
                     <div className={styles.group_notice}>
                         {newNotice > 0 ? <span className={styles.number}>{newNotice}</span> : ''}
                         <div key={6} className={styles.btnNav} onClick={handleReadNotice}>
