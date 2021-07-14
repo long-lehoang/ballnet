@@ -205,14 +205,10 @@ export default function Message({ friendsz, roomsz }) {
                     });
                 })
                 .listenForWhisper('typing', () => {
-                    if(!typing){
-                        setTyping(true);
-                    }
+                    setTyping(true);
                 })
                 .listenForWhisper('untyping', () => {
-                    if(typing){
-                        setTyping(false);
-                    }
+                    setTyping(false);
                 });
         }
     }, [room]);
