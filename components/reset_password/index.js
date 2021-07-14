@@ -28,7 +28,7 @@ export default function ResetPasswordForm({token}) {
         })
         axios.put(RESET_PASSWORD_API + token, formData).then(response=>{
             dispatch(setLoading(false));
-            router.push('/');
+            router.push('/login');
         }).catch(error=>{
 
             dispatch(setLoading(false));
