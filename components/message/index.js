@@ -14,6 +14,18 @@ import Link from "next/link";
 import InfiniteScroll from "react-infinite-scroller";
 import Typing from '../commons/Typing';
 
+Array.prototype.diff = function(arr2) {
+    var ret = [];
+    this.sort();
+    arr2.sort();
+    for(var i = 0; i < this.length; i += 1) {
+        if(arr2.indexOf(this[i]) > -1){
+            ret.push(this[i]);
+        }
+    }
+    return ret;
+};
+
 export default function Message({ friendsz, roomsz }) {
     const token = useSelector(state => state.token);
     const dispatch = useDispatch();
@@ -32,6 +44,36 @@ export default function Message({ friendsz, roomsz }) {
     });
     const [messInput, setMessInput] = useState('');
     const [view, setView] = useState(0);
+    const [onlines, setOnlines] = useState([]);
+
+    useEffect(()=>{
+        let idFrs = friends.map(fr=>fr.id);
+        let onlLists = onlines.map(fr=>fr.id);
+        let onlFrs = onlLists.diff(idFrs);
+
+        setFriend(fr=>{
+            if(onlFrs.indexOf(fr.id)>-1){
+                fr.status = 1;
+            }else{
+                fr.status = 0;
+            }
+            return fr;
+        });
+
+        setFriends(friends=>{
+            friends.forEach((fr, key) => {
+                if(onlFrs.indexOf(fr.id)>-1){
+                    friends[key].status = 1
+                }else{
+                    friends[key].status = 0
+                }
+            });
+            return friends;
+        })
+
+        
+
+    },[onlines])
 
     function selectRoom(id) {
         setRoom(id);
@@ -40,7 +82,13 @@ export default function Message({ friendsz, roomsz }) {
                 Authorization: `Bearer ${token}`
             }
         }).then(res => {
-            setFriend(res.data.data);
+            let user = res.data.data;
+            if(onlines.filter(onl=>onl.id===user.id).length>0){
+                user.status = 1;
+            }else{
+                user.status = 0;
+            }
+            setFriend(user);
         }).catch(err => {
             openMessageBox("Error");
         })
@@ -169,6 +217,21 @@ export default function Message({ friendsz, roomsz }) {
         }
     }, [room]);
 
+    useEffect(()=>{
+        window.Echo.join(`chat`)
+        .here((users) => {
+            setOnlines(users);
+        })
+        .joining((user) => {
+            setOnlines(onlines=>[...onlines, user]);
+        })
+        .leaving((user) => {
+            setOnlines(onlines=>onlines.filter(onl=>onl.id != user.id));
+        })
+        .error((error) => {
+            console.error(error);
+        });
+    },[null])
     const [hasMore, setHasMore] = useState(true);
     const [nextUrl, setNextUrl] = useState('');
     const [wait, setWait] = useState(false);
@@ -263,7 +326,7 @@ export default function Message({ friendsz, roomsz }) {
                         </div>
                     </div>
                     <div className={styles.right}>
-                        <button><FontAwesomeIcon height={15} icon={faEllipsisV} /></button>
+                        {/* <button><FontAwesomeIcon height={15} icon={faEllipsisV} /></button> */}
                     </div>
                 </div>
                 <div className={styles.main}>
