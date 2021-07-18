@@ -73,7 +73,7 @@ export default function Stadium({stadium})
                 loader={<div className="loader" key={0}>Loading ...</div>}
             >
                 <div className={styles.lists}>
-                    <CreateStadiumForm show={show} setShow={setShow} stadium={list} setStadium={setList}></CreateStadiumForm>
+                    <CreateStadiumForm show={show} setShow={setShow} stadiums={list} setStadiums={setList}></CreateStadiumForm>
                     <div className={styles.addComp} onClick={()=>setShow(true)}>
                         <img src={AVATAR_TEAM}></img>
                         <button>+</button>

@@ -100,13 +100,13 @@ export default function CreateStadiumForm({show,setShow, stadiums, setStadiums }
             }
         }).then((response) => {
             setShow(false);
-            let arr = JSON.parse(JSON.stringify(stadiums));
-            arr.unshift(response.data.data)
-            setStadiums(arr);
+            console.log(response.data.data);
+            setStadiums(stadiums=>[response.data.data].concat(stadiums));
             dispatch(setLoading(false));
         }).catch((error) => {
             dispatch(setLoading(false));
             setShow(true);
+            console.log(error);
             openMessageBox("Created failed!");
         })
 

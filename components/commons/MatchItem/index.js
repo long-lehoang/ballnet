@@ -57,6 +57,13 @@ export default function Item({ item }) {
         dispatch(action);
     }
 
+    function checkStart()
+    {
+        let now = new Date();
+        let start = new Date(time);
+        return start <= now;
+    }
+
     function handleJoin(option) {
         var formData = new FormData();
         formData.append('team_id', option == 1 ? item.team_1 : item.team_2);
@@ -297,26 +304,26 @@ export default function Item({ item }) {
                 </div>
                 <button className={styles.btnShowPopup}>...</button>
                 <div className={styles.popup}>
-                    {item.captain1 ? <button onClick={handleEdit}><FormattedMessage id="Edit" /></button> : ''}
-                    {item.captain1 ? <button onClick={() => handleManageTeamRequest(2)}><FormattedMessage id="Team Request" /></button> : ''}
-                    {item.captain1 ? <button onClick={handleBooking}><FormattedMessage id="Book Stadium" /></button> : ''}
-                    {item.captain1 ? <button onClick={handleDelete}><FormattedMessage id="Delete" /></button> : ''}
+                    {item.captain1 && !checkStart() ? <button onClick={handleEdit}><FormattedMessage id="Edit" /></button> : ''}
+                    {item.captain1 && !checkStart() ? <button onClick={() => handleManageTeamRequest(2)}><FormattedMessage id="Team Request" /></button> : ''}
+                    {item.captain1 && !checkStart() ? <button onClick={handleBooking}><FormattedMessage id="Book Stadium" /></button> : ''}
+                    {item.captain1 && !checkStart() ? <button onClick={handleDelete}><FormattedMessage id="Delete" /></button> : ''}
                 </div>
             </div>
             <hr></hr>
             <div className={styles.actionTeam}>
                 <button className={styles.btnShowPopup1}>...</button>
                 <div className={styles.popup1}>
-                    {item.admin1 ? <button onClick={() => handleManageUserRequest(1)}><FormattedMessage id="User Request" /></button> : ''}
-                    <button onClick={() => { handleInvitePeople(1) }}><FormattedMessage id="Invite People" /></button>
+                    {item.admin1 && !checkStart() ? <button onClick={() => handleManageUserRequest(1)}><FormattedMessage id="User Request" /></button> : ''}
+                    {!checkStart() ? <button onClick={() => { handleInvitePeople(1) }}><FormattedMessage id="Invite People" /></button> : ''}
                 </div>
                 <button className={styles.btnShowPopup2}>...</button>
                 <div className={styles.popup2}>
-                    {item.admin1 && item.team_2 == null ? <button onClick={handleInviteTeam}><FormattedMessage id="Invite Team" /></button> : ''}
-                    {item.admin2 ? <button onClick={() => handleManageUserRequest(2)}><FormattedMessage id="User Request" /></button> : ''}
-                    {item.team_2 !== null ? <button onClick={() => { handleInvitePeople(2) }}><FormattedMessage id="Invite People" /></button> : ''}
-                    {item.captain2 ? <button onClick={handleTeamLeave}><FormattedMessage id="Leave" /></button> : ''}
-                    {item.captain1 && item.team_2 !== null ? <button onClick={handleRemoveTeam}><FormattedMessage id="Remove" /> {item.name2}</button> : ''}
+                    {item.admin1 && !checkStart() && item.team_2 == null ? <button onClick={handleInviteTeam}><FormattedMessage id="Invite Team" /></button> : ''}
+                    {item.admin2 && !checkStart() ? <button onClick={() => handleManageUserRequest(2)}><FormattedMessage id="User Request" /></button> : ''}
+                    {item.team_2 !== null && !checkStart() ? <button onClick={() => { handleInvitePeople(2) }}><FormattedMessage id="Invite People" /></button> : ''}
+                    {item.captain2 && !checkStart() ? <button onClick={handleTeamLeave}><FormattedMessage id="Leave" /></button> : ''}
+                    {item.captain1 && !checkStart() && item.team_2 !== null ? <button onClick={handleRemoveTeam}><FormattedMessage id="Remove" /> {item.name2}</button> : ''}
                 </div>
             </div>
             <div className={styles.team}>
@@ -324,7 +331,7 @@ export default function Item({ item }) {
                     <img src={avatar1} className={styles.logo}></img>
                 </Link>
 
-                {team2 == null ? <button onClick={handleTeamJoin} className={styles.btnTeamJoin}>+</button> :
+                {team2 == null ? <button onClick={handleTeamJoin} className={styles.btnTeamJoin} disabled={checkStart() ? 'disabled' : ''}>+</button> :
                     <Link href={`/team/${item.team_2}`}>
                         <img src={avatar2} className={styles.logo}></img>
                     </Link>
@@ -383,13 +390,13 @@ export default function Item({ item }) {
             </div>
             <div className={styles.action}>
                 <div>
-                    {isJoin1 ? <button className={styles.btnLeave} onClick={() => { handleLeave(1) }}><FormattedMessage id="Leave" /></button> :
-                        isJoin2 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }}><FormattedMessage id="Join" /></button> :
-                            isRequest1 ? <button className={styles.btnCancel} onClick={() => { handleCancel(1) }}><FormattedMessage id="Cancel" /></button> :
-                                isInvite1 ? <button className={styles.btnAccept} onClick={() => { handleAccept(1) }}><FormattedMessage id="Accept" /></button> :
-                                    <button className={styles.btnJoin} onClick={() => { handleJoin(1) }}><FormattedMessage id="Join" /></button>}
+                    {isJoin1 ? <button className={styles.btnLeave} onClick={() => { handleLeave(1) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Leave" /></button> :
+                        isJoin2 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Join" /></button> :
+                            isRequest1 ? <button className={styles.btnCancel} onClick={() => { handleCancel(1) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Cancel" /></button> :
+                                isInvite1 ? <button className={styles.btnAccept} onClick={() => { handleAccept(1) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Accept" /></button> :
+                                    <button className={styles.btnJoin} onClick={() => { handleJoin(1) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Join" /></button>}
 
-                    {(!isJoin1 && !isJoin2) && isInvite1 ? <button className={styles.btnCancel} onClick={handleDeny}><FormattedMessage id="Deny" /></button> :
+                    {(!isJoin1 && !isJoin2) && isInvite1 ? <button className={styles.btnCancel} onClick={handleDeny} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Deny" /></button> :
                         ''}
                 </div>
                 {team2 == null ?
@@ -397,13 +404,13 @@ export default function Item({ item }) {
                         <button className={styles.btnJoin} onClick={() => { handleJoin(2) }} disabled><FormattedMessage id="Join" /></button>
                     </div> :
                     <div>
-                        {isJoin2 ? <button className={styles.btnLeave} onClick={() => { handleLeave(2) }}><FormattedMessage id="Leave" /></button> :
-                            isJoin1 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }}><FormattedMessage id="Join" /></button> :
-                                isRequest2 ? <button className={styles.btnCancel} onClick={() => { handleCancel(2) }}><FormattedMessage id="Cancel" /></button> :
-                                    isInvite2 ? <button className={styles.btnAccept} onClick={() => { handleAccept(2) }}><FormattedMessage id="Accept" /></button> :
-                                        <button className={styles.btnJoin} onClick={() => { handleJoin(2) }}><FormattedMessage id="Join" /></button>}
+                        {isJoin2 ? <button className={styles.btnLeave} onClick={() => { handleLeave(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Leave" /></button> :
+                            isJoin1 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Join" /></button> :
+                                isRequest2 ? <button className={styles.btnCancel} onClick={() => { handleCancel(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Cancel" /></button> :
+                                    isInvite2 ? <button className={styles.btnAccept} onClick={() => { handleAccept(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Accept" /></button> :
+                                        <button className={styles.btnJoin} onClick={() => { handleJoin(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Join" /></button>}
 
-                        {(!isJoin1 && !isJoin2) && isInvite2 ? <button className={styles.btnCancel} onClick={handleDeny}><FormattedMessage id="Deny" /></button> :
+                        {(!isJoin1 && !isJoin2) && isInvite2 ? <button className={styles.btnCancel} onClick={handleDeny} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Deny" /></button> :
                             ''}
                     </div>
                 }
