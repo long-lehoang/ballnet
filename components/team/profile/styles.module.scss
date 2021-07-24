@@ -100,8 +100,11 @@
                 }
             }
             .menu{
-                padding-bottom: 20px;
-                // padding-left: 10px;
+                padding: 10px;
+                border-top: 20px solid var(--background-header);
+                margin-bottom: 20px;
+                background-color: var(--background-component);
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
                 display: flex;
                 align-items: flex-start;
                 button{

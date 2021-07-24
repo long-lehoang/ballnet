@@ -14,7 +14,7 @@ export default function Invitation({ team }) {
             </div>
             <div className={styles.lists}>
                 {
-                    list.map((item, key) => {
+                    list.length == 0 ? <h3><FormattedMessage id="No Item" /></h3> : list.map((item, key) => {
                         return (
                             <Item item={item} key={key} />
                         )

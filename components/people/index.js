@@ -10,24 +10,23 @@ import { PEOPLE_API, SEARCH_PEOPLE_API } from '../../config/config';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
-export default function People({people})
-{
-    const [list, setList] = useState(people||[]);
+export default function People({ people }) {
+    const [list, setList] = useState(people || []);
     const token = useSelector(state => state.token);
     const [hasMore, setHasMore] = useState(true);
     const [nextUrl, setNextUrl] = useState(PEOPLE_API + '?page=2');
     const [wait, setWait] = useState(false);
 
-    function loadMore(page){
+    function loadMore(page) {
         let url = ''
-        if(nextUrl != null){
+        if (nextUrl != null) {
             url = nextUrl;
-        }else{
+        } else {
             setHasMore(false);
             return false;
         }
 
-        if(wait){
+        if (wait) {
             return false;
         }
         setWait(true);
@@ -41,10 +40,10 @@ export default function People({people})
             let page = parseInt(response.config.url.split("page=")[1][0]);
             lists = lists.concat(response.data.data);
             setList(lists);
-            if(response.data.data.length == 0){
+            if (response.data.data.length == 0) {
                 setHasMore(false);
                 setNextUrl(null);
-            }else{
+            } else {
                 page = page + 1;
                 let url = response.config.url
                 url = url.replace(/page=./, `page=${page}`);
@@ -57,11 +56,11 @@ export default function People({people})
         })
     }
 
-    return(
+    return (
         <div className={styles.container}>
             <h3><FormattedMessage id="People" /></h3>
             <div className={styles.filter}>
-                <Filter setHasMore={setHasMore} setWait={setWait} setResult={setList} baseUrl={SEARCH_PEOPLE_API}  setNextUrl={setNextUrl}/>
+                <Filter setHasMore={setHasMore} setWait={setWait} setResult={setList} baseUrl={SEARCH_PEOPLE_API} setNextUrl={setNextUrl} />
             </div>
             <InfiniteScroll
                 pageStart={2}
@@ -70,12 +69,12 @@ export default function People({people})
                 loader={<div className="loader" key={0}>Loading ...</div>}
             >
                 <div className={styles.lists}>
-                    
+
                     {
-                        list.map((item, key)=>{
-                            return(
-                                <LazyLoad key={key} height={200} placeholder={<Loading/>}>
-                                    <Item item={item} key={item.id}/>
+                        list.length == 0 ? <h3><FormattedMessage id="No Item" /></h3> : list.map((item, key) => {
+                            return (
+                                <LazyLoad key={key} height={200} placeholder={<Loading />}>
+                                    <Item item={item} key={item.id} />
                                 </LazyLoad>
                             )
                         })
