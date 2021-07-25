@@ -45,6 +45,7 @@
                 border: none;
                 background-color: transparent;
                 outline: none;
+                white-space: nowrap;
             }
             button:hover{
                 color: var(--background-header);
@@ -185,6 +186,7 @@
                 color: var(--text-color-4);            
                 min-width: 50px;
                 height: 20px;
+                white-space: nowrap;
             }
             .btnLeave{
                 background-color: var(--background-header);

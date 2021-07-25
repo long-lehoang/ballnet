@@ -138,8 +138,9 @@
             border-radius: 4px;
             margin: 10px 5px;
             color: var(--text-color-4);            
-            width: 50px;
+            min-width: 50px;
             height: 20px;
+            white-space: nowrap;
         }
         .btnCancel{
             background-color: var(--background-header);
