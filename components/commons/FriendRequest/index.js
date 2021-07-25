@@ -80,7 +80,7 @@ export default function FriendRequest() {
                                         <Link href={element.username}><span>{element.name}</span></Link>
                                     </div>
                                     <div className={styles.location}>
-                                        <span>{element.address.split(',')[1]}</span>
+                                        <span>{element.address == null ? '' : element.address.split(',')[1]}</span>
                                     </div>
                                 </div>
                             </div>
