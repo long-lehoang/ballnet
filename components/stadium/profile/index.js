@@ -126,7 +126,7 @@ export default function StadiumProfile(props) {
                     </h1>
                     {permission ? <button className={styles.btnRemove} onClick={handleRemove}><FormattedMessage id="Remove" /></button> : ''}
                 </div>
-                <p>{loadStar(props.stadium.rating, 15)}</p>
+                <p className={styles.star}>{loadStar(props.stadium.rating, 15)}</p>
                 <h5>{sport}</h5>
                 <h5>
                     {location}
