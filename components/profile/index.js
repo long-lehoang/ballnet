@@ -187,9 +187,6 @@ export default function Profile({ permission, userN, profileN }) {
                             </div>
 
                         </div>
-                        <div className={styles.info}>
-                            <span className={styles.status}>{status}</span>
-                        </div>
                     </div>
                     <div className={styles.menu}>
                         <button onClick={() => setOption(1)} className={option == 1 ? styles.active : ''}>
