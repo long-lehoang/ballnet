@@ -42,13 +42,12 @@ export default function StadiumSuggest() {
                                         <div className={styles.name}>
                                             <span>{element.name}</span>
                                         </div>
-                                        <div className={styles.content}>
-                                            <div className={styles.groupStar}>
-                                                {loadStar(element.rating, 15)}
-                                            </div>
-                                            <div className={styles.location}>
-                                                <span>{element.location.split(', ')[3]}</span>
-                                            </div>
+                                        
+                                        <div className={styles.groupStar}>
+                                            {loadStar(element.rating, 15)}
+                                        </div>
+                                        <div className={styles.location}>
+                                            <span>{element.location.split(', ')[3]}</span>
                                         </div>
                                     </div>
                                 </div>

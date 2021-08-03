@@ -39,19 +39,15 @@
         .name {
           color: var(--text-color-3);
         }
-        .content {
-          display: flex;
-          justify-content: space-between;
-          .groupStar {
-            color: var(--star);
-            .star {
-              height: 13px;
-              width: 13px;
-            }
+        .groupStar {
+          color: var(--star);
+          .star {
+            height: 13px;
+            width: 13px;
           }
-          .location {
-            color: var(--text-color-2);
-          }
+        }
+        .location {
+          color: var(--text-color-2);
         }
       }
     }
