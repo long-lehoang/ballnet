@@ -133,3 +133,29 @@
         }
     }
 }
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1280px) {
+    .container{
+        .img{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            clip: rect(0px,100vw,60vh,0px);
+        }
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1280px) {
+    .container{
+        .img{
+            position: absolute;
+            top: 0;
+            left: calc((1280px - 100vw)/2);
+            width: 100vw;
+            clip: rect(0px,100vw,60vh,0px);
+        }
+    }
+}
