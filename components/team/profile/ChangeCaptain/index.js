@@ -79,7 +79,7 @@ export default function ChangeCaptain({ team, show, setShow, setMember, openMess
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => { props.setShow(false) }}><FormattedMessage id="Close" /></Button>
+                <Button variant="secondary" onClick={() => { setShow(false) }}><FormattedMessage id="Close" /></Button>
                 <Button variant="primary" onClick={() => { handleSubmit() }}><FormattedMessage id="Save changes" /></Button>
             </Modal.Footer>
         </Modal>

@@ -150,6 +150,19 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
             openMessageBox('Có lỗi xảy ra trong quá trình huỷ yêu cầu tham gia đội.')
         });
     }
+
+    function handleRemove(){
+        axios.delete(TEAM_API + team.id, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response) => {
+            router.push('/team');
+        }).catch(error => {
+            openMessageBox('Có lỗi xảy ra trong quá trình xóa đội.')
+        });
+    }
+
     function openMessageBox(message, title = 'Error') {
         const data = { title: title, message: message, show: true };
         const action = setMessage(data);
@@ -186,6 +199,7 @@ export default function TeamProfile({ isMember, isAdmin, isCaptain, team }) {
                                     invited ? <button className={styles.btn_accept} onClick={handleAccept}><FormattedMessage id="Accept" /></button> :
                                         <button className={styles.btn_join} onClick={handleJoin}><FormattedMessage id="Join" /></button>}
                             {invited ? <button className={styles.btn_deny} onClick={handleDeny}><FormattedMessage id="Deny" /></button> : ''}
+                            {isCaptain ? <button className={styles.btn_leave} onClick={handleRemove}><FormattedMessage id="Remove" /></button> : ''}
                         </div>
 
                     </div>
