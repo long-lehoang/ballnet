@@ -77,7 +77,7 @@ export default function Team({ team }) {
                         <span><FormattedMessage id="Add" /></span>
                     </div>
                     {
-                        list.length == 0 ? <h3><FormattedMessage id="No Item" /></h3> : list.map((item, key) => {
+                        list.map((item, key) => {
                             return (
                                 <LazyLoad key={item.id} height={200} placeholder={<Loading />}>
                                     <Item item={item} key={item.id} />

@@ -134,17 +134,17 @@ export default function Header() {
                             </div>
                         </div>
                     </Link>
-
-                    <div key={2} className={styles.btnNav}>
-                        <div className={styles.iconNav}>
-                            <FontAwesomeIcon height={22} icon={faUsers}></FontAwesomeIcon>
+                    <Link href="/team">
+                        <div key={2} className={styles.btnNav}>
+                            <div className={styles.iconNav}>
+                                <FontAwesomeIcon height={22} icon={faUsers}></FontAwesomeIcon>
+                            </div>
+                            <div className={styles.textNav}>
+                                <Link href="/team"><div className={styles.link}><FormattedMessage id="Team" /></div></Link>
+                                <Link href="/team/invitation"><div className={styles.link}><FormattedMessage id="Team Invitation" /></div></Link>
+                            </div>
                         </div>
-                        <div className={styles.textNav}>
-                            <Link href="/team"><div className={styles.link}><FormattedMessage id="Team" /></div></Link>
-                            <Link href="/team/invitation"><div className={styles.link}><FormattedMessage id="Team Invitation" /></div></Link>
-                        </div>
-                    </div>
-
+                    </Link>
                     <Link href="/match">
                         <div key={3} className={styles.btnNav}>
                             <div className={styles.iconNav}>
@@ -167,16 +167,17 @@ export default function Header() {
                             </div>
                         </div>
                     </Link>
-
-                    <div key={5} className={styles.btnNav}>
-                        <div className={styles.iconNav}>
-                            <FontAwesomeIcon height={22} icon={faUserPlus}></FontAwesomeIcon>
+                    <Link href="/people">
+                        <div key={5} className={styles.btnNav}>
+                            <div className={styles.iconNav}>
+                                <FontAwesomeIcon height={22} icon={faUserPlus}></FontAwesomeIcon>
+                            </div>
+                            <div className={styles.textNav}>
+                                <Link href="/people"><div className={styles.link}><FormattedMessage id="People" /></div></Link>
+                                <Link href="/people/friend_request"><div className={styles.link}><FormattedMessage id="Friend Requests" /></div></Link>
+                            </div>
                         </div>
-                        <div className={styles.textNav}>
-                            <Link href="/people"><div className={styles.link}><FormattedMessage id="People" /></div></Link>
-                            <Link href="/people/friend_request"><div className={styles.link}><FormattedMessage id="Friend Requests" /></div></Link>
-                        </div>
-                    </div>
+                    </Link>
                     <Link href="/message">
                         <div className={styles.btnNav}>
 
