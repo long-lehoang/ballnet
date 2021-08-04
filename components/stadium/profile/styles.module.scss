@@ -3,9 +3,7 @@
     position: relative;
     display: block;
     padding: 5% 10%;
-    .cover{
-        width: 100%;
-    }
+
     label{
         cursor: pointer;
         position: absolute;
@@ -33,8 +31,8 @@
     .img{
         position: absolute;
         top: 0;
-        left: 0;
-        width: 100%;
+        left: calc((1280px - 100vw)/2);
+        width: 100vw;
         clip: rect(0px,100vw,60vh,0px);
     }
     .info{
