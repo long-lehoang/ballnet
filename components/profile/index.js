@@ -91,8 +91,8 @@ export default function Profile({ permission, userN, profileN }) {
         }).then((response) => {
             setWaiting(true);
             setIdRequest(response.data.data);
+        }).catch(error=>{
             openMessageBox("Error happened when add friend");
-
         })
     }
     function handleUnfriend() {
