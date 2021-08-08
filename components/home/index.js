@@ -57,10 +57,10 @@ export default function HomePage({ posts }) {
                     <Info></Info>
                 </div>
                 <div className={styles.row}>
-                    <StadiumSuggest></StadiumSuggest>
+                    <FriendRequest></FriendRequest>
                 </div>
                 <div className={styles.row}>
-                    <FriendRequest></FriendRequest>
+                    <FriendSuggest></FriendSuggest>
                 </div>
             </div>
             <div className={styles.col_2} >
@@ -88,7 +88,7 @@ export default function HomePage({ posts }) {
                     <MatchSuggest></MatchSuggest>
                 </div>
                 <div className={styles.row}>
-                    <FriendSuggest></FriendSuggest>
+                    <StadiumSuggest></StadiumSuggest>
                 </div>
             </div>
         </div>
