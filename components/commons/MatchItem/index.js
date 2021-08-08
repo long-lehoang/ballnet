@@ -391,7 +391,7 @@ export default function Item({ item }) {
             <div className={styles.action}>
                 <div>
                     {isJoin1 ? <button className={styles.btnLeave} onClick={() => { handleLeave(1) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Leave" /></button> :
-                        isJoin2 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Join" /></button> :
+                        isJoin2 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }} ><FormattedMessage id="Join" /></button> :
                             isRequest1 ? <button className={styles.btnCancel} onClick={() => { handleCancel(1) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Cancel" /></button> :
                                 isInvite1 ? <button className={styles.btnAccept} onClick={() => { handleAccept(1) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Accept" /></button> :
                                     <button className={styles.btnJoin} onClick={() => { handleJoin(1) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Join" /></button>}
@@ -405,7 +405,7 @@ export default function Item({ item }) {
                     </div> :
                     <div>
                         {isJoin2 ? <button className={styles.btnLeave} onClick={() => { handleLeave(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Leave" /></button> :
-                            isJoin1 ? <button disabled className={styles.btnJoin} onClick={() => { handleJoin(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Join" /></button> :
+                            isJoin1 ? <button disabled={'disabled'} className={styles.btnJoin} onClick={() => { handleJoin(2) }}><FormattedMessage id="Join" /></button> :
                                 isRequest2 ? <button className={styles.btnCancel} onClick={() => { handleCancel(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Cancel" /></button> :
                                     isInvite2 ? <button className={styles.btnAccept} onClick={() => { handleAccept(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Accept" /></button> :
                                         <button className={styles.btnJoin} onClick={() => { handleJoin(2) }} disabled={checkStart() ? 'disabled' : ''}><FormattedMessage id="Join" /></button>}
