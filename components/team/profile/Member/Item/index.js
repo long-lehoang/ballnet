@@ -19,7 +19,7 @@ export default function Item({ member, team }) {
     function handleKick() {
         var formData = new FormData();
         formData.append('member_id', member.memberId);
-        axios.post(TEAM_API + `kick`, formData, {
+        axios.post(TEAM_API + `${team.id}/kick`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
