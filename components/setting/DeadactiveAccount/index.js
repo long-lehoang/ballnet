@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { route } from 'next/dist/next-server/server/router';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { DELETE_API } from '../../../config/config';
+import Confirmation from './Confirm';
 import styles from './styles.module.scss';
 
 export default function DeadactiveAccount() {
@@ -16,6 +17,8 @@ export default function DeadactiveAccount() {
     const router = useRouter();
     const token = useSelector(state => state.token);
     const [cookie, setCookie, removeCookie] = useCookies(["user"]);
+    const [show, setShow] = useState(false);
+    const [confirm, setConfirm] = useState(false);
 
     function validate() {
         let error = false;
@@ -38,8 +41,11 @@ export default function DeadactiveAccount() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        if (validate()) {
+        setShow(true);
+    }
 
+    useEffect(()=>{
+        if (confirm&&validate()) {
             var formData = new FormData();
             formData.append("password", password);
             formData.append("email", mail);
@@ -54,12 +60,12 @@ export default function DeadactiveAccount() {
                 setErrMsgMail(error.response.data.message);
                 setErrMsgPassword(error.response.data.message);
             })
-        } else {
-            return false;
         }
-    }
+    },[confirm])
+
     return (
         <div className={styles.container}>
+            <Confirmation show={show} setShow={setShow} setConfirm={setConfirm} />
             <h3 className={styles.title}><FormattedMessage id="Deadactive Account" /></h3>
             <hr></hr>
             <form className={styles.form} onSubmit={handleSubmit}>

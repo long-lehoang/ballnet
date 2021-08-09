@@ -148,11 +148,14 @@
     "Review Opponent Team": "Đánh giá đội bạn",
     "Review Member": "Đánh giá thành viên",
     "Submit": "Gửi",
+    "Yes": "Có",
+    "No": "Không",
     "Review Stadium": "Đánh giá sân vận động",
     "Loading": "Đang tải",
     "Send": "Gửi",
     "Message": "Tin nhắn",
     "Online": "Đang hoạt động",
     "Offline": "Không hoạt động",
-    "No Item": "Không có dữ liệu"
+    "No Item": "Không có dữ liệu",
+    "Confirm Delete": "Bạn muốn xóa tài khoản của mình?"
 }

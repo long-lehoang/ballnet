@@ -6,6 +6,8 @@
     "Match Suggestion": "Match (suggestion)",
     "Home": "Home",
     "Team": "Team",
+    "Yes": "Yes",
+    "No": "No",
     "is at": "is at",
     "Forget Password": "Forget Password",
     "Reset Password": "Reset Password",
@@ -154,5 +156,6 @@
     "Message": "Message",
     "Online": "Online",
     "Offline": "Offline",
-    "No Item": "No Item"
+    "No Item": "No Item",
+    "Confirm Delete": "Do you want to deadactive your account?"
 }

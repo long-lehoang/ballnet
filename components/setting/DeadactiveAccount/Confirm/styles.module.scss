@@ -1,0 +1,38 @@
+.container{
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    .title{
+        font: var(--title);
+    }
+    .form{
+        .group{
+            padding: 10px 0px;
+            .header{
+                padding-bottom: 5px;
+                display: flex;
+                justify-content: space-between;
+                .errMsg{
+                    color: var(--background-header);
+                }
+            }
+            input{
+                width: 100%;
+                padding: 5px 10px;
+            }
+        }
+        button{
+            margin-top: 30px;
+            border: 1px solid var(--text-color-1);
+            height: 30px;
+            width: 100px;
+            margin-right: 10px;
+            border-radius: 4px;
+            background-color: var(--background-component);
+        }
+        button:hover{
+            background-color: var(--background);
+            color: var(--background-header);
+        }
+    }
+}
