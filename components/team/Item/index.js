@@ -59,7 +59,7 @@ export default function Item({ item }) {
     }
 
     function handleAccept() {
-        axios.post(TEAM_REQUEST_API + `${idRequest}/approve`, {
+        axios.post(TEAM_REQUEST_API + `${idRequest}/approve`,{}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
