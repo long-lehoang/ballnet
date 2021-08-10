@@ -18,7 +18,7 @@ export default function CreateStadiumForm({show,setShow, stadiums, setStadiums }
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [sport, setSport] = useState('Football');
+    const [sport, setSport] = useState('Bóng đá');
     const [listSport, setListSport] = useState([]);
     const [nameCity, setNameCity] = useState(''); //city to submit form
     const [nameDistrict, setNameDistrict] = useState(''); //district to submit form

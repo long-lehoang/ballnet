@@ -34,7 +34,7 @@ export default function Item({ request }) {
         }).then(response => {
             setShow(false);
         }).catch(error => {
-            openMessageBox("Can't approve the request");
+            openMessageBox("Can't deny the request");
         })
     }
 
