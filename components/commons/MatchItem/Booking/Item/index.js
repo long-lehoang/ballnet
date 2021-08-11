@@ -40,7 +40,7 @@ export default function Item({ id, avatar, name, match_id, location, rating, pho
                 <img src={img}></img>
                 <div>
                     <Link href={`/stadium/${id}`}><a className={styles.name}>{name}</a></Link>
-                    <span className={styles.star}>{loadStar(rating, 15)}</span>
+                    <span className={styles.star}>{loadStar(rating, 12)}</span>
                     <span className={styles.line}>{location}</span>
                     <span className={styles.line}>{phone}</span>
                 </div>
